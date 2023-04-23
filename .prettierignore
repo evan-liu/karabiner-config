@@ -1,0 +1,11 @@
+/node_modules
+
+package-lock.json
+
+.gitignore
+
+.idea
+.vscode
+
+.DS_Store
+Thumbs.db
