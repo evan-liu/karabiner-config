@@ -8,7 +8,6 @@ import { sourceTree } from './apps/sourcetree'
 import { airmail } from './apps/airmail'
 import { openApp } from './system/open-app'
 import { mouseCursor } from './system/mouse-cursor'
-import { universal } from './system/universal'
 import { appleKeyboard } from './devices/apple-keyboard'
 import { moonlander } from './devices/moonlander'
 
@@ -31,5 +30,4 @@ writeToProfile('Default', [
   // system
   mouseCursor,
   openApp,
-  universal,
 ])
