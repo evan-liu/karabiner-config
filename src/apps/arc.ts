@@ -1,5 +1,6 @@
-import { ifApp, map, rule } from 'karabiner-config'
+import { ifApp, map, rule, withCondition } from 'karabiner-config'
 import { left, right } from '../utils/tap-dance'
+import { ifAppleKeyboard } from '../devices/apple-keyboard'
 
 export const ifArc = ifApp('^company.thebrowser.Browser$')
 
@@ -16,4 +17,8 @@ export const arc = rule('Arc', ifArc).manipulators([
   map(']', '⌥').to('↓', '⌘⌥'), // Next Tab
   map('[', '⌃').to('←', '⌘⌥'), // Pre Space
   map(']', '⌃').to('→', '⌘⌥'), // Next Space
+
+  ...withCondition(ifAppleKeyboard)([
+    map('left_command').toIfAlone('s', '⌘⌥'), // Reveal/Hide Sidebar
+  ]),
 ])
