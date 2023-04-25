@@ -1,4 +1,4 @@
-import { ifDevice, map, rule } from 'karabiner-dot-ts'
+import { ifDevice, map, rule } from 'karabiner.ts'
 
 export const ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
 

@@ -1,4 +1,4 @@
-import { ifDevice, rule } from 'karabiner-dot-ts'
+import { ifDevice, rule } from 'karabiner.ts'
 import { doubleLeft, doubleRight } from '../utils/tap-dance'
 
 export const ifMoonlander = ifDevice({ vendor_id: 12951, product_id: 6505 })

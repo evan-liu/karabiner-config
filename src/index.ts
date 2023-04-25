@@ -1,4 +1,4 @@
-import { writeToProfile } from 'karabiner-dot-ts'
+import { writeToProfile } from 'karabiner.ts'
 import { slashMode } from './layers/slash-mode'
 import { zMode } from './layers/z-mode'
 import { arc } from './apps/arc'

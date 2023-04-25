@@ -1,4 +1,4 @@
-import { map } from 'karabiner-dot-ts'
+import { map } from 'karabiner.ts'
 
 // This is to work with Moonlander Tap Dance (https://blog.zsa.io/2101-introducing-tap-dance/)
 // Moonlander modifier 'tapped' and 'double-tapped' are firstly mapped to Hyper+F-keys

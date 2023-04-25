@@ -1,4 +1,4 @@
-import { ifApp, rule } from 'karabiner-dot-ts'
+import { ifApp, rule } from 'karabiner.ts'
 import { left, right } from '../utils/tap-dance'
 
 export const ifSourceTree = ifApp('^com.torusknot.SourceTree')
