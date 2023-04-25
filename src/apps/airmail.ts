@@ -1,4 +1,4 @@
-import { ifApp, map, rule, withCondition } from 'karabiner-config'
+import { ifApp, map, rule, withCondition } from 'karabiner-dot-ts'
 import { left, right } from '../utils/tap-dance'
 import { ifAppleKeyboard } from '../devices/apple-keyboard'
 

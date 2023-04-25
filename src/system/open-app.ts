@@ -1,4 +1,4 @@
-import { map, rule } from 'karabiner-config'
+import { map, rule } from 'karabiner-dot-ts'
 
 export const openApp = rule('Open App').manipulators([
   map('a', 'Meh').toApp('Arc'),

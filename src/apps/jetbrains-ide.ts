@@ -1,4 +1,4 @@
-import { ifApp, rule } from 'karabiner-config'
+import { ifApp, rule } from 'karabiner-dot-ts'
 import { double, doubleLeft, left, right } from '../utils/tap-dance'
 
 export const ifJetBrainsIde = ifApp('^com.jetbrains.(WebStorm|rider)$')

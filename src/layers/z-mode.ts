@@ -1,4 +1,4 @@
-import { layer, map } from 'karabiner-config'
+import { layer, map } from 'karabiner-dot-ts'
 
 export const zMode = layer('z', 'z-mode').manipulators([
   map('m').toPaste('🔀'), // Merge branches

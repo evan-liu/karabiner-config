@@ -1,4 +1,4 @@
-import { map, rule } from 'karabiner-config'
+import { map, rule } from 'karabiner-dot-ts'
 
 export const mouseCursor = rule('Mouse Cursor Position').manipulators([
   map('←', 'Meh').toMouseCursorPosition({ x: '25%', y: '50%' }),

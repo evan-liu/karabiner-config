@@ -1,4 +1,4 @@
-import { layer, map } from 'karabiner-config'
+import { layer, map } from 'karabiner-dot-ts'
 
 export const slashMode = layer('/', 'slash-mode').manipulators([
   map(1).toPaste('⌘'),
