@@ -1,22 +1,13 @@
-import { layer, map } from 'karabiner.ts'
+import { layer, map, NumberKeyValue, withMapper } from 'karabiner.ts'
 
 export const slashMode = layer('/', 'slash-mode').manipulators([
-  map(1).toPaste('⌘'),
-  map(2).toPaste('⌥'),
-  map(3).toPaste('⌃'),
-  map(4).toPaste('⇧'),
-  map(5).toPaste('⇪'),
+  //           1    2    3    4    5
+  withMapper(['⌘', '⌥', '⌃', '⇧', '⇪'])((k, i) =>
+    map((i + 1) as NumberKeyValue).toPaste(k),
+  ),
 
-  map('←').toPaste('←'),
-  map('→').toPaste('→'),
-  map('↑').toPaste('↑'),
-  map('↓').toPaste('↓'),
-  map('␣').toPaste('␣'),
-  map('⏎').toPaste('⏎'),
-  map('⇥').toPaste('⇥'),
-  map('⎋').toPaste('⎋'),
-  map('⌫').toPaste('⌫'),
-  map('⌦').toPaste('⌦'),
-  map('-').toPaste('⎽'),
-  map('⇪').toPaste('⇪'),
+  //           Paste the symbols instead of triggering the key
+  withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⇥', '⎋', '⌫', '⌦', '⇪'])((k) =>
+    map(k).toPaste(k),
+  ),
 ])
