@@ -8,7 +8,7 @@ export const airmail = rule('Airmail', ifAirmail).manipulators([
   left('⌘').to('↓', '⌘⌥'), // Reveal/Hide Sidebar
   right('⌥').to('↑', '⌥'), // Goto the first message
 
-  ...withCondition(ifAppleKeyboard)([
+  withCondition(ifAppleKeyboard)([
     map('left_command').to('left_command').toIfAlone('↓', '⌘⌥'), // Reveal/Hide Sidebar
   ]),
 ])

@@ -18,7 +18,7 @@ export const arc = rule('Arc', ifArc).manipulators([
   map('[', '⌃').to('←', '⌘⌥'), // Pre Space
   map(']', '⌃').to('→', '⌘⌥'), // Next Space
 
-  ...withCondition(ifAppleKeyboard)([
+  withCondition(ifAppleKeyboard)([
     map('left_command').to('left_command').toIfAlone('s', '⌘⌥'), // Reveal/Hide Sidebar
   ]),
 ])
