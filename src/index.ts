@@ -1,6 +1,5 @@
 import { writeToProfile } from 'karabiner.ts'
-import { slashMode } from './layers/slash-mode'
-import { zMode } from './layers/z-mode'
+import { emojiMode } from './layers/emoji-mode'
 import { arc } from './apps/arc'
 import { slack } from './apps/slack'
 import { jetbrainsIde } from './apps/jetbrains-ide'
@@ -24,8 +23,7 @@ writeToProfile('Default', [
   moonlander,
 
   // layers
-  slashMode,
-  zMode,
+  emojiMode,
 
   // system
   mouseCursor,

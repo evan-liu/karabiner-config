@@ -1,7 +1,7 @@
-import { layer, map, withMapper } from 'karabiner.ts'
+import { layer, map, NumberKeyValue, withMapper } from 'karabiner.ts'
 
-// See https://gitmoji.dev/
-export const zMode = layer('z', 'z-mode').manipulators([
+export const emojiMode = layer(['z', '/'], 'emoji-mode').manipulators([
+  // See https://gitmoji.dev/
   withMapper({
     b: '👷', // add or update ci Build system
     c: '✅', // _check
@@ -18,4 +18,14 @@ export const zMode = layer('z', 'z-mode').manipulators([
     u: '⬆️', // Upgrade dependencies
     v: '🔖', // release / Version tags
   })((k, v) => map(k).toPaste(v)),
+
+  //           1    2    3    4    5
+  withMapper(['⌘', '⌥', '⌃', '⇧', '⇪'])((k, i) =>
+    map((i + 1) as NumberKeyValue).toPaste(k),
+  ),
+
+  //           Paste the symbols instead of triggering the key
+  withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⇥', '⎋', '⌫', '⌦', '⇪'])((k) =>
+    map(k).toPaste(k),
+  ),
 ])
