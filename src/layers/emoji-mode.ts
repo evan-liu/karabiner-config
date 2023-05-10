@@ -30,4 +30,8 @@ export const emojiMode = layer(['z', '/'], 'emoji-mode').manipulators([
   ),
   map(',').toPaste('‹'),
   map('.').toPaste('›'),
+
+  // Code snippets
+  map('l').toTypeSequence('console.log()←'),
+  map('`').toTypeSequence('```⏎⏎↑'),
 ])
