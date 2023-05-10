@@ -28,4 +28,6 @@ export const emojiMode = layer(['z', '/'], 'emoji-mode').manipulators([
   withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⇥', '⎋', '⌫', '⌦', '⇪'])((k) =>
     map(k).toPaste(k),
   ),
+  map(',').toPaste('‹'),
+  map('.').toPaste('›'),
 ])
