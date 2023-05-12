@@ -11,6 +11,6 @@ export const slack = rule('Slack', ifSlack).manipulators([
   right('⌥').to('k', '⌘'), // Open
 
   withCondition(ifAppleKeyboard)([
-    map('left_command').to('left_command').toIfAlone('d', '⌘⇧'), // Show/Hide SideBar
+    map('‹⌘').to('‹⌘').toIfAlone('d', '⌘⇧'), // Show/Hide SideBar
   ]),
 ])

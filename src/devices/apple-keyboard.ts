@@ -7,6 +7,6 @@ export const appleKeyboard = rule(
   ifAppleKeyboard,
 ).manipulators([
   //
-  map('right_command').toHyper(),
-  map('right_option').toMeh(),
+  map('›⌘').toHyper(),
+  map('›⌥').toMeh(),
 ])
