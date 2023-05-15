@@ -15,11 +15,10 @@ import { arc, ifArc } from './apps/arc'
 import { ifSlack, slack } from './apps/slack'
 import { ifSourceTree, sourceTree } from './apps/source-tree'
 import { airmail, ifAirmail } from './apps/airmail'
+import { system } from './apps/system'
 
 const ifIde = ifJetBrainsIde
 const ide = jetBrainsIde
-
-const hjklArrows = { h: '←', j: '↑', k: '↓', l: '→' } as const
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
@@ -31,26 +30,25 @@ writeToProfile('Default', [
 
   // ⌘ & Caret & Action
   duoLayer('f', 'd').manipulators([
-    // ⌘
-    withMapper(['p', '/', '[', ']'])((k) => map(k).to(k, '⌘')),
-
     // ← ↑ ↓ →
-    withMapper(hjklArrows)((k, v) => map(k).to(v)),
+    withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
+      map(k).to(v),
+    ),
+    withMapper({ n: '←', m: '↑', ',': '↓', '.': '→' } as const)((k, v) =>
+      map(k).to(v, '⌘'),
+    ),
+    withMapper({ y: '←', u: '↑', i: '↓', o: '→' } as const)((k, v) =>
+      map(k).to(v, '⌥'),
+    ),
     withCondition(ifIde)({
-      n: ide.moveCaret_lineStart,
-      '.': ide.moveCaret_lineEnd,
-      y: ide.moveCaret_previousWord,
-      o: ide.moveCaret_nextWord,
       6: ide.moveCaret_previousCamelWord,
       9: ide.moveCaret_nextCamelWord,
-
-      m: ide.moveCaret_textStart,
-      ',': ide.moveCaret_textEnd,
-      u: ide.expendSelection,
-      i: ide.shrinkSelection,
       7: ide.scrollUp,
       8: ide.scrollDown,
     }),
+
+    // ⌘
+    withMapper(['p', '/', '[', ']'])((k) => map(k).to(k, '⌘')),
   ]),
   duoLayer('j', 'k').manipulators([
     // ⌘
@@ -65,22 +63,23 @@ writeToProfile('Default', [
   // ⌥ & Selection & Navigation
   duoLayer('f', 's').manipulators([
     // ← ↑ ↓ → + ⇧
-    withMapper(hjklArrows)((k, v) => map(k).to(v, '⇧')),
+    withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
+      map(k).to(v, '⇧'),
+    ),
+    withMapper({ n: '←', m: '↑', ',': '↓', '.': '→' } as const)((k, v) =>
+      map(k).to(v, '⌘⇧'),
+    ),
+    withMapper({ y: '←', u: '↑', i: '↓', o: '→' } as const)((k, v) =>
+      map(k).to(v, '⌥⇧'),
+    ),
     withCondition(ifIde)({
-      n: ide.moveCaret_lineStart_withSelection,
-      '.': ide.moveCaret_lineEnd_withSelection,
-      y: ide.moveCaret_previousWord_withSelection,
-      o: ide.moveCaret_nextWord_withSelection,
       6: ide.moveCaret_previousCamelWord_withSelection,
       9: ide.moveCaret_nextCamelWord_withSelection,
-
-      m: ide.moveCaret_textStart_withSelection,
-      ',': ide.moveCaret_textEnd_withSelection,
-      u: ide.navigateInFile_previousMethod,
-      i: ide.navigateInFile_nextMethod,
       7: ide.navigateInFile_previousHighlightedError,
       8: ide.navigateInFile_nextHighlightedError,
     }),
+
+    // ⌥
     withCondition(ifArc)({
       '[': arc.preTab,
       ']': arc.nextTab,
@@ -94,17 +93,12 @@ writeToProfile('Default', [
 
   // ⌃ & Delete & Edit
   duoLayer('d', 's').manipulators([
-    // ⌃
-    { '⏎': toKey('⏎', '⌃') },
-
     // delete
     { h: toKey('⌫'), l: toKey('⌦') },
+    { n: toKey('⌫', '⌘'), '.': toKey('⌦', '⌘') },
+    { y: toKey('⌫', '⌥'), o: toKey('⌦', '⌥') },
     withCondition(ifIde)({
       ';': ide.delete_line,
-      n: ide.delete_toLineStart,
-      '.': ide.delete_toLineEnd,
-      y: ide.delete_toWordStart,
-      o: ide.delete_toWordEnd,
       6: ide.delete_toCamelWordStart,
       9: ide.delete_toCamelWordEnd,
 
@@ -115,6 +109,8 @@ writeToProfile('Default', [
       ',': ide.code_moveStatementDown,
     }),
 
+    // ⌃
+    { '⏎': toKey('⏎', '⌃') },
     withCondition(ifArc)({
       '[': arc.preSpace,
       ']': arc.nextSpace,
@@ -160,6 +156,8 @@ writeToProfile('Default', [
   }),
 
   duoLayer('z', 'x').manipulators([
+    map('␣').to(system.emojiPicker),
+
     // See https://gitmoji.dev/
     withMapper({
       b: '👷', // add or update ci Build system
