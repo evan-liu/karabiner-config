@@ -16,10 +16,10 @@ import { ifSlack, slack } from './apps/slack'
 import { ifSourceTree, sourceTree } from './apps/source-tree'
 import { airmail, ifAirmail } from './apps/airmail'
 
-const hjklArrows = { h: '←', j: '↑', k: '↓', l: '→' } as const
-
 const ifIde = ifJetBrainsIde
 const ide = jetBrainsIde
+
+const hjklArrows = { h: '←', j: '↑', k: '↓', l: '→' } as const
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
@@ -32,10 +32,7 @@ writeToProfile('Default', [
   // ⌘ & Caret & Action
   duoLayer('f', 'd').manipulators([
     // ⌘
-    withMapper([
-      ...([6, 7, 8, 9, 0] as const),
-      ...(['p', '/', '[', ']'] as const),
-    ])((k) => map(k).to(k, '⌘')),
+    withMapper(['p', '/', '[', ']'])((k) => map(k).to(k, '⌘')),
 
     // ← ↑ ↓ →
     withMapper(hjklArrows)((k, v) => map(k).to(v)),
@@ -59,7 +56,6 @@ writeToProfile('Default', [
     // ⌘
     withMapper([
       ...([1, 2, 3, 4, 5] as const),
-      ...(['q', 'w', 'e', 'r', 't'] as const),
       ...(['q', 'w', 'e', 'r', 't'] as const),
       ...(['a', 's', 'd', 'f', 'g'] as const),
       ...(['z', 'x', 'c', 'v', 'b'] as const),
@@ -90,6 +86,11 @@ writeToProfile('Default', [
       ']': arc.nextTab,
     }),
   ]),
+  duoLayer('j', 'l').manipulators([
+    withCondition(ifArc)({
+      c: arc.copyCurrentTabUrl,
+    }),
+  ]),
 
   // ⌃ & Delete & Edit
   duoLayer('d', 's').manipulators([
@@ -118,6 +119,10 @@ writeToProfile('Default', [
       '[': arc.preSpace,
       ']': arc.nextSpace,
     }),
+  ]),
+  duoLayer('k', 'l').manipulators([
+    // ⌃
+    { '⇥': toKey('⇥', '⌃') },
   ]),
 
   //// ⏡› bottom row
