@@ -33,9 +33,8 @@ writeToProfile('Default', [
   duoLayer('f', 'd').manipulators([
     // ⌘
     withMapper([
-      ...(['y', 'u', 'i', 'o', 'p'] as const),
-      ...(['n', 'm', ',', '.', '/'] as const),
-      ...(['[', ']'] as const),
+      ...([6, 7, 8, 9, 0] as const),
+      ...(['p', '/', '[', ']'] as const),
     ])((k) => map(k).to(k, '⌘')),
 
     // ← ↑ ↓ →
@@ -59,6 +58,8 @@ writeToProfile('Default', [
   duoLayer('j', 'k').manipulators([
     // ⌘
     withMapper([
+      ...([1, 2, 3, 4, 5] as const),
+      ...(['q', 'w', 'e', 'r', 't'] as const),
       ...(['q', 'w', 'e', 'r', 't'] as const),
       ...(['a', 's', 'd', 'f', 'g'] as const),
       ...(['z', 'x', 'c', 'v', 'b'] as const),
