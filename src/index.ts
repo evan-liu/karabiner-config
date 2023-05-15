@@ -1,7 +1,5 @@
 import {
   duoLayer,
-  ifApp,
-  ifDevice,
   map,
   NumberKeyValue,
   rule,
@@ -12,19 +10,16 @@ import {
   withMapper,
   writeToProfile,
 } from 'karabiner.ts'
-
-// Devices
-export const ifMoonlander = ifDevice({ vendor_id: 12951, product_id: 6505 })
-export const ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
-
-// Apps
-export const ifAirmail = ifApp('^it.bloop.airmail2$')
-export const ifArc = ifApp('^company.thebrowser.Browser$')
-export const ifJetBrainsIde = ifApp('^com.jetbrains.(WebStorm|rider)$')
-export const ifSlack = ifApp('^com.tinyspeck.slackmacgap$')
-export const ifSourceTree = ifApp('^com.torusknot.SourceTree')
+import { ifJetBrainsIde, jetBrainsIde } from './apps/jetbrains-ide'
+import { arc, ifArc } from './apps/arc'
+import { ifSlack, slack } from './apps/slack'
+import { ifSourceTree, sourceTree } from './apps/source-tree'
+import { airmail, ifAirmail } from './apps/airmail'
 
 const hjklArrows = { h: '←', j: '↑', k: '↓', l: '→' } as const
+
+const ifIde = ifJetBrainsIde
+const ide = jetBrainsIde
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
@@ -32,37 +27,37 @@ const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
 writeToProfile('Default', [
   rule('Hyper').manipulators([map('⇪').toHyper().toIfAlone('⎋')]),
 
-  //// 🏠‹ home row - left side
+  //// 🏠 home row
+
+  // ⌘ & Caret & Action
   duoLayer('f', 'd').manipulators([
+    // ⌘
+    withMapper([
+      ...(['y', 'u', 'i', 'o', 'p'] as const),
+      ...(['n', 'm', ',', '.', '/'] as const),
+      ...(['[', ']'] as const),
+    ])((k) => map(k).to(k, '⌘')),
+
     // ← ↑ ↓ →
     withMapper(hjklArrows)((k, v) => map(k).to(v)),
-    map('n').to('←', '⌥'),
-    map('.').to('→', '⌥'),
-    map('m').to('←', '⌃'),
-    map(',').to('→', '⌃'),
-  ]),
-  duoLayer('f', 's').manipulators([
-    // ← ↑ ↓ → + ⇧
-    withMapper(hjklArrows)((k, v) => map(k).to(v, '⇧')),
-    map('n').to('←', '⌥⇧'),
-    map('.').to('→', '⌥⇧'),
-    map('m').to('←', '⌃⇧'),
-    map(',').to('→', '⌃⇧'),
-  ]),
-  duoLayer('d', 's').manipulators([
-    // delete
-    map('h').to('⌫'),
-    map('l').to('⌦'),
-    map('j').to('⌫', '⌘'),
-    map('n').to('⌫', '⌥'),
-    map('.').to('⌦', '⌥'),
-    map('m').to('⌫', '⌃'),
-    map(',').to('⌦', '⌃'),
-  ]),
+    withCondition(ifIde)({
+      n: ide.moveCaret_lineStart,
+      '.': ide.moveCaret_lineEnd,
+      y: ide.moveCaret_previousWord,
+      o: ide.moveCaret_nextWord,
+      6: ide.moveCaret_previousCamelWord,
+      9: ide.moveCaret_nextCamelWord,
 
-  //// 🏠› home row - right side
+      m: ide.moveCaret_textStart,
+      ',': ide.moveCaret_textEnd,
+      u: ide.expendSelection,
+      i: ide.shrinkSelection,
+      7: ide.scrollUp,
+      8: ide.scrollDown,
+    }),
+  ]),
   duoLayer('j', 'k').manipulators([
-    // ⌘ + letter
+    // ⌘
     withMapper([
       ...(['q', 'w', 'e', 'r', 't'] as const),
       ...(['a', 's', 'd', 'f', 'g'] as const),
@@ -70,9 +65,95 @@ writeToProfile('Default', [
     ])((k) => map(k).to(k, '⌘')),
   ]),
 
-  duoLayer('z', 'x').manipulators([
-    map('⏎').to('␣', '⌘⌃'),
+  // ⌥ & Selection & Navigation
+  duoLayer('f', 's').manipulators([
+    // ← ↑ ↓ → + ⇧
+    withMapper(hjklArrows)((k, v) => map(k).to(v, '⇧')),
+    withCondition(ifIde)({
+      n: ide.moveCaret_lineStart_withSelection,
+      '.': ide.moveCaret_lineEnd_withSelection,
+      y: ide.moveCaret_previousWord_withSelection,
+      o: ide.moveCaret_nextWord_withSelection,
+      6: ide.moveCaret_previousCamelWord_withSelection,
+      9: ide.moveCaret_nextCamelWord_withSelection,
 
+      m: ide.moveCaret_textStart_withSelection,
+      ',': ide.moveCaret_textEnd_withSelection,
+      u: ide.navigateInFile_previousMethod,
+      i: ide.navigateInFile_nextMethod,
+      7: ide.navigateInFile_previousHighlightedError,
+      8: ide.navigateInFile_nextHighlightedError,
+    }),
+    withCondition(ifArc)({
+      '[': arc.preTab,
+      ']': arc.nextTab,
+    }),
+  ]),
+
+  // ⌃ & Delete & Edit
+  duoLayer('d', 's').manipulators([
+    // ⌃
+    { '⏎': toKey('⏎', '⌃') },
+
+    // delete
+    { h: toKey('⌫'), l: toKey('⌦') },
+    withCondition(ifIde)({
+      ';': ide.delete_line,
+      n: ide.delete_toLineStart,
+      '.': ide.delete_toLineEnd,
+      y: ide.delete_toWordStart,
+      o: ide.delete_toWordEnd,
+      6: ide.delete_toCamelWordStart,
+      9: ide.delete_toCamelWordEnd,
+
+      // Move
+      j: ide.code_moveLineUp,
+      k: ide.code_moveLineDown,
+      m: ide.code_moveStatementUp,
+      ',': ide.code_moveStatementDown,
+    }),
+
+    withCondition(ifArc)({
+      '[': arc.preSpace,
+      ']': arc.nextSpace,
+    }),
+  ]),
+
+  //// ⏡› bottom row
+
+  // Version Control
+  duoLayer('v', 'c').condition(ifIde).manipulators({
+    j: ide.navigateInFile_previousChange,
+    k: ide.navigateInFile_nextChange,
+
+    h: ide.versionControl_commitMessageHistory,
+    n: ide.versionControl_newBranch,
+    u: ide.versionControl_updateProject,
+    p: ide.versionControl_push,
+  }),
+  duoLayer('m', ',').condition(ifIde).manipulators({
+    f: ide.versionControl_showAllAffectedFiles,
+    a: ide.versionControl_amendCommit,
+    b: ide.versionControl_branches,
+    c: ide.versionControl_commit,
+    z: ide.versionControl_rollBack,
+  }),
+
+  // Refactor
+  duoLayer('v', 'x').condition(ifIde).manipulators({
+    m: ide.refactor_move,
+    i: ide.refactor_inline,
+    p: ide.refactor_introduceParameter,
+  }),
+  duoLayer('m', '.').condition(ifIde).manipulators({
+    s: ide.refactor_changeSignature,
+    f: ide.refactor_introduceField,
+    v: ide.refactor_introduceVariable,
+    c: ide.refactor_introduceConstant,
+    r: ide.refactor_rename,
+  }),
+
+  duoLayer('z', 'x').manipulators([
     // See https://gitmoji.dev/
     withMapper({
       b: '👷', // add or update ci Build system
@@ -107,7 +188,6 @@ writeToProfile('Default', [
 
     // Code snippets
     map('l').toTypeSequence('console.log()←'),
-    map('`').toTypeSequence('```⏎⏎↑'),
   ]),
 
   duoLayer('l', ';').manipulators([
@@ -131,47 +211,36 @@ writeToProfile('Default', [
 
   rule('apps and modifiers').manipulators([
     withCondition(ifAirmail)([
-      map('‹⌘').to('‹⌘').toIfAlone('↓', '⌘⌥'), // Reveal/Hide Sidebar
-      map('›⌥').to('›⌥').toIfAlone('↑', '⌥'), // Goto the first message
+      tapModifier('‹⌘', airmail.revealHideSidebar),
+      tapModifier('›⌥', airmail.gotoFirstMessage),
     ]),
 
     withCondition(ifArc)([
-      tapModifier('‹⌘', toKey('s', '⌘⌥')), // Reveal/Hide Sidebar
+      tapModifier('‹⌘', arc.revealHideSidebar),
+      tapModifier('‹⌥', arc.refresh),
 
-      tapModifier('‹⌘', toKey('s', '⌘⌥')), // Reveal/Hide Sidebar
-      tapModifier('‹⌥', toKey('r', '⌘')), // Refresh
-      tapModifier('‹⌃', toKey('=', '⌃⇧')), // Add Split View
-
-      tapModifier('›⌘', toKey('i', '⌘⌥')), // Developer Tools
-      tapModifier('›⌥', toKey('l', '⌘')), // Open Command Bar
-      tapModifier('›⌃', toKey('t', '⌘')), // New Tab
-
-      map('[', '⌥').to('↑', '⌘⌥'), // Pre Tab
-      map(']', '⌥').to('↓', '⌘⌥'), // Next Tab
-      map('[', '⌃').to('←', '⌘⌥'), // Pre Space
-      map(']', '⌃').to('→', '⌘⌥'), // Next Space
+      tapModifier('›⌘', arc.developerTools),
+      tapModifier('›⌥', arc.openCommandBar),
     ]),
 
-    withCondition(ifJetBrainsIde)([
-      tapModifier('‹⌘', toKey('h', '⌥')), // Hide all tool windows
-      tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
+    withCondition(ifIde)([
+      tapModifier('‹⌘', ide.hideAllToolWindows),
+      tapModifier('‹⌥', ide.run),
 
-      tapModifier('›⌘', toKey(4, '⌥')), // Terminal
-      tapModifier('›⌥', toKey(';', '⌃')), // AceJump
+      tapModifier('›⌘', ide.terminal),
+      tapModifier('›⌥', ide.aceJump),
     ]),
 
     withCondition(ifSlack)([
-      tapModifier('‹⌘', toKey('d', '⌘⇧')), // Show/Hide SideBar
-      tapModifier('‹⌥', toKey('f6')), // Move focus to the next section
-      tapModifier('›⌘', toKey('.', '⌘')), // Hide right bar
-      tapModifier('›⌥', toKey('k', '⌘')), // Open
+      tapModifier('‹⌘', slack.showHideSideBar),
+      tapModifier('‹⌥', slack.moveFocusToTheNextSection),
+      tapModifier('›⌘', slack.hideRightBar),
+      tapModifier('›⌥', slack.open),
     ]),
 
     withCondition(ifSourceTree)([
-      tapModifier('‹⌥', toKey('c', '⌘⇧')), // Commit
-      tapModifier('‹⌃', toKey('p', '⌘⇧')), // Push
-      tapModifier('›⌥', toKey('f', '⌘⇧')), // fetch
-      tapModifier('›⌃', toKey('l', '⌘⇧')), // pull
+      tapModifier('‹⌥', sourceTree.commit),
+      tapModifier('›⌥', sourceTree.fetch),
     ]),
   ]),
 
