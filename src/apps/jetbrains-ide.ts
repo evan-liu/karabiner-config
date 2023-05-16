@@ -82,7 +82,6 @@ export const jetBrainsIde = {
   delete_toWordEnd: toKey('⌦', '⌥'),
   delete_toCamelWordEnd: toKey('⌦', '⌃'),
 
-  //
   refactor_introduceConstant: toKey('c', '⌘⌥'),
   refactor_introduceField: toKey('f', '⌘⌥'),
   refactor_inline: toKey('i', '⌘⌥'),
@@ -93,7 +92,6 @@ export const jetBrainsIde = {
   refactor_introduceVariable: toKey('v', '⌘⌥'),
   refactor_popup: toKey('⏎', '⌘⌥'),
 
-  //
   versionControl_amendCommit: toKey('a', '⌘⌃'),
   versionControl_branches: toKey('b', '⌘⌃'),
   versionControl_commit: toKey('c', '⌘⌃'),
@@ -105,6 +103,13 @@ export const jetBrainsIde = {
   versionControl_rollBack: toKey('z', '⌘⌃'),
   versionControl_popup: toKey('⏎', '⌘⌃'),
 
-  //
+  switchCase_camelCase: toKey('c', '⌥⌃'),
+  switchCase_kebabCase: toKey('k', '⌥⌃'),
+  switchCase_lowerCase: toKey('l', '⌥⌃'),
+  switchCase_pascalCase: toKey('p', '⌥⌃'),
+  switchCase_snakeCase: toKey('s', '⌥⌃'),
+  switchCase_capitalizedWords: toKey('t', '⌥⌃'),
+  switchCase_upperCase: toKey('u', '⌥⌃'),
+  switchCase_firstWordCapitalized: toKey('w', '⌥⌃'),
   switchCase_popup: toKey('⏎', '⌥⌃'),
 }

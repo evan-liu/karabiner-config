@@ -173,10 +173,16 @@ writeToProfile('Default', [
   // --------------------
   // -- Switch Case -- //
   duoLayer('c', 'x').condition(ifIde).manipulators({
-    //
+    k: ide.switchCase_kebabCase,
+    l: ide.switchCase_lowerCase,
+    p: ide.switchCase_pascalCase,
+    u: ide.switchCase_upperCase,
   }),
   duoLayer(',', '.').condition(ifIde).manipulators({
-    //
+    c: ide.switchCase_camelCase,
+    s: ide.switchCase_snakeCase,
+    t: ide.switchCase_capitalizedWords,
+    w: ide.switchCase_firstWordCapitalized,
   }),
 
   // =========================
