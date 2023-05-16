@@ -26,9 +26,12 @@ const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
 writeToProfile('Default', [
   rule('Hyper').manipulators([map('⇪').toHyper().toIfAlone('⎋')]),
 
-  //// 🏠 home row
+  // =========================
+  // == 🏠  home row  🏠 == //
+  // =========================
 
-  // ⌘ & Caret & Action
+  // -----------------
+  // -- ⌘, Caret -- //
   duoLayer('f', 'd').manipulators([
     // ← ↑ ↓ →
     withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
@@ -60,7 +63,8 @@ writeToProfile('Default', [
     ])((k) => map(k).to(k, '⌘')),
   ]),
 
-  // ⌥ & Selection & Navigation
+  // ---------------------------------
+  // -- ⌥, Selection, Navigation -- //
   duoLayer('f', 's').manipulators([
     // ← ↑ ↓ → + ⇧
     withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
@@ -81,17 +85,20 @@ writeToProfile('Default', [
 
     // ⌥
     withCondition(ifArc)({
-      '[': arc.preTab,
+      '[': arc.previousTab,
       ']': arc.nextTab,
     }),
+
+    map('␣').to(system.emojiPicker),
   ]),
   duoLayer('j', 'l').manipulators([
     withCondition(ifArc)({
-      c: arc.copyCurrentTabUrl,
+      c: arc.copyPageUrl,
     }),
   ]),
 
-  // ⌃ & Delete & Edit
+  // ----------------
+  // -- ⌃, Edit -- //
   duoLayer('d', 's').manipulators([
     // delete
     { h: toKey('⌫'), l: toKey('⌦') },
@@ -112,18 +119,23 @@ writeToProfile('Default', [
     // ⌃
     { '⏎': toKey('⏎', '⌃') },
     withCondition(ifArc)({
-      '[': arc.preSpace,
+      '[': arc.previousSpace,
       ']': arc.nextSpace,
     }),
+
+    map('␣').to(system.selectNextSourceInInputMenu),
   ]),
   duoLayer('k', 'l').manipulators([
     // ⌃
     { '⇥': toKey('⇥', '⌃') },
   ]),
 
-  //// ⏡› bottom row
+  // =========================
+  // == 🚇 bottom row 🚇 == //
+  // =========================
 
-  // Version Control
+  // ------------------------
+  // -- Version Control -- //
   duoLayer('v', 'c').condition(ifIde).manipulators({
     j: ide.navigateInFile_previousChange,
     k: ide.navigateInFile_nextChange,
@@ -132,6 +144,7 @@ writeToProfile('Default', [
     n: ide.versionControl_newBranch,
     u: ide.versionControl_updateProject,
     p: ide.versionControl_push,
+    '⏎': ide.versionControl_popup,
   }),
   duoLayer('m', ',').condition(ifIde).manipulators({
     f: ide.versionControl_showAllAffectedFiles,
@@ -141,11 +154,13 @@ writeToProfile('Default', [
     z: ide.versionControl_rollBack,
   }),
 
-  // Refactor
+  // -----------------
+  // -- Refactor -- //
   duoLayer('v', 'x').condition(ifIde).manipulators({
     m: ide.refactor_move,
     i: ide.refactor_inline,
     p: ide.refactor_introduceParameter,
+    '⏎': ide.refactor_popup,
   }),
   duoLayer('m', '.').condition(ifIde).manipulators({
     s: ide.refactor_changeSignature,
@@ -155,13 +170,26 @@ writeToProfile('Default', [
     r: ide.refactor_rename,
   }),
 
-  duoLayer('z', 'x').manipulators([
-    map('␣').to(system.emojiPicker),
+  // --------------------
+  // -- Switch Case -- //
+  duoLayer('c', 'x').condition(ifIde).manipulators({
+    //
+  }),
+  duoLayer(',', '.').condition(ifIde).manipulators({
+    //
+  }),
 
+  // =========================
+  // ==  ✨  Others  ✨  == //
+  // =========================
+
+  // -----------------------
+  // -- Emoji & Symbol -- //
+  duoLayer('z', 'x').manipulators([
     // See https://gitmoji.dev/
     withMapper({
       b: '👷', // add or update ci Build system
-      c: '✅', // _check
+      c: '🔧', // Add or update Configuration files
       d: '📝', // add or update Documentation
       f: '🐛', // Fix a bug
       h: '💯', // _hundred
@@ -182,6 +210,7 @@ writeToProfile('Default', [
     withMapper(['⌘', '⌥', '⌃', '⇧'])((k, i) =>
       map((i + 6) as NumberKeyValue).toPaste(k),
     ),
+    map(0).toPaste('⇥'),
 
     //           Paste the symbols instead of triggering the key
     withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⇥', '⎋', '⌫', '⌦', '⇪'])((k) =>
@@ -194,12 +223,14 @@ writeToProfile('Default', [
     map('l').toTypeSequence('console.log()←'),
   ]),
 
+  // ---------------
+  // -- launch -- //
   duoLayer('l', ';').manipulators([
-    // Launch apps
     withMapper({
-      a: 'Arc', // Browser
+      a: 'Arc',
       c: 'Calendar',
       f: 'Finder',
+      i: 'WeChat', // IM
       k: 'Lens', // K8s
       m: 'Airmail', // Mail
       n: 'Notion',
@@ -213,6 +244,8 @@ writeToProfile('Default', [
     })((k, v) => map(k).toApp(v)),
   ]),
 
+  // -------------
+  // -- apps -- //
   rule('apps and modifiers').manipulators([
     withCondition(ifAirmail)([
       tapModifier('‹⌘', airmail.revealHideSidebar),
@@ -221,9 +254,9 @@ writeToProfile('Default', [
 
     withCondition(ifArc)([
       tapModifier('‹⌘', arc.revealHideSidebar),
-      tapModifier('‹⌥', arc.refresh),
+      tapModifier('‹⌥', arc.refreshThePage),
 
-      tapModifier('›⌘', arc.developerTools),
+      tapModifier('›⌘', arc.javaScriptConsole),
       tapModifier('›⌥', arc.openCommandBar),
     ]),
 
@@ -248,7 +281,8 @@ writeToProfile('Default', [
     ]),
   ]),
 
-  // system
+  // ---------------
+  // -- system -- //
   rule('Mouse Cursor Position').manipulators([
     map('←', 'Meh').toMouseCursorPosition({ x: '25%', y: '50%' }),
     map('→', 'Meh').toMouseCursorPosition({ x: '75%', y: '50%' }),

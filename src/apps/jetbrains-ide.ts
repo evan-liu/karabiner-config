@@ -91,6 +91,7 @@ export const jetBrainsIde = {
   refactor_rename: toKey('r', '⌘⌥'),
   refactor_changeSignature: toKey('s', '⌘⌥'),
   refactor_introduceVariable: toKey('v', '⌘⌥'),
+  refactor_popup: toKey('⏎', '⌘⌥'),
 
   //
   versionControl_amendCommit: toKey('a', '⌘⌃'),
@@ -102,4 +103,8 @@ export const jetBrainsIde = {
   versionControl_push: toKey('p', '⌘⌃'),
   versionControl_updateProject: toKey('u', '⌘⌃'),
   versionControl_rollBack: toKey('z', '⌘⌃'),
+  versionControl_popup: toKey('⏎', '⌘⌃'),
+
+  //
+  switchCase_popup: toKey('⏎', '⌥⌃'),
 }
