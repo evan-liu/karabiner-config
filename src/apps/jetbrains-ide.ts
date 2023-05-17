@@ -3,11 +3,8 @@ import { ifApp, toKey } from 'karabiner.ts'
 export const ifJetBrainsIde = ifApp('^com.jetbrains.\\w+$')
 
 export const jetBrainsIde = {
-  hideAllToolWindows: toKey('h', '⌥'),
-  run: toKey('r', '⌥⇧'),
-  terminal: toKey(4, '⌥'),
   aceJump: toKey(';', '⌃'),
-  //
+  switcher: toKey('⇥', '⌃'),
 
   // ←
   moveCaret_lineStart: toKey('←', '⌘'),
@@ -65,14 +62,11 @@ export const jetBrainsIde = {
 
   toolWindow_stretchToBottom: toKey('↓', '⌘⌃⇧'),
 
-  //
   moveCaret_matchingBrace: toKey('m', '⌘'),
   moveCaret_codeBlockStart: toKey('[', '⌘⌥'),
   moveCaret_codeBlockEnd: toKey(']', '⌘⌥'),
-
-  cloneCaret_above: toKey('↑', '⌘⌥⇧'),
-  cloneCaret_below: toKey('↓', '⌘⌥⇧'),
-  addCarets_endsOfSelectedLines: toKey('⏎', '⌘⌥⇧'),
+  moveCaret_codeBlockStartWithSelection: toKey('[', '⌘⌥⇧'),
+  moveCaret_codeBlockEndWithSelection: toKey('[', '⌘⌥⇧'),
 
   // ⌫
   delete_line: toKey('⌫', '⌘⌥'),
@@ -88,8 +82,18 @@ export const jetBrainsIde = {
   //
   navigate_back: toKey('[', '⌘'),
   navigate_forward: toKey(']', '⌘'),
-  navigate_declarationAndUsage: toKey('b', '⌘'),
-  navigate_goToSymbol: toKey('o', '⌘'),
+  navigate_byReference_declarationAndUsage: toKey('b', '⌘'),
+  navigate_byReference_implementations: toKey('b', '⌥'),
+  navigate_byReference_relatedSymbol: toKey('b', '⌃'),
+  navigate_byReference_typeDeclaration: toKey('b', '⌘⇧'),
+  navigate_byReference_superMethod: toKey('b', '⌥⇧'),
+  navigate_byReference_test: toKey('b', '⌃⇧'),
+  navigate_byReference_selectIn: toKey('s', '⌃'),
+  navigate_byReference_fileStructure: toKey(7, '⌃'),
+  navigate_byReference_jumpToNavigationBar: toKey('n', '⌥⇧'),
+  navigate_byName_symbol: toKey('o', '⌘'),
+  navigate_byName_file: toKey('o', '⌥'),
+  navigate_byName_class: toKey('o', '⌃'),
 
   editorTabs_closeTab: toKey('w', '⌘'),
   editorTabs_closeOtherTabs: toKey('w', '⌥'),
@@ -100,6 +104,106 @@ export const jetBrainsIde = {
   editorTabs_gotoPreviousSplitter: toKey('[', '⌃'),
   editorTabs_gotoNextSplitter: toKey(']', '⌃'),
   editorTabs_splitAndMoveRight: toKey('→', '⌘⌥⌃'),
+
+  editorActions_duplicateLineOrSelection: toKey('d', '⌘'),
+  editorActions_duplicateEntireLines: toKey('d', '⌥'),
+  editorActions_joinLines: toKey('j', '⌘'),
+  editorActions_splitLine: toKey('⏎', '⌃'),
+  editorActions_startNewLine: toKey('⏎', '⇧'),
+  editorActions_startNewLineBeforeCurrent: toKey('⏎', '⌃⇧'),
+
+  edit_copy: toKey('c', '⌘'),
+  edit_copyPathReference: toKey('c', '⌃'),
+  edit_paste: toKey('v', '⌘'),
+  edit_pasteFromHistory: toKey('v', '⌥'),
+  edit_cut: toKey('x', '⌘'),
+  edit_undo: toKey('z', '⌘'),
+  edit_redo: toKey('z', '⌘⇧'),
+
+  edit_findUsages_showUsages: toKey('u', '⌃'),
+  edit_findUsages_findUsages: toKey('u', '⌃⇧'),
+  edit_findUsages_previousHighlightedUsages: toKey('↑', '⌘⌥⌃'),
+  edit_findUsages_nextHighlightedUsages: toKey('↓', '⌘⌥⌃'),
+
+  edit_cloneCaret_above: toKey('↑', '⌘⌥⇧'),
+  edit_cloneCaret_below: toKey('↓', '⌘⌥⇧'),
+  edit_addCaretsToEndsOfSelectedLines: toKey('⏎', '⌘⌥⇧'),
+
+  fileOpenActions_saveAs: toKey('s', '⌘⇧'),
+  fileOpenActions_createNewDirectoryOrPackage: toKey('n', '⌘⇧'),
+  fileOpenActions_newScratchFile: toKey('n', '⌃⇧'),
+  fileOpenActions_closeProject: toKey('w', 'Hyper'),
+
+  findAction: toKey('a', '⌘⇧'),
+
+  find_find: toKey('f', '⌘'),
+  find_replace: toKey('r', '⌘'),
+  find_findInPath: toKey('f', '⌘⇧'),
+  find_replaceInPath: toKey('r', '⌘⇧'),
+
+  find_addSelectionForNextOccurrence: toKey('f', '⌥'),
+  find_unselectOccurrence: toKey('f', '⌥⇧'),
+  find_selectAllOccurrences: toKey('f', '⌃'),
+
+  run_debugPopup: toKey('d', '⌃'),
+  run_runPopup: toKey('r', '⌃'),
+  run_editConfigurations: toKey('r', '⌥'),
+  run_run: toKey('r', '⌥⇧'),
+  run_debug: toKey('d', '⌥⇧'),
+  run_stop: toKey('.', '⌃⇧'),
+  runFile: toKey('r', '⌃⇧'),
+
+  view_compareFiles: toKey('d', '⌘'),
+  view_showSource: toKey('⏎', '⌘'),
+  view_jumpToSource: toKey('s', '⌥'),
+
+  view_recentFiles: toKey('e', '⌘'),
+  view_recentLocations: toKey('e', '⌘⇧'),
+  view_recentChanges: toKey('e', '⌥⇧'),
+
+  view_errorDescription: toKey('e', '⌃'),
+  view_documentation: toKey('i', '⌃'),
+  view_parameterInfo: toKey('p', '⌃'),
+  view_quickTypeDefinition: toKey('t', '⌃'),
+  view_quickDefinition: toKey('i', '⌃⇧'),
+
+  other_showContextActions: toKey('⏎', '⌥'),
+  other_selectFileInProjectView: toKey(1, '⌘⇧'),
+
+  code_optimizeImports: toKey('i', '⌘'),
+  code_reformatCode: toKey('l', '⌘'),
+  code_generate: toKey('n', '⌘'),
+  code_insertLiveTemplate: toKey('t', '⌘'),
+  code_implementMethods: toKey('i', '⌥⇧'),
+  code_overrideMethods: toKey('o', '⌥⇧'),
+
+  code_folding_collapse: toKey('-', '⌘'),
+  code_folding_expand: toKey('=', '⌘'),
+  code_folding_collapseRecursively: toKey('-', '⌥'),
+  code_folding_expandRecursively: toKey('=', '⌥'),
+  code_folding_collapseAll: toKey('-', '⌃'),
+  code_folding_expandAll: toKey('=', '⌃'),
+
+  code_commentWithLineComment: toKey('/', '⌘'),
+  code_commentWithBlockComment: toKey('/', '⌘'),
+
+  code_completion_basic: toKey('␣', '⌃'),
+  code_completion_typeMatching: toKey('␣', '⌃⇧'),
+
+  toolWindows_commit: toKey(0, '⌘'),
+  toolWindows_project: toKey(1, '⌘'),
+  toolWindows_bookmarks: toKey(2, '⌘'),
+  toolWindows_find: toKey(3, '⌘'),
+  toolWindows_run: toKey(4, '⌘'),
+  toolWindows_debug: toKey(5, '⌘'),
+  toolWindows_problems: toKey(6, '⌘'),
+  toolWindows_structure: toKey(7, '⌘'),
+  toolWindows_services: toKey(8, '⌘'),
+  toolWindows_git: toKey(9, '⌘'),
+  toolWindows_terminal: toKey(4, '⌥'),
+  toolWindows_pullRequests: toKey(9, '⌥'),
+
+  activeToolWindow_hideAllToolWindows: toKey('h', '⌥'),
 
   refactor_introduceConstant: toKey('c', '⌘⌥'),
   refactor_introduceField: toKey('f', '⌘⌥'),
@@ -121,6 +225,11 @@ export const jetBrainsIde = {
   versionControl_updateProject: toKey('u', '⌘⌃'),
   versionControl_rollBack: toKey('z', '⌘⌃'),
   versionControl_popup: toKey('⏎', '⌘⌃'),
+  versionControl_showDiff: toKey('d', '⌘'),
+  versionControl_diff_previousDifferences: toKey('[', '⌘'),
+  versionControl_diff_nextDifferences: toKey(']', '⌘'),
+  versionControl_diff_comparePreviousFile: toKey('[', '⌥'),
+  versionControl_diff_compareNextFile: toKey(']', '⌥'),
 
   switchCase_camelCase: toKey('c', '⌥⌃'),
   switchCase_kebabCase: toKey('k', '⌥⌃'),
@@ -132,3 +241,6 @@ export const jetBrainsIde = {
   switchCase_firstWordCapitalized: toKey('w', '⌥⌃'),
   switchCase_popup: toKey('⏎', '⌥⌃'),
 }
+
+export const ifIde = ifJetBrainsIde
+export const ide = jetBrainsIde
