@@ -169,6 +169,7 @@ export const jetBrainsIde = {
 
   other_showContextActions: toKey('⏎', '⌥'),
   other_selectFileInProjectView: toKey(1, '⌘⇧'),
+  other_runAnyThing: toKey('f5', 'Hyper'),
 
   code_optimizeImports: toKey('i', '⌘'),
   code_reformatCode: toKey('l', '⌘'),
@@ -200,10 +201,16 @@ export const jetBrainsIde = {
   toolWindows_structure: toKey(7, '⌘'),
   toolWindows_services: toKey(8, '⌘'),
   toolWindows_git: toKey(9, '⌘'),
+  toolWindows_database: toKey(1, '⌥'),
+  toolWindows_endpoints: toKey(2, '⌥'),
   toolWindows_terminal: toKey(4, '⌥'),
+  toolWindows_NuGet: toKey(7, '⌘⌥'),
+  toolWindows_unitTests: toKey(8, '⌘⌥'),
   toolWindows_pullRequests: toKey(9, '⌥'),
 
   activeToolWindow_hideAllToolWindows: toKey('h', '⌥'),
+
+  tests_unitTestingQuickList: toKey('u', '⌥⇧'),
 
   refactor_introduceConstant: toKey('c', '⌘⌥'),
   refactor_introduceField: toKey('f', '⌘⌥'),

@@ -11,14 +11,23 @@ export const leftSideAllKeys = [
   ...(['z', 'x', 'c', 'v', 'b'] as const),
   ...(['-', '='] as const),
 ]
+export const rightSideAllKeys = [
+  ...([6, 7, 8, 9, 0] as const),
+  ...(['y', 'u', 'i', 'o', 'p'] as const),
+  ...(['h', 'j', 'k', 'l', ';'] as const),
+  ...(['n', 'm', ',', '.', '/'] as const),
+  ...(['[', ']'] as const),
+]
 export const rightSideNoArrowKeys = [6, 7, 8, 9, 0, 'p', '/', '[', ']'] as const
 
+// f,d
 export const primaryLeft = [
   withCondition(ifArc)({
     p: arc.openCommandBar,
     ';': arc.addSplitView,
   }),
   withCondition(ifIde)({
+    p: ide.other_runAnyThing,
     ';': ide.editorTabs_splitAndMoveRight,
 
     // ← ↑ ↓ →
@@ -42,14 +51,7 @@ export const primaryLeft = [
   withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘')),
 ]
 
-export const primaryRight = [
-  withCondition(ifIde)({
-    '⏎': ide.other_showContextActions,
-  }),
-
-  withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘')),
-]
-
+// f,w
 export const primaryLeftNoArrows = [
   withCondition(ifIde)({
     '[': ide.editorTabs_gotoPreviousSplitter,
@@ -60,10 +62,14 @@ export const primaryLeftNoArrows = [
     ']': arc.switchToNextSplitView,
   }),
 
-  withMapper([
-    ...([6, 7, 8, 9] as const),
-    ...(['y', 'u', 'i', 'o'] as const),
-    ...(['h', 'j', 'k', 'l'] as const),
-    ...(['n', 'm', ',', '.'] as const),
-  ])((k) => map(k).to(k, '⌘')),
+  withMapper(rightSideAllKeys)((k) => map(k).to(k, '⌘')),
+]
+
+// j,k
+export const primaryRight = [
+  withCondition(ifIde)({
+    '⏎': ide.other_showContextActions,
+  }),
+
+  withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘')),
 ]

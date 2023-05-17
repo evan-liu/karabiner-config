@@ -2,6 +2,7 @@ import { map, toKey, withCondition, withMapper } from 'karabiner.ts'
 import { arc, ifArc } from '../apps/arc'
 import { ide, ifIde } from '../apps/jetbrains-ide'
 
+// f,x
 export const tertiaryLeft = [
   withCondition(ifArc)({
     '[': arc.previousSpace,
@@ -25,6 +26,7 @@ export const tertiaryLeft = [
   ),
 ]
 
+// k,l
 export const tertiaryRight = [
   withCondition(ifIde)({
     '⏎': ide.edit_addCaretsToEndsOfSelectedLines,
@@ -44,17 +46,28 @@ export const tertiaryRight = [
 
     c: ide.edit_copyPathReference,
     v: ide.edit_findUsages_showUsages,
+
+    x: ide.tests_unitTestingQuickList,
+
+    1: ide.toolWindows_pullRequests,
+    2: ide.toolWindows_NuGet,
+    3: ide.toolWindows_endpoints,
+    4: ide.toolWindows_unitTests,
+    5: ide.toolWindows_database,
   }),
 
   { '⇥': toKey('⇥', '⌃') },
 ]
 
-// More IDE only mapping
+// j,.   More IDE only mapping
 export const tertiaryRightIde = {
   '⏎': ide.runFile,
 
-  r: ide.run_editConfigurations,
+  r: ide.run_run,
+  e: ide.run_editConfigurations,
   w: ide.editorTabs_closeOtherTabs,
+
   f: ide.find_selectAllOccurrences,
+  d: ide.run_debug,
   v: ide.edit_findUsages_findUsages,
 }

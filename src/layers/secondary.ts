@@ -4,6 +4,7 @@ import { ide, ifIde } from '../apps/jetbrains-ide'
 import { system } from '../apps/system'
 import { leftSideAllKeys, rightSideNoArrowKeys } from './primary'
 
+// f,s
 export const secondaryLeft = [
   withCondition(ifArc)({
     '[': arc.previousTab,
@@ -36,6 +37,7 @@ export const secondaryLeft = [
   withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘⇧')),
 ]
 
+// j,l
 export const secondaryRight = [
   withCondition(ifIde)({
     '⏎': ide.editorActions_startNewLineBeforeCurrent,
