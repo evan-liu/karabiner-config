@@ -1,7 +1,8 @@
-import { toKey, withCondition } from 'karabiner.ts'
+import { map, toKey, withCondition, withMapper } from 'karabiner.ts'
 import { arc, ifArc } from '../apps/arc'
 import { ide, ifIde } from '../apps/jetbrains-ide'
 import { system } from '../apps/system'
+import { leftSideAllKeys, rightSideNoArrowKeys } from './primary'
 
 export const secondaryLeft = [
   withCondition(ifArc)({
@@ -31,18 +32,17 @@ export const secondaryLeft = [
   { n: toKey('⌫', '⌘'), '.': toKey('⌦', '⌘') },
   { y: toKey('⌫', '⌥'), o: toKey('⌦', '⌥') },
 
-  { z: toKey('z', '⌘⇧') },
   { '⏎': toKey('⏎', '⌃'), '␣': system.emojiPicker },
+  withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘⇧')),
 ]
 
 export const secondaryRight = [
   withCondition(ifIde)({
     '⏎': ide.editorActions_startNewLineBeforeCurrent,
-    f: ide.find_addSelectionForNextOccurrence,
-  }),
-  withCondition(ifArc)({
-    c: arc.copyPageUrl,
+    d: ide.editorActions_duplicateEntireLines,
+    s: ide.view_jumpToSource,
   }),
 
   { '⇥': toKey('`', '⌘') },
+  withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘⇧')),
 ]

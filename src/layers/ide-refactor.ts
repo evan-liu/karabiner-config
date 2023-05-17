@@ -3,6 +3,9 @@ import { ide } from '../apps/jetbrains-ide'
 export const refactorLeft = {
   '⏎': ide.refactor_popup,
 
+  j: ide.navigate_byReference_superMethod,
+  k: ide.navigate_byReference_implementations,
+
   m: ide.refactor_move,
   i: ide.refactor_inline,
   p: ide.refactor_introduceParameter,

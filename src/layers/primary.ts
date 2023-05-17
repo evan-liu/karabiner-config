@@ -3,13 +3,22 @@ import { arc, ifArc } from '../apps/arc'
 import { ide, ifIde } from '../apps/jetbrains-ide'
 import { system } from '../apps/system'
 
+export const leftSideAllKeys = [
+  ...(['`', '⇥', '⎋'] as const),
+  ...([1, 2, 3, 4, 5] as const),
+  ...(['q', 'w', 'e', 'r', 't'] as const),
+  ...(['a', 's', 'd', 'f', 'g'] as const),
+  ...(['z', 'x', 'c', 'v', 'b'] as const),
+  ...(['-', '='] as const),
+]
+export const rightSideNoArrowKeys = [6, 7, 8, 9, 0, 'p', '/', '[', ']'] as const
+
 export const primaryLeft = [
   withCondition(ifArc)({
     p: arc.openCommandBar,
     ';': arc.addSplitView,
   }),
   withCondition(ifIde)({
-    p: ide.findAction,
     ';': ide.editorTabs_splitAndMoveRight,
 
     // ← ↑ ↓ →
@@ -30,7 +39,7 @@ export const primaryLeft = [
 
   { '⏎': toKey('⏎', '⌘'), '␣': system.selectNextSourceInInputMenu },
   { w: toKey('w', '⌘') },
-  withMapper([6, 7, 8, 9, 0, 'p', '/', '[', ']'])((k) => map(k).to(k, '⌘')),
+  withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘')),
 ]
 
 export const primaryRight = [
@@ -38,13 +47,7 @@ export const primaryRight = [
     '⏎': ide.other_showContextActions,
   }),
 
-  { '⇥': toKey('⇥', '⌘') },
-  withMapper([
-    ...([1, 2, 3, 4, 5] as const),
-    ...(['q', 'w', 'e', 'r', 't'] as const),
-    ...(['a', 's', 'd', 'f', 'g'] as const),
-    ...(['z', 'x', 'c', 'v', 'b'] as const),
-  ])((k) => map(k).to(k, '⌘')),
+  withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘')),
 ]
 
 export const primaryLeftNoArrows = [

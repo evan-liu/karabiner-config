@@ -115,7 +115,7 @@ export const jetBrainsIde = {
   edit_copy: toKey('c', '⌘'),
   edit_copyPathReference: toKey('c', '⌃'),
   edit_paste: toKey('v', '⌘'),
-  edit_pasteFromHistory: toKey('v', '⌥'),
+  edit_pasteFromHistory: toKey('v', '⌘⇧'),
   edit_cut: toKey('x', '⌘'),
   edit_undo: toKey('z', '⌘'),
   edit_redo: toKey('z', '⌘⇧'),
