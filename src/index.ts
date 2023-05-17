@@ -1,5 +1,6 @@
 import {
   duoLayer,
+  ifDevice,
   map,
   NumberKeyValue,
   rule,
@@ -17,6 +18,9 @@ import { ifSourceTree, sourceTree } from './apps/source-tree'
 import { airmail, ifAirmail } from './apps/airmail'
 import { system } from './apps/system'
 
+const ifMoonlander = ifDevice({ vendor_id: 12951, product_id: 6505 })
+const ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
+
 const ifIde = ifJetBrainsIde
 const ide = jetBrainsIde
 
@@ -24,15 +28,15 @@ const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
 
 writeToProfile('Default', [
-  rule('Hyper').manipulators([map('⇪').toHyper().toIfAlone('⎋')]),
-
   // =========================
   // == 🏠  home row  🏠 == //
   // =========================
 
-  // -----------------
-  // -- ⌘, Caret -- //
+  // ----------------------------
+  // -- 🥇 Primary f,d  j,k -- //
   duoLayer('f', 'd').manipulators([
+    { '⏎': toKey('⏎', '⌘'), '␣': system.selectNextSourceInInputMenu },
+
     // ← ↑ ↓ →
     withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
       map(k).to(v),
@@ -63,9 +67,42 @@ writeToProfile('Default', [
     ])((k) => map(k).to(k, '⌘')),
   ]),
 
-  // ---------------------------------
-  // -- ⌥, Selection, Navigation -- //
+  // ------------------------------
+  // -- 🥈 Secondary f,s  j,l -- //
   duoLayer('f', 's').manipulators([
+    { '⏎': toKey('⏎', '⌃'), '␣': system.emojiPicker },
+
+    // delete
+    { h: toKey('⌫'), l: toKey('⌦') },
+    { n: toKey('⌫', '⌘'), '.': toKey('⌦', '⌘') },
+    { y: toKey('⌫', '⌥'), o: toKey('⌦', '⌥') },
+    withCondition(ifIde)({
+      ';': ide.delete_line,
+      6: ide.delete_toCamelWordStart,
+      9: ide.delete_toCamelWordEnd,
+
+      // Move
+      j: ide.code_moveLineUp,
+      k: ide.code_moveLineDown,
+      m: ide.code_moveStatementUp,
+      ',': ide.code_moveStatementDown,
+    }),
+
+    withCondition(ifArc)({
+      '[': arc.previousTab,
+      ']': arc.nextTab,
+    }),
+  ]),
+  duoLayer('j', 'l').manipulators([
+    withCondition(ifArc)({
+      c: arc.copyPageUrl,
+    }),
+  ]),
+
+  // -----------------------------
+  // -- 🥉 Tertiary f,x  k,l -- //
+  // d,s are used together in words, like 'words' itself
+  duoLayer('f', 'x').manipulators([
     // ← ↑ ↓ → + ⇧
     withMapper({ h: '←', j: '↑', k: '↓', l: '→' } as const)((k, v) =>
       map(k).to(v, '⇧'),
@@ -83,47 +120,10 @@ writeToProfile('Default', [
       8: ide.navigateInFile_nextHighlightedError,
     }),
 
-    // ⌥
-    withCondition(ifArc)({
-      '[': arc.previousTab,
-      ']': arc.nextTab,
-    }),
-
-    map('␣').to(system.emojiPicker),
-  ]),
-  duoLayer('j', 'l').manipulators([
-    withCondition(ifArc)({
-      c: arc.copyPageUrl,
-    }),
-  ]),
-
-  // ----------------
-  // -- ⌃, Edit -- //
-  duoLayer('d', 's').manipulators([
-    // delete
-    { h: toKey('⌫'), l: toKey('⌦') },
-    { n: toKey('⌫', '⌘'), '.': toKey('⌦', '⌘') },
-    { y: toKey('⌫', '⌥'), o: toKey('⌦', '⌥') },
-    withCondition(ifIde)({
-      ';': ide.delete_line,
-      6: ide.delete_toCamelWordStart,
-      9: ide.delete_toCamelWordEnd,
-
-      // Move
-      j: ide.code_moveLineUp,
-      k: ide.code_moveLineDown,
-      m: ide.code_moveStatementUp,
-      ',': ide.code_moveStatementDown,
-    }),
-
-    // ⌃
-    { '⏎': toKey('⏎', '⌃') },
     withCondition(ifArc)({
       '[': arc.previousSpace,
       ']': arc.nextSpace,
     }),
-
-    map('␣').to(system.selectNextSourceInInputMenu),
   ]),
   duoLayer('k', 'l').manipulators([
     // ⌃
@@ -131,11 +131,11 @@ writeToProfile('Default', [
   ]),
 
   // =========================
-  // == 🚇 bottom row 🚇 == //
+  // == ⬇️ bottom row ⬇️ == //
   // =========================
 
-  // ------------------------
-  // -- Version Control -- //
+  // ---------------------------
+  // -- 🔖 Version Control -- //
   duoLayer('v', 'c').condition(ifIde).manipulators({
     j: ide.navigateInFile_previousChange,
     k: ide.navigateInFile_nextChange,
@@ -154,8 +154,8 @@ writeToProfile('Default', [
     z: ide.versionControl_rollBack,
   }),
 
-  // -----------------
-  // -- Refactor -- //
+  // --------------------
+  // -- ♻️ Refactor -- //
   duoLayer('v', 'x').condition(ifIde).manipulators({
     m: ide.refactor_move,
     i: ide.refactor_inline,
@@ -170,8 +170,8 @@ writeToProfile('Default', [
     r: ide.refactor_rename,
   }),
 
-  // --------------------
-  // -- Switch Case -- //
+  // -----------------------
+  // -- 🔠 Switch Case -- //
   duoLayer('c', 'x').condition(ifIde).manipulators({
     k: ide.switchCase_kebabCase,
     l: ide.switchCase_lowerCase,
@@ -189,8 +189,8 @@ writeToProfile('Default', [
   // ==  ✨  Others  ✨  == //
   // =========================
 
-  // -----------------------
-  // -- Emoji & Symbol -- //
+  // --------------------------
+  // -- 😂 Emoji & Symbol -- //
   duoLayer('z', 'x').manipulators([
     // See https://gitmoji.dev/
     withMapper({
@@ -230,7 +230,7 @@ writeToProfile('Default', [
   ]),
 
   // ---------------
-  // -- launch -- //
+  // -- 🚀 launch -- //
   duoLayer('l', ';').manipulators([
     withMapper({
       a: 'Arc',
@@ -250,8 +250,8 @@ writeToProfile('Default', [
     })((k, v) => map(k).toApp(v)),
   ]),
 
-  // -------------
-  // -- apps -- //
+  // ----------------
+  // -- ↩️ apps -- //
   rule('apps and modifiers').manipulators([
     withCondition(ifAirmail)([
       tapModifier('‹⌘', airmail.revealHideSidebar),
@@ -287,9 +287,14 @@ writeToProfile('Default', [
     ]),
   ]),
 
-  // ---------------
-  // -- system -- //
-  rule('Mouse Cursor Position').manipulators([
+  // ----------------------------
+  // -- 💻 devices & system -- //
+  rule('apple keyboard modifiers', ifAppleKeyboard).manipulators([
+    map('⇪').to('⎋'),
+    map('‹⌃', 'fn').toHyper(),
+    map('‹⌥', 'fn').toMeh(),
+  ]),
+  rule('Mouse Cursor Position', ifMoonlander).manipulators([
     map('←', 'Meh').toMouseCursorPosition({ x: '25%', y: '50%' }),
     map('→', 'Meh').toMouseCursorPosition({ x: '75%', y: '50%' }),
     map('↓', 'Meh').toMouseCursorPosition({ x: '50%', y: '50%' }),

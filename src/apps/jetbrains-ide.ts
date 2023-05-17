@@ -33,8 +33,6 @@ export const jetBrainsIde = {
 
   toolWindow_stretchToRight: toKey('→', '⌘⌃⇧'),
 
-  editorTabs_splitAndMoveRight: toKey('→', '⌘⌥⌃'),
-
   // ↑
 
   moveCaret_textStart: toKey('↑', '⌘'),
@@ -50,8 +48,6 @@ export const jetBrainsIde = {
   findUsages_previousHighlightedUsage: toKey('↑', '⌘⌥⌃'),
 
   toolWindow_stretchToTop: toKey('↑', '⌘⌃⇧'),
-
-  cloneCaret_above: toKey('↑', '⌘⌥⇧'),
 
   // ↓
 
@@ -69,7 +65,14 @@ export const jetBrainsIde = {
 
   toolWindow_stretchToBottom: toKey('↓', '⌘⌃⇧'),
 
+  //
+  moveCaret_matchingBrace: toKey('m', '⌘'),
+  moveCaret_codeBlockStart: toKey('[', '⌘⌥'),
+  moveCaret_codeBlockEnd: toKey(']', '⌘⌥'),
+
+  cloneCaret_above: toKey('↑', '⌘⌥⇧'),
   cloneCaret_below: toKey('↓', '⌘⌥⇧'),
+  addCarets_endsOfSelectedLines: toKey('⏎', '⌘⌥⇧'),
 
   // ⌫
   delete_line: toKey('⌫', '⌘⌥'),
@@ -81,6 +84,22 @@ export const jetBrainsIde = {
   delete_toLineEnd: toKey('⌦', '⌘'),
   delete_toWordEnd: toKey('⌦', '⌥'),
   delete_toCamelWordEnd: toKey('⌦', '⌃'),
+
+  //
+  navigate_back: toKey('[', '⌘'),
+  navigate_forward: toKey(']', '⌘'),
+  navigate_declarationAndUsage: toKey('b', '⌘'),
+  navigate_goToSymbol: toKey('o', '⌘'),
+
+  editorTabs_closeTab: toKey('w', '⌘'),
+  editorTabs_closeOtherTabs: toKey('w', '⌥'),
+  editorTabs_selectPreviousTab: toKey('[', '⌥'),
+  editorTabs_selectNextTab: toKey(']', '⌥'),
+  editorTabs_reopenClosedTab: toKey('w', '⌘⇧'),
+
+  editorTabs_gotoPreviousSplitter: toKey('[', '⌃'),
+  editorTabs_gotoNextSplitter: toKey(']', '⌃'),
+  editorTabs_splitAndMoveRight: toKey('→', '⌘⌥⌃'),
 
   refactor_introduceConstant: toKey('c', '⌘⌥'),
   refactor_introduceField: toKey('f', '⌘⌥'),
