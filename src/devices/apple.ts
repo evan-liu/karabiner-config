@@ -7,6 +7,8 @@ export const appleKeyboard = rule(
   ifAppleKeyboard,
 ).manipulators([
   map('⇪').to('⎋'),
-  map('‹⌃', 'fn').toHyper(),
-  map('‹⌥', 'fn').toMeh(),
+
+  // The esc on the keyboard, not the ⇪ mapping above
+  map('⎋', 'fn').toHyper(),
+  map('⎋', '⌃').toMeh(),
 ])
