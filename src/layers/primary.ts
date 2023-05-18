@@ -20,15 +20,14 @@ export const rightSideAllKeys = [
 ]
 export const rightSideNoArrowKeys = [6, 7, 8, 9, 0, 'p', '/', '[', ']'] as const
 
-// f,d
+// ------------------
+// -- 🥇 f d 👈 -- //
 export const primaryLeft = [
   withCondition(ifArc)({
     p: arc.openCommandBar,
-    ';': arc.addSplitView,
   }),
   withCondition(ifIde)({
-    p: ide.other_runAnyThing,
-    ';': ide.editorTabs_splitAndMoveRight,
+    p: ide.navigate_byName_class,
 
     // ← ↑ ↓ →
     6: ide.moveCaret_previousCamelWord,
@@ -46,30 +45,35 @@ export const primaryLeft = [
     map(k).to(v, '⌥'),
   ),
 
-  { '⏎': toKey('⏎', '⌘'), '␣': system.selectNextSourceInInputMenu },
   { w: toKey('w', '⌘') },
+  { '⏎': toKey('⏎', '⌘'), '␣': system.selectNextSourceInInputMenu },
   withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘')),
 ]
 
-// f,w
+// ------------------
+// -- 🥇 f w 👈 -- //
 export const primaryLeftNoArrows = [
-  withCondition(ifIde)({
-    '[': ide.editorTabs_gotoPreviousSplitter,
-    ']': ide.editorTabs_gotoNextSplitter,
-  }),
   withCondition(ifArc)({
+    ';': arc.addSplitView,
     '[': arc.switchToPreviousSplitView,
     ']': arc.switchToNextSplitView,
+  }),
+  withCondition(ifIde)({
+    ';': ide.editorTabs_splitAndMoveRight,
+    '[': ide.editorTabs_gotoPreviousSplitter,
+    ']': ide.editorTabs_gotoNextSplitter,
+
+    '↑': ide.edit_cloneCaret_above,
+    '↓': ide.edit_cloneCaret_below,
+    '⏎': ide.edit_addCaretsToEndsOfSelectedLines,
   }),
 
   withMapper(rightSideAllKeys)((k) => map(k).to(k, '⌘')),
 ]
 
-// j,k
+// ------------------
+// -- 🥇 👉 j k -- //
 export const primaryRight = [
-  withCondition(ifIde)({
-    '⏎': ide.other_showContextActions,
-  }),
-
+  { '⏎': toKey('⏎', '⌘⇧') },
   withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘')),
 ]

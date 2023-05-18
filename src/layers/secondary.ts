@@ -4,7 +4,8 @@ import { ide, ifIde } from '../apps/jetbrains-ide'
 import { system } from '../apps/system'
 import { leftSideAllKeys, rightSideNoArrowKeys } from './primary'
 
-// f,s
+// ------------------
+// -- 🥈 f s 👈 -- //
 export const secondaryLeft = [
   withCondition(ifArc)({
     '[': arc.previousTab,
@@ -13,6 +14,7 @@ export const secondaryLeft = [
   withCondition(ifIde)({
     '[': ide.editorTabs_selectPreviousTab,
     ']': ide.editorTabs_selectNextTab,
+    p: ide.navigate_byName_file,
 
     7: ide.navigateInFile_previousHighlightedError,
     8: ide.navigateInFile_nextHighlightedError,
@@ -33,18 +35,18 @@ export const secondaryLeft = [
   { n: toKey('⌫', '⌘'), '.': toKey('⌦', '⌘') },
   { y: toKey('⌫', '⌥'), o: toKey('⌦', '⌥') },
 
-  { '⏎': toKey('⏎', '⌃'), '␣': system.emojiPicker },
+  { '⏎': toKey('⏎', '⌥'), '␣': system.emojiPicker },
   withMapper(rightSideNoArrowKeys)((k) => map(k).to(k, '⌘⇧')),
 ]
 
-// j,l
+// ------------------
+// -- 🥈 👉 j l -- //
 export const secondaryRight = [
   withCondition(ifIde)({
-    '⏎': ide.editorActions_startNewLineBeforeCurrent,
     d: ide.editorActions_duplicateEntireLines,
     s: ide.view_jumpToSource,
   }),
 
-  { '⇥': toKey('`', '⌘') },
+  { '⏎': toKey('⏎', '⌥⇧') },
   withMapper(leftSideAllKeys)((k) => map(k).to(k, '⌘⇧')),
 ]

@@ -7,4 +7,5 @@ export const slack = {
   moveFocusToTheNextSection: toKey('f6'),
   hideRightBar: toKey('.', '⌘'),
   open: toKey('k', '⌘'),
+  link: toKey('u', '⌘⇧'),
 }

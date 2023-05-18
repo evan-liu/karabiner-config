@@ -3,9 +3,6 @@ import { ifApp, toKey } from 'karabiner.ts'
 export const ifJetBrainsIde = ifApp('^com.jetbrains.\\w+$')
 
 export const jetBrainsIde = {
-  aceJump: toKey(';', '⌃'),
-  switcher: toKey('⇥', '⌃'),
-
   // ←
   moveCaret_lineStart: toKey('←', '⌘'),
   moveCaret_previousWord: toKey('←', '⌥'),
@@ -170,6 +167,10 @@ export const jetBrainsIde = {
   other_showContextActions: toKey('⏎', '⌥'),
   other_selectFileInProjectView: toKey(1, '⌘⇧'),
   other_runAnyThing: toKey('f5', 'Hyper'),
+
+  aceJump: toKey(';', '⌃'),
+  switcher: toKey('⇥', '⌃'),
+  switcherBackward: toKey('⇥', '⌃⇧'),
 
   code_optimizeImports: toKey('i', '⌘'),
   code_reformatCode: toKey('l', '⌘'),
