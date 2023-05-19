@@ -56,7 +56,7 @@ writeToProfile('Default', [
       '[': ide.editorTabs_selectPreviousTab,
       ']': ide.editorTabs_selectNextTab,
 
-      j: ide.code_moveLineUp,
+      i: ide.code_moveLineUp,
       k: ide.code_moveLineDown,
     }),
   ]),
@@ -77,6 +77,7 @@ writeToProfile('Default', [
 
     // b
     v: ide.edit_findUsages_findUsages,
+    // c
     // x
     // z
 
@@ -97,7 +98,7 @@ writeToProfile('Default', [
       '[': ide.switcherBackward,
       ']': ide.switcher,
 
-      j: ide.code_moveStatementUp,
+      i: ide.code_moveStatementUp,
       k: ide.code_moveStatementDown,
 
       '↑': ide.edit_cloneCaret_above,
@@ -118,7 +119,7 @@ writeToProfile('Default', [
       '[': ide.editorTabs_gotoPreviousSplitter,
       ']': ide.editorTabs_gotoNextSplitter,
 
-      j: ide.shrinkSelection,
+      i: ide.shrinkSelection,
       k: ide.expendSelection,
     }),
   ]),
