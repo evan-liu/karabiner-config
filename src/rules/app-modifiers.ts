@@ -5,16 +5,16 @@ import {
   ToEvent,
   withCondition,
 } from 'karabiner.ts'
-import { airmail, ifAirmail } from './airmail'
-import { arc, ifArc } from './arc'
-import { ifSlack, slack } from './slack'
-import { ifSourceTree, sourceTree } from './source-tree'
-import { ide, ifIde } from './jetbrains-ide'
+import { airmail, ifAirmail } from '../apps/airmail'
+import { arc, ifArc } from '../apps/arc'
+import { ifSlack, slack } from '../apps/slack'
+import { ifSourceTree, sourceTree } from '../apps/source-tree'
+import { ide, ifIde } from '../apps/jetbrains-ide'
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
 
-export const appModifier = rule('apps and modifiers').manipulators([
+export const appModifiers = rule('apps and modifiers').manipulators([
   withCondition(ifAirmail)([
     tapModifier('‹⌘', airmail.revealHideSidebar),
     tapModifier('›⌥', airmail.gotoFirstMessage),

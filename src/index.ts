@@ -1,72 +1,125 @@
-import { duoLayer, writeToProfile } from 'karabiner.ts'
-import { ifIde } from './apps/jetbrains-ide'
-import { appleKeyboard } from './devices/apple'
-import { moonlander } from './devices/moonlander'
-import { appModifier } from './apps/app-modifier'
 import {
-  primaryLeft,
-  primaryLeftNoArrows,
-  primaryRight,
-} from './layers/primary'
-import { secondaryLeft, secondaryRight } from './layers/secondary'
-import {
-  tertiaryLeft,
-  tertiaryRight,
-  tertiaryRightIde,
-} from './layers/tertiary'
-import {
-  versionControlLeft,
-  versionControlRight,
-} from './layers/ide-version-control'
-import { refactorLeft, refactorRight } from './layers/ide-refactor'
-import { switchCaseLeft, switchCaseRight } from './layers/ide-switch-case'
+  duoLayer,
+  layer,
+  mapSimultaneous,
+  rule,
+  simlayer,
+  withCondition,
+  writeToProfile,
+} from 'karabiner.ts'
+import { appleKeyboard } from './devices/apple-keyboard'
+import { ifMoonlander, mouseCursor } from './devices/moonlander'
+import { appModifiers } from './rules/app-modifiers'
 import { emojiSymbol } from './layers/emoji-symbol'
 import { launchApp } from './layers/launch-app'
+import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
+import { arc, ifArc } from './apps/arc'
+import { ide, ifIde } from './apps/jetbrains-ide'
 
 writeToProfile('Default', [
-  // =========================
-  // == 🏠  home row  🏠 == //
-  // =========================
+  appleKeyboard,
+  appModifiers,
 
-  // -- 🥇 Primary f,d  j,k -- //
-  duoLayer('f', 'd').manipulators(primaryLeft),
-  duoLayer('j', 'k').manipulators(primaryRight),
-  duoLayer('f', 'w').manipulators(primaryLeftNoArrows),
+  rule('sim-modifiers').manipulators([
+    mapSimultaneous(['f', 'd']).to('‹⌘'),
+    mapSimultaneous(['f', 's']).to('‹⌘', '⇧'),
+    mapSimultaneous(['f', 'w']).to('‹⌥'),
+    mapSimultaneous(['f', 'x']).to('‹⌃'),
 
-  // -- 🥈 Secondary f,s  j,l -- //
-  duoLayer('f', 's').manipulators(secondaryLeft),
-  duoLayer('j', 'l').manipulators(secondaryRight),
+    mapSimultaneous(['j', 'k']).to('›⌘'),
+    mapSimultaneous(['j', 'l']).to('›⌘', '⇧'),
+    mapSimultaneous(['j', ';']).to('›⌥'),
+    mapSimultaneous(['j', '.']).to('›⌃'),
 
-  // -- 🥉 Tertiary f,x  k,l -- //
-  // d,s are used together in words
-  duoLayer('f', 'x').manipulators(tertiaryLeft),
-  duoLayer('k', 'l').manipulators(tertiaryRight),
-  duoLayer('j', '.').condition(ifIde).manipulators(tertiaryRightIde),
+    mapSimultaneous(['v', 'c']).to('‹⌘', '⌥'),
+    mapSimultaneous(['v', 'x']).to('‹⌘', '⌃'),
+    mapSimultaneous(['c', 'x']).to('‹⌥', '⌃'),
 
-  // =========================
-  // == ⬇️ bottom row ⬇️ == //
-  // =========================
+    mapSimultaneous(['m', ',']).to('›⌘', '⌥'),
+    mapSimultaneous(['m', '.']).to('›⌘', '⌃'),
+    mapSimultaneous([',', '.']).to('›⌥', '⌃'),
+  ]),
 
-  // -- 🔖 Version Control -- //
-  duoLayer('v', 'c').condition(ifIde).manipulators(versionControlLeft),
-  duoLayer('m', ',').condition(ifIde).manipulators(versionControlRight),
+  simlayer('f', 'arrow-mode').manipulators(arrowMode),
+  simlayer('d', 'arrow-delete').manipulators(arrowDelete),
+  simlayer('s', 'arrow-select').manipulators(arrowSelect),
 
-  // -- ♻️ Refactor -- //
-  duoLayer('v', 'x').condition(ifIde).manipulators(refactorLeft),
-  duoLayer('m', '.').condition(ifIde).manipulators(refactorRight),
+  layer('`', 'mouse-mode').condition(ifMoonlander).manipulators(mouseCursor),
 
-  // -- 🔠 Switch Case -- //
-  duoLayer('c', 'x').condition(ifIde).manipulators(switchCaseLeft),
-  duoLayer(',', '.').condition(ifIde).manipulators(switchCaseRight),
-
-  // =========================
-  // ==  ✨  Others  ✨  == //
-  // =========================
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
 
-  appModifier,
+  // -- 🥇 Primary -- //
+  duoLayer('z', 'f').manipulators([
+    withCondition(ifArc)({ '[': arc.previousTab, ']': arc.nextTab }),
+    withCondition(ifIde)({
+      '[': ide.editorTabs_selectPreviousTab,
+      ']': ide.editorTabs_selectNextTab,
 
-  appleKeyboard,
-  moonlander,
+      j: ide.code_moveLineUp,
+      k: ide.code_moveLineDown,
+    }),
+  ]),
+  duoLayer('/', 'j').condition(ifIde).manipulators({
+    '⏎': ide.runFile,
+
+    t: ide.navigate_byReference_typeDeclaration,
+    r: ide.run_run,
+    e: ide.run_editConfigurations,
+    w: ide.editorTabs_closeOtherTabs,
+    // q
+
+    g: ide.find_selectAllOccurrences,
+    f: ide.find_addSelectionForNextOccurrence,
+    d: ide.run_debug,
+    s: ide.run_stop,
+    a: ide.other_runAnyThing,
+
+    // b
+    v: ide.edit_findUsages_findUsages,
+    // x
+    // z
+
+    1: ide.toolWindow_stretchToLeft,
+    2: ide.toolWindow_stretchToTop,
+    3: ide.toolWindow_stretchToBottom,
+    4: ide.toolWindow_stretchToRight,
+    5: ide.find_unselectOccurrence,
+
+    '↑': ide.navigate_byReference_superMethod,
+    '↓': ide.navigate_byReference_implementations,
+  }),
+
+  // -- 🥈 Secondary -- //
+  duoLayer('z', 'd').manipulators([
+    withCondition(ifArc)({ '[': arc.previousSpace, ']': arc.nextSpace }),
+    withCondition(ifIde)({
+      '[': ide.switcherBackward,
+      ']': ide.switcher,
+
+      j: ide.code_moveStatementUp,
+      k: ide.code_moveStatementDown,
+
+      '↑': ide.edit_cloneCaret_above,
+      '↓': ide.edit_cloneCaret_below,
+      '⏎': ide.edit_addCaretsToEndsOfSelectedLines,
+    }),
+  ]),
+
+  // -- 🥉 Tertiary -- //
+  duoLayer('z', 'l').manipulators([
+    withCondition(ifArc)({
+      ';': arc.addSplitView,
+      '[': arc.switchToPreviousSplitView,
+      ']': arc.switchToNextSplitView,
+    }),
+    withCondition(ifIde)({
+      ';': ide.editorTabs_splitAndMoveRight,
+      '[': ide.editorTabs_gotoPreviousSplitter,
+      ']': ide.editorTabs_gotoNextSplitter,
+
+      j: ide.shrinkSelection,
+      k: ide.expendSelection,
+    }),
+  ]),
 ])

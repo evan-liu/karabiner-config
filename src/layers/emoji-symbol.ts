@@ -1,6 +1,9 @@
 import { map, toPaste, withMapper } from 'karabiner.ts'
+import { system } from '../apps/system'
 
 export const emojiSymbol = [
+  map(';').to(system.emojiPicker),
+
   // See https://gitmoji.dev/
   withMapper({
     b: '👷', // add or update ci Build system
