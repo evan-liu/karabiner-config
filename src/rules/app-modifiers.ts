@@ -31,9 +31,11 @@ export const appModifiers = rule('apps and modifiers').manipulators([
   withCondition(ifIde)([
     tapModifier('‹⌘', ide.activeToolWindow_hideAllToolWindows),
     tapModifier('‹⌥', ide.run_run),
+    tapModifier('‹⌃', ide.other_runAnyThing),
 
     tapModifier('›⌘', ide.toolWindows_terminal),
     tapModifier('›⌥', ide.aceJump),
+    tapModifier('›⌃', ide.findAction),
   ]),
 
   withCondition(ifSlack)([
