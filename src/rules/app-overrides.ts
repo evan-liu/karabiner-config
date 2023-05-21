@@ -8,5 +8,9 @@ export const appOverrides = rule('app overrides').manipulators([
 
     map('[', '⌃').to(arc.previousSpace),
     map(']', '⌃').to(arc.nextSpace),
+
+    map(';', 'Meh').to(arc.addSplitView),
+    map('[', 'Meh').to(arc.switchToPreviousSplitView),
+    map(']', 'Meh').to(arc.switchToNextSplitView),
   ]),
 ])
