@@ -37,20 +37,27 @@ export const arrowDelete = [
   },
 ]
 
-export const arrowSelect = {
-  j: toKey('←', '⇧'),
-  i: toKey('↑', '⇧'),
-  k: toKey('↓', '⇧'),
-  l: toKey('→', '⇧'),
+export const arrowSelect = [
+  withCondition(ifIde)({
+    '↑': ide.expendSelection,
+    '↓': ide.shrinkSelection,
+  }),
 
-  h: toKey('←', '⌘⇧'),
-  8: toKey('↑', '⌘⇧'),
-  ',': toKey('↓', '⌘⇧'),
-  ';': toKey('→', '⌘⇧'),
+  {
+    j: toKey('←', '⇧'),
+    i: toKey('↑', '⇧'),
+    k: toKey('↓', '⇧'),
+    l: toKey('→', '⇧'),
 
-  m: toKey('←', '⌥⇧'),
-  '.': toKey('→', '⌥⇧'),
+    h: toKey('←', '⌘⇧'),
+    8: toKey('↑', '⌘⇧'),
+    ',': toKey('↓', '⌘⇧'),
+    ';': toKey('→', '⌘⇧'),
 
-  n: toKey('←', '⌃⇧'),
-  '/': toKey('→', '⌃⇧'),
-}
+    m: toKey('←', '⌥⇧'),
+    '.': toKey('→', '⌥⇧'),
+
+    n: toKey('←', '⌃⇧'),
+    '/': toKey('→', '⌃⇧'),
+  },
+]
