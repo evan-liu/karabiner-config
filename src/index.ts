@@ -4,7 +4,6 @@ import {
   mapSimultaneous,
   rule,
   simlayer,
-  withCondition,
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
@@ -13,8 +12,6 @@ import { appModifiers } from './rules/app-modifiers'
 import { emojiSymbol } from './layers/emoji-symbol'
 import { launchApp } from './layers/launch-app'
 import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
-import { arc, ifArc } from './apps/arc'
-import { ide, ifIde } from './apps/jetbrains-ide'
 import { appOverrides } from './rules/app-overrides'
 
 writeToProfile('Default', [

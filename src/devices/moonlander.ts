@@ -24,8 +24,13 @@ const scrollDown = (v = 1) =>
   toMouseKey({ vertical_wheel: 32, speed_multiplier: v })
 
 export const mouseCursor = {
-  ...{ 1: topLeft, 2: topRight, 3: leftCenter, 4: rightCenter, 5: center },
-  ...{ 6: topLeft, 7: topRight, 8: leftCenter, 9: rightCenter, 0: center },
+  ...{
+    1: topRight,
+    2: leftCenter,
+    3: rightCenter,
+    4: center,
+    5: topLeft,
+  },
   ...{ j: moveLeft(), i: moveUp(), k: moveDown(), l: moveRight() },
   ...{ '↑': scrollUp(), '↓': scrollDown() },
   '⏎': toPointingButton('button1'),
