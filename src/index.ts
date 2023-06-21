@@ -14,31 +14,41 @@ import { launchApp } from './layers/launch-app'
 import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
 
-writeToProfile('Default', [
+const rules = [
   rule('sim-modifiers').manipulators([
+    // ‹⌘⌥⌃ == dsa + f
     mapSimultaneous(['f', 'd']).to('‹⌘'),
-    mapSimultaneous(['f', 's']).to('‹⌘', '⇧'),
+    mapSimultaneous(['f', 's']).to('‹⌥'),
+    mapSimultaneous(['f', 'a']).to('‹⌃'),
 
-    mapSimultaneous(['f', 'w']).to('‹⌥'),
-    mapSimultaneous(['f', 'x']).to('‹⌃'),
+    mapSimultaneous(['d', 's']).to('‹⇧'),
 
-    mapSimultaneous(['f', 'z']).to('‹⌥', '⇧'),
-    mapSimultaneous(['d', 'z']).to('‹⌃', '⇧'),
-    mapSimultaneous(['s', 'z']).to('‹⌃', '⌥⇧'), // Meh
+    // ‹⌘⌥⌃ + ⇧ == dsa + g
+    mapSimultaneous(['g', 'd']).to('‹⌘', '⇧'),
+    mapSimultaneous(['g', 's']).to('‹⌥', '⇧'),
+    mapSimultaneous(['g', 'a']).to('‹⌃', '⇧'),
+
+    mapSimultaneous(['f', 'x']).to('‹⌃', '⌥⇧'), // Meh
+    mapSimultaneous(['f', 'z']).to('‹⌃', '⌘⌥⇧'), // Hyper
 
     mapSimultaneous(['v', 'c']).to('‹⌘', '⌥'),
     mapSimultaneous(['v', 'x']).to('‹⌘', '⌃'),
     mapSimultaneous(['c', 'x']).to('‹⌥', '⌃'),
 
+    // ›⌘⌥⌃ == kl; + j
     mapSimultaneous(['j', 'k']).to('›⌘'),
-    mapSimultaneous(['j', 'l']).to('›⌘', '⇧'),
+    mapSimultaneous(['j', 'l']).to('›⌥'),
+    mapSimultaneous(['j', ';']).to('›⌃'),
 
-    mapSimultaneous(['j', ';']).to('›⌥'),
-    mapSimultaneous(['j', '.']).to('›⌃'),
+    mapSimultaneous(['k', 'l']).to('›⇧'),
 
-    mapSimultaneous(['j', '/']).to('›⌥', '⇧'),
-    mapSimultaneous(['k', '/']).to('›⌃', '⇧'),
-    mapSimultaneous(['l', '/']).to('›⌃', '⌥⇧'), // Meh
+    // ›⌘⌥⌃ + ⇧ == kl; + h
+    mapSimultaneous(['h', 'k']).to('›⌘', '⇧'),
+    mapSimultaneous(['h', 'l']).to('›⌥', '⇧'),
+    mapSimultaneous(['h', ';']).to('›⌃', '⇧'),
+
+    mapSimultaneous(['j', '.']).to('›⌃', '⌥⇧'), // Meh
+    mapSimultaneous(['j', '/']).to('›⌃', '⌘⌥⇧'), // Hyper
 
     mapSimultaneous(['m', ',']).to('›⌘', '⌥'),
     mapSimultaneous(['m', '.']).to('›⌘', '⌃'),
@@ -57,4 +67,9 @@ writeToProfile('Default', [
   appleKeyboard,
   appModifiers,
   appOverrides,
-])
+]
+
+writeToProfile('Default', rules, {
+  'basic.simultaneous_threshold_milliseconds': 40,
+  'simlayer.threshold_milliseconds': 120,
+})
