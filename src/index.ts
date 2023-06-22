@@ -28,13 +28,14 @@ const rules = [
     mapSimultaneous(['g', 's']).to('‹⌥', '⇧'),
     mapSimultaneous(['g', 'a']).to('‹⌃', '⇧'),
 
-    mapSimultaneous(['f', 'x']).to('‹⌃', '⌥⇧'), // Meh ⌥⌃⇧
-    mapSimultaneous(['f', 'z']).to('‹⌃', '⌘⌥⇧'), // Hyper ⌘⌥⌃⇧
-    mapSimultaneous(['v', 'z']).to('‹⌃', '⌘⌥'), // ⌘⌥⌃
-
     mapSimultaneous(['v', 'c']).to('‹⌘', '⌥'),
     mapSimultaneous(['v', 'x']).to('‹⌘', '⌃'),
     mapSimultaneous(['c', 'x']).to('‹⌥', '⌃'),
+
+    mapSimultaneous(['v', 'z']).to('‹⌃', '⌘⌥'), // ⌘⌥⌃
+
+    mapSimultaneous(['f', 'x']).to('‹⌃', '⌥⇧'), // ⌥⌃⇧ Meh
+    mapSimultaneous(['f', 'z']).to('‹⌃', '⌘⌥⇧'), // ⌘⌥⌃⇧ Hyper
 
     // ›⌘⌥⌃ == kl; + j
     mapSimultaneous(['j', 'k']).to('›⌘'),
@@ -48,13 +49,14 @@ const rules = [
     mapSimultaneous(['h', 'l']).to('›⌥', '⇧'),
     mapSimultaneous(['h', ';']).to('›⌃', '⇧'),
 
-    mapSimultaneous(['j', '.']).to('›⌃', '⌥⇧'), // Meh
-    mapSimultaneous(['j', '/']).to('›⌃', '⌘⌥⇧'), // Hyper
-    mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // Hyper
+    mapSimultaneous(['m', ',']).to('›⌘', '⌥'),
+    mapSimultaneous(['m', '.']).to('›⌘', '⌃'),
+    mapSimultaneous([',', '.']).to('›⌥', '⌃'),
 
-    mapSimultaneous(['m', ',']).to('›⌘', '⌥'), // Meh ⌥⌃⇧
-    mapSimultaneous(['m', '.']).to('›⌘', '⌃'), // Hyper ⌘⌥⌃⇧
-    mapSimultaneous([',', '.']).to('›⌥', '⌃'), // ⌘⌥⌃
+    mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // ⌘⌥⌃
+
+    mapSimultaneous(['j', '.']).to('›⌃', '⌥⇧'), // ⌥⌃⇧ Meh
+    mapSimultaneous(['j', '/']).to('›⌃', '⌘⌥⇧'), // ⌘⌥⌃⇧ Hyper
   ]),
 
   simlayer('f', 'arrow-mode').manipulators(arrowMode),
