@@ -52,9 +52,10 @@ const rules = [
     mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // ⌘⌥⌃
   ]),
 
-  duoLayer('f', 'j', 'arrow-mode').manipulators(arrowMode),
-  duoLayer('d', 'j', 'arrow-delete').manipulators(arrowDelete),
-  duoLayer('s', 'j', 'arrow-select').manipulators(arrowSelect),
+  // ; can be released once layer is activated
+  duoLayer('f', ';', 'arrow-mode').manipulators(arrowMode),
+  duoLayer('d', ';', 'arrow-delete').manipulators(arrowDelete),
+  duoLayer('s', ';', 'arrow-select').manipulators(arrowSelect),
 
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
