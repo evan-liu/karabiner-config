@@ -3,7 +3,6 @@ import {
   layer,
   mapSimultaneous,
   rule,
-  simlayer,
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
@@ -53,9 +52,9 @@ const rules = [
     mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // ⌘⌥⌃
   ]),
 
-  simlayer('f', 'arrow-mode').manipulators(arrowMode),
-  simlayer('d', 'arrow-delete').manipulators(arrowDelete),
-  simlayer('s', 'arrow-select').manipulators(arrowSelect),
+  duoLayer('f', 'j', 'arrow-mode').manipulators(arrowMode),
+  duoLayer('d', 'j', 'arrow-delete').manipulators(arrowDelete),
+  duoLayer('s', 'j', 'arrow-select').manipulators(arrowSelect),
 
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
@@ -70,5 +69,4 @@ const rules = [
 writeToProfile('Default', rules, {
   'basic.simultaneous_threshold_milliseconds': 40,
   'duo_layer.threshold_milliseconds': 40,
-  'simlayer.threshold_milliseconds': 120,
 })
