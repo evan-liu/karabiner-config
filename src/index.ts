@@ -34,9 +34,6 @@ const rules = [
 
     mapSimultaneous(['v', 'z']).to('‹⌃', '⌘⌥'), // ⌘⌥⌃
 
-    mapSimultaneous(['f', 'x']).to('‹⌃', '⌥⇧'), // ⌥⌃⇧ Meh
-    mapSimultaneous(['f', 'z']).to('‹⌃', '⌘⌥⇧'), // ⌘⌥⌃⇧ Hyper
-
     // ›⌘⌥⌃ == kl; + j
     mapSimultaneous(['j', 'k']).to('›⌘'),
     mapSimultaneous(['j', 'l']).to('›⌥'),
@@ -54,19 +51,16 @@ const rules = [
     mapSimultaneous([',', '.']).to('›⌥', '⌃'),
 
     mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // ⌘⌥⌃
-
-    mapSimultaneous(['j', '.']).to('›⌃', '⌥⇧'), // ⌥⌃⇧ Meh
-    mapSimultaneous(['j', '/']).to('›⌃', '⌘⌥⇧'), // ⌘⌥⌃⇧ Hyper
   ]),
 
   simlayer('f', 'arrow-mode').manipulators(arrowMode),
   simlayer('d', 'arrow-delete').manipulators(arrowDelete),
   simlayer('s', 'arrow-select').manipulators(arrowSelect),
 
-  layer('`', 'mouse-mode').condition(ifMoonlander).manipulators(mouseCursor),
-
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
+
+  layer('`', 'mouse-mode').condition(ifMoonlander).manipulators(mouseCursor),
 
   appleKeyboard,
   appModifiers,
@@ -75,5 +69,6 @@ const rules = [
 
 writeToProfile('Default', rules, {
   'basic.simultaneous_threshold_milliseconds': 40,
+  'duo_layer.threshold_milliseconds': 40,
   'simlayer.threshold_milliseconds': 120,
 })
