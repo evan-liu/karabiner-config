@@ -26,7 +26,7 @@ export const appModifiers = rule('apps and modifiers').manipulators([
     tapModifier('‹⌘', arc.revealHideSidebar),
     tapModifier('‹⌥', arc.refreshThePage),
 
-    tapModifier('›⌘', arc.javaScriptConsole),
+    tapModifier('›⌘', arc.developerToolElementsPanel),
     tapModifier('›⌥', arc.openCommandBar),
   ]),
 

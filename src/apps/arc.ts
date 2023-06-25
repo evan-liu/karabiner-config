@@ -14,7 +14,12 @@ export const arc = {
   closeSplitView: toKey('-', '⌃⇧'),
   copyPageUrl: toKey('c', '⌘⇧'),
   copyUrlAsMarkdown: toKey('c', '⌘⌥⇧'),
+
+  // https://developer.chrome.com/docs/devtools/shortcuts/
   developerTools: toKey('i', '⌘⌥'),
+  developerToolConsolePanel: toKey('j', '⌘⌥'),
+  developerToolElementsPanel: toKey('c', '⌘⌥'),
+
   enterReaderMode: toKey('r', '⌘⌥'),
   findNext: toKey('g', '⌘'),
   findPrevious: toKey('g', '⌘⇧'),
@@ -28,8 +33,6 @@ export const arc = {
   goToLastSidebarItem: toKey('9', '⌘'),
   hideArc: toKey('h', '⌘'),
   hideOtherWindows: toKey('h', '⌘⌥'),
-  inspectElements: toKey('c', '⌘⌥'),
-  javaScriptConsole: toKey('j', '⌘⌥'),
   jumpToSelection: toKey('j', '⌘⌥'),
   minimizeWindow: toKey('m', '⌘'),
   newEasel: toKey('e', '⌃⇧'),
