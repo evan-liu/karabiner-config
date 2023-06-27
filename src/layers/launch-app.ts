@@ -1,20 +1,23 @@
-import { map, withMapper } from 'karabiner.ts'
+import { to$, toApp } from 'karabiner.ts'
 
-export const launchApp = [
-  withMapper({
-    a: 'Arc',
-    c: 'Calendar',
-    f: 'Finder',
-    i: 'WeChat', // IM
-    k: 'Lens', // K8s
-    m: 'Airmail', // Mail
-    n: 'Notion',
-    r: 'Rider',
-    s: 'Slack',
-    t: 'Warp', // Terminal
-    w: 'WebStorm',
-    x: 'Xcode',
-    z: 'zoom.us',
-    ',': 'System Settings',
-  })((k, v) => map(k).toApp(v)),
-]
+export const launchApp = {
+  a: toApp('Arc'),
+  c: toApp('Calendar'),
+  f: toApp('Finder'),
+  i: toApp('WeChat'), // IM
+  k: toApp('Lens'), // K8s
+  m: toApp('Airmail'), // Mail
+  n: toApp('Notion'),
+  r: toIDE('Rider'),
+  s: toApp('Slack'),
+  t: toApp('Warp'), // Terminal
+  w: toIDE('WebStorm'),
+  x: toApp('Xcode'),
+  z: toApp('zoom.us'),
+  ',': toApp('System Settings'),
+}
+
+// `open -a` sometimes gets confused by IDE updates
+function toIDE(name: string) {
+  return to$(`open ~/Applications/JetBrains\\ Toolbox/${name}.app`)
+}
