@@ -1,8 +1,8 @@
 import { ifApp, toKey } from 'karabiner.ts'
 
 export const ifJetBrainsIde = ifApp('^com.jetbrains.[\\w-]+$')
-export const ifWebStorm = ifApp('^com.jetbrains.WebStorm$')
-export const ifRider = ifApp('^com.jetbrains.rider$')
+export const ifWebStorm = ifApp('^com.jetbrains.WebStorm.*$')
+export const ifRider = ifApp('^com.jetbrains.rider.*$')
 
 export const jetBrainsIde = {
   // ←
