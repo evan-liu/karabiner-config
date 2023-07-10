@@ -12,6 +12,7 @@ import { emojiSymbol } from './layers/emoji-symbol'
 import { launchApp } from './layers/launch-app'
 import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
+import { openLinks } from './layers/open-links'
 
 const rules = [
   rule('sim-modifiers').manipulators([
@@ -59,6 +60,7 @@ const rules = [
 
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
+  duoLayer('.', '/').manipulators(openLinks),
 
   layer('`', 'mouse-mode').condition(ifMoonlander).manipulators(mouseCursor),
 
