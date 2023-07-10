@@ -32,4 +32,5 @@ export const emojiSymbol = [
 
   // Code snippets
   map('l').toTypeSequence('console.log()←'),
+  map("'").toTypeSequence('⌫"'),
 ]
