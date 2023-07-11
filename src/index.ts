@@ -13,6 +13,7 @@ import { launchApp } from './layers/launch-app'
 import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
 import { openLinks } from './layers/open-links'
+import { numbers } from './layers/numbers'
 
 const rules = [
   rule('sim-modifiers').manipulators([
@@ -57,6 +58,7 @@ const rules = [
   duoLayer('f', ';', 'arrow-mode').manipulators(arrowMode),
   duoLayer('d', ';', 'arrow-delete').manipulators(arrowDelete),
   duoLayer('s', ';', 'arrow-select').manipulators(arrowSelect),
+  duoLayer('a', ';', 'numbers').manipulators(numbers),
 
   duoLayer('z', 'x').manipulators(emojiSymbol),
   duoLayer('l', ';').manipulators(launchApp),
