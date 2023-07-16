@@ -55,16 +55,16 @@ const rules = [
   ]),
 
   // ; can be released once layer is activated
-  duoLayer('f', ';', 'arrow-mode').manipulators(arrowMode),
-  duoLayer('d', ';', 'arrow-delete').manipulators(arrowDelete),
-  duoLayer('s', ';', 'arrow-select').manipulators(arrowSelect),
+  duoLayer('f', ';', 'arrow').manipulators(arrowMode),
+  duoLayer('d', ';', 'delete').manipulators(arrowDelete),
+  duoLayer('s', ';', 'select').manipulators(arrowSelect),
   duoLayer('a', ';', 'numbers').manipulators(numbers),
 
-  duoLayer('z', 'x').manipulators(emojiSymbol),
-  duoLayer('l', ';').manipulators(launchApp),
-  duoLayer('.', '/').manipulators(openLinks),
+  duoLayer('z', 'x', 'emoji').manipulators(emojiSymbol),
+  duoLayer('l', ';', 'app').manipulators(launchApp),
+  duoLayer('.', '/', 'link').manipulators(openLinks),
 
-  layer('`', 'mouse-mode').condition(ifMoonlander).manipulators(mouseCursor),
+  layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
   appleKeyboard,
   appModifiers,
@@ -72,6 +72,6 @@ const rules = [
 ]
 
 writeToProfile('Default', rules, {
-  'basic.simultaneous_threshold_milliseconds': 40,
-  'duo_layer.threshold_milliseconds': 40,
+  'basic.simultaneous_threshold_milliseconds': 50,
+  'duo_layer.threshold_milliseconds': 100,
 })
