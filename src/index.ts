@@ -1,10 +1,4 @@
-import {
-  duoLayer,
-  layer,
-  mapSimultaneous,
-  rule,
-  writeToProfile,
-} from 'karabiner.ts'
+import { duoLayer, layer, rule, writeToProfile } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
 import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { appModifiers } from './rules/app-modifiers'
@@ -14,44 +8,45 @@ import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
 import { openLinks } from './layers/open-links'
 import { numbers } from './layers/numbers'
+import { duoModifier } from './utils/duo-modifier'
 
 const rules = [
-  rule('sim-modifiers').manipulators([
+  rule('duo-modifiers').manipulators([
     // ‹⌘⌥⌃ == dsa + f
-    mapSimultaneous(['f', 'd']).to('‹⌘'),
-    mapSimultaneous(['f', 's']).to('‹⌥'),
-    mapSimultaneous(['f', 'a']).to('‹⌃'),
+    duoModifier('fd', '⌘'),
+    duoModifier('fs', '⌥'),
+    duoModifier('fa', '⌃'),
 
-    mapSimultaneous(['d', 's']).to('‹⇧'),
+    duoModifier('ds', '⇧'),
 
     // ‹⌘⌥⌃ + ⇧ == dsa + g
-    mapSimultaneous(['g', 'd']).to('‹⌘', '⇧'),
-    mapSimultaneous(['g', 's']).to('‹⌥', '⇧'),
-    mapSimultaneous(['g', 'a']).to('‹⌃', '⇧'),
+    duoModifier('gd', '⌘⇧'),
+    duoModifier('gs', '⌥⇧'),
+    duoModifier('ga', '⌃⇧'),
 
-    mapSimultaneous(['v', 'c']).to('‹⌘', '⌥'),
-    mapSimultaneous(['v', 'x']).to('‹⌘', '⌃'),
-    mapSimultaneous(['c', 'x']).to('‹⌥', '⌃'),
+    duoModifier('vc', '⌘⌥'),
+    duoModifier('vx', '⌘⌃'),
+    duoModifier('cx', '⌥⌃'),
 
-    mapSimultaneous(['v', 'z']).to('‹⌃', '⌘⌥'), // ⌘⌥⌃
+    duoModifier('vz', '⌘⌥⌃'),
 
     // ›⌘⌥⌃ == kl; + j
-    mapSimultaneous(['j', 'k']).to('›⌘'),
-    mapSimultaneous(['j', 'l']).to('›⌥'),
-    mapSimultaneous(['j', ';']).to('›⌃'),
+    duoModifier('jk', '⌘'),
+    duoModifier('jl', '⌥'),
+    duoModifier('j;', '⌃'),
 
-    mapSimultaneous(['k', 'l']).to('›⇧'),
+    duoModifier('kl', '⇧'),
 
     // ›⌘⌥⌃ + ⇧ == kl; + h
-    mapSimultaneous(['h', 'k']).to('›⌘', '⇧'),
-    mapSimultaneous(['h', 'l']).to('›⌥', '⇧'),
-    mapSimultaneous(['h', ';']).to('›⌃', '⇧'),
+    duoModifier('hk', '⌘⇧'),
+    duoModifier('hl', '⌥⇧'),
+    duoModifier('h;', '⌃⇧'),
 
-    mapSimultaneous(['m', ',']).to('›⌘', '⌥'),
-    mapSimultaneous(['m', '.']).to('›⌘', '⌃'),
-    mapSimultaneous([',', '.']).to('›⌥', '⌃'),
+    duoModifier('m,', '⌘⌥'),
+    duoModifier('m.', '⌘⌃'),
+    duoModifier(',.', '⌥⌃'),
 
-    mapSimultaneous(['m', '/']).to('›⌃', '⌘⌥'), // ⌘⌥⌃
+    duoModifier('m/', '⌘⌥⌃'),
   ]),
 
   // ; can be released once layer is activated
