@@ -54,6 +54,9 @@ export const arrowSelect = [
     ',': toKey('↓', '⌘⇧'),
     ';': toKey('→', '⌘⇧'),
 
+    u: toKey('↑', '⌥'),
+    o: toKey('↓', '⌥'),
+
     m: toKey('←', '⌥⇧'),
     '.': toKey('→', '⌥⇧'),
 
