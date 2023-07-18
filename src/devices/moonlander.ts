@@ -8,7 +8,7 @@ import {
 export const ifMoonlander = ifDevice({ vendor_id: 12951, product_id: 6505 })
 
 const topLeft = toMouseCursorPosition({ x: 20, y: 20 })
-const topRight = toMouseCursorPosition({ x: '99%', y: 20 })
+const topRight = toMouseCursorPosition({ x: '92%', y: 25 })
 const center = toMouseCursorPosition({ x: '50%', y: '50%' })
 const leftCenter = toMouseCursorPosition({ x: '25%', y: '50%' })
 const rightCenter = toMouseCursorPosition({ x: '75%', y: '50%' })
