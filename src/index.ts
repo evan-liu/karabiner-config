@@ -55,14 +55,14 @@ const rules = [
   ]),
 
   // ; can be released once layer is activated
-  duoLayer('f', ';', 'arrow').manipulators(arrowMode),
-  duoLayer('d', ';', 'delete').manipulators(arrowDelete),
-  duoLayer('s', ';', 'select').manipulators(arrowSelect),
-  duoLayer('a', ';', 'numbers').manipulators(numbers),
+  duoLayer('f', ';').manipulators(arrowMode).notification('Arrow ← → ↑ ↓'),
+  duoLayer('d', ';').manipulators(arrowDelete).notification('Delete ❌ ⌫ ⌦'),
+  duoLayer('s', ';').manipulators(arrowSelect).notification('Select ⇧ ← ⇧ →'),
+  duoLayer('a', ';').manipulators(numbers).notification('Numbers 0️⃣ 1️⃣ 2️⃣ 3️⃣'),
 
-  duoLayer('z', 'x', 'emoji').manipulators(emojiSymbol),
-  duoLayer('l', ';', 'app').manipulators(launchApp),
-  duoLayer('.', '/', 'link').manipulators(openLinks),
+  duoLayer('z', 'x').manipulators(emojiSymbol).notification('Emoji 😀 ⌘ ⏎'),
+  duoLayer('l', ';').manipulators(launchApp).notification('Launch App 🚀 📱'),
+  duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
 
   layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
@@ -73,5 +73,6 @@ const rules = [
 
 writeToProfile('Default', rules, {
   'basic.simultaneous_threshold_milliseconds': 50,
-  'duo_layer.threshold_milliseconds': 100,
+  'duo_layer.threshold_milliseconds': 200,
+  'duo_layer.notification': true,
 })
