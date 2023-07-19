@@ -9,6 +9,7 @@ import { appOverrides } from './rules/app-overrides'
 import { openLinks } from './layers/open-links'
 import { numbers } from './layers/numbers'
 import { duoModifier } from './utils/duo-modifier'
+import { toLocalSound } from './utils/sounds'
 
 const rules = [
   rule('duo-modifiers').manipulators([
@@ -55,9 +56,18 @@ const rules = [
   duoLayer('s', ';').manipulators(arrowSelect).notification('Select ⇧ ← ⇧ →'),
   duoLayer('a', ';').manipulators(numbers).notification('Numbers 0️⃣ 1️⃣ 2️⃣ 3️⃣'),
 
-  duoLayer('z', 'x').manipulators(emojiSymbol).notification('Emoji 😀 ⌘ ⏎'),
-  duoLayer('l', ';').manipulators(launchApp).notification('Launch App 🚀 📱'),
-  duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
+  duoLayer('z', 'x')
+    .manipulators(emojiSymbol)
+    .notification('Emoji 😀 ⌘ ⏎')
+    .toIfActivated(toLocalSound('pop')),
+  duoLayer('l', ';')
+    .manipulators(launchApp)
+    .notification('Launch App 🚀 📱')
+    .toIfActivated(toLocalSound('pop')),
+  duoLayer('.', '/')
+    .manipulators(openLinks)
+    .notification('Open Link 🔗')
+    .toIfActivated(toLocalSound('pop')),
 
   layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
