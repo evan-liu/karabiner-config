@@ -2,7 +2,7 @@ import { duoLayer, layer, rule, writeToProfile } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
 import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { appModifiers } from './rules/app-modifiers'
-import { emojiSymbol } from './layers/emoji-symbol'
+import { emojiSymbol, emojiHint } from './layers/emoji-symbol'
 import { launchApp } from './layers/launch-app'
 import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
@@ -58,7 +58,7 @@ const rules = [
 
   duoLayer('z', 'x')
     .manipulators(emojiSymbol)
-    .notification('Emoji 😀 ⌘ ⏎')
+    .notification(emojiHint)
     .toIfActivated(toLocalSound('pop')),
   duoLayer('l', ';')
     .manipulators(launchApp)
