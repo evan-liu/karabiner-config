@@ -11,6 +11,7 @@ import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
 import { ifZoom, zoom } from '../apps/zoom'
+import { ifNotion, notion } from '../apps/notion'
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
@@ -61,5 +62,10 @@ export const appModifiers = rule('apps and modifiers').manipulators([
 
     tapModifier('›⌘', zoom.startStopVideo),
     tapModifier('›⌥', zoom.showHideChatPanel),
+  ]),
+
+  withCondition(ifNotion)([
+    tapModifier('‹⌘', notion.openCloseSidebar),
+    tapModifier('›⌥', notion.openSearch),
   ]),
 ])
