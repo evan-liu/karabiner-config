@@ -2,9 +2,9 @@ import { duoLayer, layer, rule, writeToProfile } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
 import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { appModifiers } from './rules/app-modifiers'
-import { emojiSymbol, emojiHint } from './layers/emoji-symbol'
+import { emojiHint, emojiSymbol } from './layers/emoji-symbol'
 import { launchApp } from './layers/launch-app'
-import { arrowDelete, arrowMode, arrowSelect } from './layers/arrows'
+import { arrowMode, arrowShift, deleteMode } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
 import { openLinks } from './layers/open-links'
 import { numbers } from './layers/numbers'
@@ -52,8 +52,8 @@ const rules = [
 
   // ; can be released once layer is activated
   duoLayer('f', ';').manipulators(arrowMode).notification('Arrow ← → ↑ ↓'),
-  duoLayer('d', ';').manipulators(arrowDelete).notification('Delete ❌ ⌫ ⌦'),
-  duoLayer('s', ';').manipulators(arrowSelect).notification('Select ⇧ ← ⇧ →'),
+  duoLayer('s', ';').manipulators(arrowShift).notification('⇧ ← → ↑ ↓ ⇧'),
+  duoLayer('d', ';').manipulators(deleteMode).notification('Delete ❌ ⌫ ⌦'),
   duoLayer('a', ';').manipulators(numbers).notification('Numbers 0️⃣ 1️⃣ 2️⃣ 3️⃣'),
 
   duoLayer('z', 'x')

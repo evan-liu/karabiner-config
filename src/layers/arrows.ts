@@ -1,66 +1,46 @@
-import { toKey, withCondition } from 'karabiner.ts'
-import { ide, ifIde } from '../apps/jetbrains-ide'
+import { ToEvent, toKey } from 'karabiner.ts'
 
 export const arrowMode = {
-  j: toKey('←'),
-  i: toKey('↑'),
-  k: toKey('↓'),
+  h: toKey('←'),
+  j: toKey('↓'),
+  k: toKey('↑'),
   l: toKey('→'),
 
-  h: toKey('←', '⌘'),
-  8: toKey('↑', '⌘'),
-  ',': toKey('↓', '⌘'),
-  ';': toKey('→', '⌘'),
+  n: toKey('←', '⌘'),
+  m: toKey('↓', '⌘'),
+  ',': toKey('↑', '⌘'),
+  '.': toKey('→', '⌘'),
 
-  m: toKey('←', '⌥'),
-  '.': toKey('→', '⌥'),
+  y: toKey('←', '⌥'),
+  u: toKey('↓', '⌥'),
+  i: toKey('↑', '⌥'),
+  o: toKey('→', '⌥'),
 
-  n: toKey('←', '⌃'),
-  '/': toKey('→', '⌃'),
+  6: toKey('←', '⌃'),
+  7: toKey('↓', '⌃'),
+  8: toKey('↑', '⌃'),
+  9: toKey('→', '⌃'),
 }
 
-export const arrowDelete = [
-  withCondition(ifIde)({ ';': ide.delete_line }),
+const withShift = (e: ToEvent) => ({
+  ...e,
+  modifiers: [...(e.modifiers || []), 'shift'],
+})
+export const arrowShift = Object.entries(arrowMode).reduce(
+  (r, [k, v]) => ({ ...r, [k]: withShift(v) }),
+  {},
+)
 
-  {
-    j: toKey('⌫'),
-    l: toKey('⌦'),
+export const deleteMode = {
+  j: toKey('⌫'),
+  k: toKey('⌦'),
 
-    h: toKey('⌫', '⌘'),
-    ';': toKey('⌦', '⌘'),
+  m: toKey('⌫', '⌘'),
+  ',': toKey('⌦', '⌘'),
 
-    m: toKey('⌫', '⌥'),
-    '.': toKey('⌦', '⌥'),
+  u: toKey('⌫', '⌥'),
+  i: toKey('⌦', '⌥'),
 
-    n: toKey('⌫', '⌃'),
-    '/': toKey('⌦', '⌃'),
-  },
-]
-
-export const arrowSelect = [
-  withCondition(ifIde)({
-    '↑': ide.expendSelection,
-    '↓': ide.shrinkSelection,
-  }),
-
-  {
-    j: toKey('←', '⇧'),
-    i: toKey('↑', '⇧'),
-    k: toKey('↓', '⇧'),
-    l: toKey('→', '⇧'),
-
-    h: toKey('←', '⌘⇧'),
-    8: toKey('↑', '⌘⇧'),
-    ',': toKey('↓', '⌘⇧'),
-    ';': toKey('→', '⌘⇧'),
-
-    u: toKey('↑', '⌥'),
-    o: toKey('↓', '⌥'),
-
-    m: toKey('←', '⌥⇧'),
-    '.': toKey('→', '⌥⇧'),
-
-    n: toKey('←', '⌃⇧'),
-    '/': toKey('→', '⌃⇧'),
-  },
-]
+  7: toKey('⌫', '⌃'),
+  8: toKey('⌦', '⌃'),
+}
