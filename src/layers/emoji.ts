@@ -23,7 +23,7 @@ export const emojiHint = Object.entries(emojiMap)
   .map(([k, v]) => `${v} ${k}`)
   .join('    ')
 
-export const emojiSymbol = [
+export const emoji = [
   map(';').to(system.emojiPicker),
 
   withMapper(emojiMap)((k, v) => map(k).toPaste(v)),

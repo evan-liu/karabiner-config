@@ -1,15 +1,28 @@
-import { duoLayer, layer, rule, writeToProfile } from 'karabiner.ts'
+import {
+  duoLayer,
+  ifVar,
+  layer,
+  mapSimultaneous,
+  rule,
+  writeToProfile,
+} from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
 import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { appModifiers } from './rules/app-modifiers'
-import { emojiHint, emojiSymbol } from './layers/emoji-symbol'
+import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
-import { arrowMode, arrowShift, deleteMode } from './layers/arrows'
 import { appOverrides } from './rules/app-overrides'
 import { openLinks } from './layers/open-links'
-import { numbers } from './layers/numbers'
-import { duoModifier } from './utils/duo-modifier'
+import { digitsAndDelete } from './layers/digits-delete'
 import { toLocalSound } from './utils/sounds'
+import { symbols } from './layers/symbols'
+import { duoModifier } from './utils/duo-modifier'
+import {
+  toVimNormalMode,
+  toVimVisualMode,
+  vimNormalMode,
+  vimModes,
+} from './layers/vim'
 
 const rules = [
   rule('duo-modifiers').manipulators([
@@ -50,14 +63,28 @@ const rules = [
     duoModifier('m/', '⌘⌥⌃'),
   ]),
 
+  rule('to vim modes', ifVar('vim').unless()).manipulators([
+    mapSimultaneous(['a', ';']).to(toVimNormalMode),
+    mapSimultaneous(['v', ';']).to(toVimVisualMode),
+  ]),
+
   // ; can be released once layer is activated
-  duoLayer('f', ';').manipulators(arrowMode).notification('Arrow ← → ↑ ↓'),
-  duoLayer('s', ';').manipulators(arrowShift).notification('⇧ ← → ↑ ↓ ⇧'),
-  duoLayer('d', ';').manipulators(deleteMode).notification('Delete ❌ ⌫ ⌦'),
-  duoLayer('a', ';').manipulators(numbers).notification('Numbers 0️⃣ 1️⃣ 2️⃣ 3️⃣'),
+  duoLayer('f', ';', 'vim')
+    .condition(ifVar('vim-mode', 'visual').unless())
+    .manipulators(vimNormalMode)
+    .notification('vim - h ← j ↓ k ↑ l →')
+    .toIfActivated(toLocalSound('pop')),
+  duoLayer('s', ';')
+    .manipulators(symbols)
+    .notification('^ [ { ( $,    _ ] } ),\n% _ = - +')
+    .toIfActivated(toLocalSound('pop')),
+  duoLayer('d', ';')
+    .manipulators(digitsAndDelete)
+    .notification('_ 4 5 6 ⌫,   _ 7 8 9,\n0 1 2 3')
+    .toIfActivated(toLocalSound('pop')),
 
   duoLayer('z', 'x')
-    .manipulators(emojiSymbol)
+    .manipulators(emoji)
     .notification(emojiHint)
     .toIfActivated(toLocalSound('pop')),
   duoLayer('l', ';')
@@ -71,6 +98,7 @@ const rules = [
 
   layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
+  vimModes,
   appleKeyboard,
   appModifiers,
   appOverrides,
