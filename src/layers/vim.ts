@@ -51,6 +51,7 @@ export const toDisableVim = [
 export const vimModes = rule('vim-modes', ifVar('vim')).manipulators([
   withCondition(ifVar('vim-mode', 'normal'))([
     map('⎋').to(toDisableVim),
+    map('i').to(toDisableVim),
     map('v').to(toVimVisualMode),
   ]),
 
