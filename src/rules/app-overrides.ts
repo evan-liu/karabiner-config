@@ -1,5 +1,6 @@
 import { map, rule, withCondition } from 'karabiner.ts'
 import { arc, ifArc } from '../apps/arc'
+import { ide, ifIde } from '../apps/jetbrains-ide'
 
 export const appOverrides = rule('app overrides').manipulators([
   withCondition(ifArc)([
@@ -12,5 +13,10 @@ export const appOverrides = rule('app overrides').manipulators([
     map(';', 'Meh').to(arc.addSplitView),
     map('[', 'Meh').to(arc.switchToPreviousSplitView),
     map(']', 'Meh').to(arc.switchToNextSplitView),
+  ]),
+
+  withCondition(ifIde)([
+    map('h', '⌘⌥').to(ide.code_moveElementLeft),
+    map('l', '⌘⌥').to(ide.code_moveElementRight),
   ]),
 ])

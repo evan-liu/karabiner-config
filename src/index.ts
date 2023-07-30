@@ -76,7 +76,7 @@ const rules = [
     .toIfActivated(toLocalSound('pop')),
   duoLayer('s', ';')
     .manipulators(symbols)
-    .notification('^ [ { ( $,    _ ] } ),\n% _ = - +')
+    .notification('^ { [ ( $,    _ } ] ),\n% _ = - +')
     .toIfActivated(toLocalSound('pop')),
   duoLayer('d', ';')
     .manipulators(digitsAndDelete)

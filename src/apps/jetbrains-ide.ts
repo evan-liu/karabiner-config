@@ -211,7 +211,7 @@ export const jetBrainsIde = {
   toolWindows_unitTests: toKey(8, '⌘⌥'),
   toolWindows_pullRequests: toKey(9, '⌥'),
 
-  activeToolWindow_hideAllToolWindows: toKey('h', '⌥'),
+  activeToolWindow_hideAllToolWindows: toKey('⎋', '⌘⇧'),
 
   tests_unitTestingQuickList: toKey('u', '⌥⇧'),
 

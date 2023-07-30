@@ -1,5 +1,26 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
+export const symbols = [
+  withMapper({
+    y: '#',
+    u: '}',
+    i: ']',
+    o: ')',
+
+    h: '^',
+    j: '{',
+    k: '[',
+    l: '(',
+    ';': '$',
+
+    n: '%',
+    m: '_',
+    ',': '=',
+    '.': '-',
+    '/': '+',
+  } as const)((k, v) => map(k).to(toSymbol[v])),
+]
+
 export const toSymbol = {
   '!': toKey(1, '⇧'),
   '@': toKey(2, '⇧'),
@@ -32,24 +53,3 @@ export const toSymbol = {
   '<': toKey(',', '⇧'),
   '>': toKey('.', '⇧'),
 }
-
-export const symbols = [
-  withMapper({
-    y: '#',
-    u: ']',
-    i: '}',
-    o: ')',
-
-    h: '^',
-    j: '[',
-    k: '{',
-    l: '(',
-    ';': '$',
-
-    n: '%',
-    m: '_',
-    ',': '=',
-    '.': '-',
-    '/': '+',
-  } as const)((k, v) => map(k).to(toSymbol[v])),
-]
