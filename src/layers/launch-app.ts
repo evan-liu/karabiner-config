@@ -17,7 +17,7 @@ export const launchApp = {
   ',': toApp('System Settings'),
 }
 
-// `open -a` sometimes gets confused by IDE updates
+// `open -a` sometimes gets confused by the non-standard path
 function toIDE(name: string) {
-  return to$(`open ~/Applications/JetBrains\\ Toolbox/${name}.app`)
+  return to$(`open ~/Applications/${name}.app`)
 }
