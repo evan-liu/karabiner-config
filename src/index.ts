@@ -26,17 +26,15 @@ import {
 
 const rules = [
   rule('duo-modifiers').manipulators([
-    // ‹⌘⌥⌃ == dsa + f
     duoModifier('fd', '⌘'),
-    duoModifier('fs', '⌥'),
-    duoModifier('fa', '⌃'),
+    duoModifier('fs', '⌃'),
+    duoModifier('fa', '⌥'),
 
     duoModifier('ds', '⇧'),
 
-    // ‹⌘⌥⌃ + ⇧ == dsa + g
     duoModifier('gd', '⌘⇧'),
-    duoModifier('gs', '⌥⇧'),
-    duoModifier('ga', '⌃⇧'),
+    duoModifier('gs', '⌃⇧'),
+    duoModifier('ga', '⌥⇧'),
 
     duoModifier('vc', '⌘⌥'),
     duoModifier('vx', '⌘⌃'),
@@ -44,17 +42,15 @@ const rules = [
 
     duoModifier('vz', '⌘⌥⌃'),
 
-    // ›⌘⌥⌃ == kl; + j
     duoModifier('jk', '⌘'),
-    duoModifier('jl', '⌥'),
-    duoModifier('j;', '⌃'),
+    duoModifier('jl', '⌃'),
+    duoModifier('j;', '⌥'),
 
     duoModifier('kl', '⇧'),
 
-    // ›⌘⌥⌃ + ⇧ == kl; + h
     duoModifier('hk', '⌘⇧'),
-    duoModifier('hl', '⌥⇧'),
-    duoModifier('h;', '⌃⇧'),
+    duoModifier('hl', '⌃⇧'),
+    duoModifier('h;', '⌘⇧'),
 
     duoModifier('m,', '⌘⌥'),
     duoModifier('m.', '⌘⌃'),
