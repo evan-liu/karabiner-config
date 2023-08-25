@@ -3,6 +3,7 @@ import { to$, toApp } from 'karabiner.ts'
 export const launchApp = {
   a: toApp('Arc'),
   c: toApp('Calendar'),
+  d: toIDE('DataGrip'),
   f: toApp('Finder'),
   i: toApp('WeChat'), // IM
   k: toApp('Lens'), // K8s
