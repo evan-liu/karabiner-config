@@ -73,5 +73,6 @@ export const appModifiers = rule('apps and modifiers').manipulators([
   withCondition(ifWarp)([
     tapModifier('›⌥', warp.toggleCommandPalette),
     tapModifier('›⌃', warp.toggleNavigationPalette),
+    tapModifier('›⌘', warp.toggleWarpAI),
   ]),
 ])
