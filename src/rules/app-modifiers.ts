@@ -10,6 +10,7 @@ import { arc, ifArc } from '../apps/arc'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
+import { ifWarp, warp } from '../apps/warp'
 import { ifZoom, zoom } from '../apps/zoom'
 import { ifNotion, notion } from '../apps/notion'
 
@@ -67,5 +68,10 @@ export const appModifiers = rule('apps and modifiers').manipulators([
   withCondition(ifNotion)([
     tapModifier('‹⌘', notion.openCloseSidebar),
     tapModifier('›⌥', notion.openSearch),
+  ]),
+
+  withCondition(ifWarp)([
+    tapModifier('›⌥', warp.toggleCommandPalette),
+    tapModifier('›⌃', warp.toggleNavigationPalette),
   ]),
 ])
