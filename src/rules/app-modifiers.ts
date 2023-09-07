@@ -3,6 +3,7 @@ import {
   rule,
   SideModifierAlias,
   ToEvent,
+  toKey,
   withCondition,
 } from 'karabiner.ts'
 import { airmail, ifAirmail } from '../apps/airmail'
@@ -71,6 +72,8 @@ export const appModifiers = rule('apps and modifiers').manipulators([
   ]),
 
   withCondition(ifWarp)([
+    tapModifier('‹⌘', toKey('h', '⌘')),
+
     tapModifier('›⌥', warp.toggleCommandPalette),
     tapModifier('›⌃', warp.toggleNavigationPalette),
     tapModifier('›⌘', warp.toggleWarpAI),
