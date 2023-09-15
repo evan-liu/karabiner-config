@@ -39,4 +39,6 @@ export const emoji = [
   // Code snippets
   map('l').toTypeSequence('console.log()←'),
   map("'").toTypeSequence('⌫"'),
+  map('[').toTypeSequence('[␣]␣'),
+  map(']').toTypeSequence('-␣[␣]␣'),
 ]
