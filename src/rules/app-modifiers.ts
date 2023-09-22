@@ -8,6 +8,7 @@ import {
 } from 'karabiner.ts'
 import { airmail, ifAirmail } from '../apps/airmail'
 import { arc, ifArc } from '../apps/arc'
+import { ifObsidian, obsidian } from '../apps/obsidian'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
@@ -69,6 +70,11 @@ export const appModifiers = rule('apps and modifiers').manipulators([
   withCondition(ifNotion)([
     tapModifier('‹⌘', notion.openCloseSidebar),
     tapModifier('›⌥', notion.openSearch),
+  ]),
+
+  withCondition(ifObsidian)([
+    tapModifier('›⌥', obsidian.quickSwitcher),
+    //
   ]),
 
   withCondition(ifWarp)([

@@ -8,7 +8,7 @@ export const launchApp = {
   i: toApp('WeChat'), // IM
   k: toApp('Lens'), // K8s
   m: toApp('Airmail'), // Mail
-  n: toApp('Notion'),
+  n: toApp('Obsidian'), // Notes
   r: toIDE('Rider'),
   s: toApp('Slack'),
   t: toApp('Warp'), // Terminal
