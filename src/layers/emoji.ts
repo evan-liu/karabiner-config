@@ -3,10 +3,9 @@ import { system } from '../apps/system'
 
 // See https://gitmoji.dev/
 const emojiMap = {
-  b: '👷', // add or update ci Build system
+  b: '🐛', // Fix a bug
   c: '🔧', // Add or update Configuration files
   d: '📝', // add or update Documentation
-  f: '🐛', // Fix a bug
   h: '💯', // _hundred
   j: '😂', // _joy
   m: '🔀', // Merge branches
@@ -14,7 +13,7 @@ const emojiMap = {
   p: '👍', // _plus_one +1
   r: '♻️', // Refactor code
   s: '😅', // _sweat_smile
-  t: '🧪', // _test
+  t: '🤔', // _thinking_face
   u: '⬆️', // Upgrade dependencies
   v: '🔖', // release / Version tags
 }
