@@ -4,8 +4,9 @@ import { system } from '../apps/system'
 // See https://gitmoji.dev/
 const emojiMap = {
   b: '🐛', // Fix a bug
-  c: '🔧', // Add or update Configuration files
+  c: '🔧', // add or update Configuration files
   d: '📝', // add or update Documentation
+  f: '🚩', // add, update, or remove Feature Flags
   h: '💯', // _hundred
   j: '😂', // _joy
   m: '🔀', // Merge branches
