@@ -9,6 +9,7 @@ import {
 import { airmail, ifAirmail } from '../apps/airmail'
 import { arc, ifArc } from '../apps/arc'
 import { ifObsidian, obsidian } from '../apps/obsidian'
+import { ifSafari, safari } from '../apps/safari'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
@@ -32,6 +33,12 @@ export const appModifiers = rule('apps and modifiers').manipulators([
 
     tapModifier('›⌘', arc.developerTools),
     tapModifier('›⌥', arc.openCommandBar),
+  ]),
+
+  withCondition(ifSafari)([
+    tapModifier('‹⌘', safari.showHideSideBar),
+    tapModifier('‹⌥', safari.reloadPage),
+    tapModifier('›⌘', safari.showWebInspector),
   ]),
 
   withCondition(ifIde)([
