@@ -7,7 +7,7 @@ import {
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
-import { ifMoonlander, moonlander, mouseCursor } from './devices/moonlander'
+import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { digitsAndDelete } from './layers/digits-delete'
 import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
@@ -79,7 +79,8 @@ const rules = [
   duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
   layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
-  moonlander,
+  rule('Homerow').manipulators([mapSimultaneous(['f', 'j']).to('␣', 'Hyper')]),
+
   vimModes,
   appleKeyboard,
   appModifiers,
