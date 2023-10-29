@@ -1,5 +1,7 @@
 import {
   ifDevice,
+  mapSimultaneous,
+  rule,
   toMouseCursorPosition,
   toMouseKey,
   toPointingButton,
@@ -29,3 +31,10 @@ export const mouseCursor = {
   ...{ '↑': scrollUp(), '↓': scrollDown() },
   '⏎': toPointingButton('button1'),
 }
+
+export const moonlander = rule('Moonlander')
+  .condition(ifMoonlander)
+  .manipulators([
+    // Homerow app trigger
+    mapSimultaneous(['␣', '⏎']).to('␣', 'Hyper'),
+  ])
