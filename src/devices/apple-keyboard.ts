@@ -1,4 +1,4 @@
-import { ifDevice, map, rule } from 'karabiner.ts'
+import { ifDevice, map, mapSimultaneous, rule } from 'karabiner.ts'
 
 const ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
 
@@ -7,4 +7,6 @@ export const appleKeyboard = rule('Apple', ifAppleKeyboard).manipulators([
 
   map('›⌘', '⌥').toHyper(),
   map('›⌥', '⇧').toMeh(),
+
+  mapSimultaneous(['f', 'j']).to('␣', 'Hyper'),
 ])

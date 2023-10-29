@@ -37,4 +37,5 @@ export const moonlander = rule('Moonlander')
   .manipulators([
     // Homerow app trigger
     mapSimultaneous(['␣', '⏎']).to('␣', 'Hyper'),
+    mapSimultaneous(['f', 'j']).to('␣', 'Hyper'),
   ])
