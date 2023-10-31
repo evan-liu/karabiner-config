@@ -79,7 +79,10 @@ const rules = [
   duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
   layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
 
-  rule('Homerow').manipulators([mapSimultaneous(['f', 'j']).to('␣', 'Hyper')]),
+  rule('Homerow').manipulators([
+    mapSimultaneous(['f', 'j']).to('␣', 'Hyper'), // Click
+    mapSimultaneous(['f', 'k']).to('⏎', 'Hyper'), // Scroll
+  ]),
 
   vimModes,
   appleKeyboard,
