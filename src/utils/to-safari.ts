@@ -5,7 +5,7 @@ export function toSafari(space: string, link: string, check = link) {
   return to$(`osascript -e '
 tell application "System Events"
   key code ${+space + 17} using (control down)
-  delay 0.2
+  delay 0.3
 end tell 
 
 tell application "Safari"
