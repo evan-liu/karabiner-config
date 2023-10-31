@@ -1,5 +1,6 @@
 import {
   ifDevice,
+  map,
   toMouseCursorPosition,
   toMouseKey,
   toPointingButton,
@@ -17,15 +18,20 @@ const scrollUp = (v = 1) =>
 const scrollDown = (v = 1) =>
   toMouseKey({ vertical_wheel: 32, speed_multiplier: v })
 
-export const mouseCursor = {
-  ...{
-    1: toMouseCursorPosition({ x: '92%', y: 25, screen: 0 }),
-    2: toMouseCursorPosition({ x: '25%', y: '50%', screen: 0 }),
-    3: toMouseCursorPosition({ x: '75%', y: '50%', screen: 0 }),
-    4: toMouseCursorPosition({ x: '50%', y: '50%', screen: 0 }),
-    5: toMouseCursorPosition({ x: '50%', y: '50%', screen: 1 }),
+export const mouseCursor = [
+  {
+    1: toMouseCursorPosition({ x: '25%', y: '50%', screen: 0 }),
+    2: toMouseCursorPosition({ x: '75%', y: '50%', screen: 0 }),
+    3: toMouseCursorPosition({ x: '50%', y: '50%', screen: 0 }),
+    4: toMouseCursorPosition({ x: '50%', y: '50%', screen: 1 }),
   },
-  ...{ h: moveLeft(), j: moveDown(), k: moveUp(), l: moveRight() },
-  ...{ '↑': scrollUp(), '↓': scrollDown() },
-  '⏎': toPointingButton('button1'),
-}
+  { h: moveLeft(), j: moveDown(), k: moveUp(), l: moveRight() },
+  { '↑': scrollUp(), '↓': scrollDown() },
+  { '⏎': toPointingButton('button1') },
+
+  // Close the system notification
+  map(5).to([
+    toMouseCursorPosition({ x: 4695, y: 48, screen: 0 }),
+    toPointingButton('button1'),
+  ]),
+]
