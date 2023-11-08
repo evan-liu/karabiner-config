@@ -29,6 +29,8 @@ function workRepos(i = 1, result: Record<string, ToEvent> = {}) {
   const repo = env[`WORK_GH_REPO_${i}`]
   if (!repo) return result
 
-  result[i] = toWorkLink(`https://github.com/${workGitHubOrg}/${repo}`)
+  const link = `https://github.com/${workGitHubOrg}/${repo}`
+  result[i] = toWorkLink(link)
+  result[i + 5] = toLink(link)
   return workRepos(i + 1, result)
 }
