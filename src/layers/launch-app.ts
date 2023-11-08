@@ -14,6 +14,7 @@ export const launchApp = {
   t: toApp('Warp'), // Terminal
   w: toIDE('WebStorm'),
   x: toApp('Xcode'),
+  y: toIDE('PyCharm\\ Professional\\ Edition'),
   z: toApp('zoom.us'),
   ',': toApp('System Settings'),
 }
