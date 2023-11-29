@@ -18,13 +18,16 @@ export const vimNormalMode = [
     k: toKey('↑'),
     l: toKey('→'),
 
+    ';': toKey('›⇧'),
     d: toKey('‹⌘'),
     s: toKey('‹⌃'),
     a: toKey('‹⌥'),
-    ';': toKey('‹⇧'),
   }),
 
   {
+    b: toKey('←', '⌥'),
+    e: toKey('→', '⌥'),
+
     y: toKey('c', '⌘'),
     p: toKey('v', '⌘'),
     x: toKey('x', '⌘'),
