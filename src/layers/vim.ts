@@ -7,26 +7,30 @@ import {
   toRemoveNotificationMessage,
   toSetVar,
   withCondition,
+  withModifier,
 } from 'karabiner.ts'
 import { toLocalSound } from '../utils/sounds'
 
-export const vimNormalMode = {
-  h: toKey('←'),
-  j: toKey('↓'),
-  k: toKey('↑'),
-  l: toKey('→'),
+export const vimNormalMode = [
+  withModifier('??')({
+    h: toKey('←'),
+    j: toKey('↓'),
+    k: toKey('↑'),
+    l: toKey('→'),
 
-  0: toKey('←', '⌘'),
-  ';': toKey('→', '⌘'),
+    d: toKey('‹⌘'),
+    s: toKey('‹⌃'),
+    a: toKey('‹⌥'),
+    ';': toKey('‹⇧'),
+  }),
 
-  b: toKey('←', '⌥'),
-  e: toKey('→', '⌥'),
-
-  y: toKey('c', '⌘'),
-  p: toKey('v', '⌘'),
-  x: toKey('x', '⌘'),
-  u: toKey('z', '⌘'),
-}
+  {
+    y: toKey('c', '⌘'),
+    p: toKey('v', '⌘'),
+    x: toKey('x', '⌘'),
+    u: toKey('z', '⌘'),
+  },
+]
 
 export const toVimNormalMode = [
   toNotificationMessage('vim', 'Vim - Normal Mode'),
