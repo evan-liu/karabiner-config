@@ -69,16 +69,12 @@ export const vimModes = rule('vim-modes', ifVar('vim')).manipulators([
 
     map('y').to('c', '⌘').to(toVimNormalMode),
     map('x').to('x', '⌘').to(toVimNormalMode),
-    map('d').to('x', '⌘').to(toVimNormalMode),
 
     {
       h: toKey('←', '⇧'),
       j: toKey('↓', '⇧'),
       k: toKey('↑', '⇧'),
       l: toKey('→', '⇧'),
-
-      0: toKey('←', '⌘⇧'),
-      ';': toKey('→', '⌘⇧'),
 
       b: toKey('←', '⌥⇧'),
       e: toKey('→', '⌥⇧'),
