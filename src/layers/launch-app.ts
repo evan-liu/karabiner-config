@@ -6,6 +6,7 @@ export const launchApp = {
   c: toApp('Calendar'),
   d: toIDE('DataGrip'),
   f: toApp('Finder'),
+  g: toApp('Google Chrome'),
   i: toApp('WeChat'), // IM
   k: toApp('Lens'), // K8s
   m: toApp('Airmail'), // Mail
