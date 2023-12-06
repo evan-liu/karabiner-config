@@ -7,12 +7,12 @@ import {
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
-import { ifMoonlander, mouseCursor } from './devices/moonlander'
 import { digitsAndDelete } from './layers/digits-delete'
 import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
 import { openLinks } from './layers/open-links'
 import { symbols } from './layers/symbols'
+import { system } from './layers/system'
 import {
   toVimNormalMode,
   toVimVisualMode,
@@ -77,7 +77,8 @@ const rules = [
   duoLayer('z', 'x').manipulators(emoji).notification(emojiHint),
   duoLayer('l', ';').manipulators(launchApp).notification('Launch App 🚀 📱'),
   duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
-  layer('`', 'mouse').condition(ifMoonlander).manipulators(mouseCursor),
+
+  layer('`', 'system').manipulators(system),
 
   rule('Homerow').manipulators([
     mapSimultaneous(['f', 'j']).to('␣', 'Hyper'), // Click
