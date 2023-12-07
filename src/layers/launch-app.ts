@@ -1,7 +1,6 @@
 import { to$, toApp } from 'karabiner.ts'
 
 export const launchApp = {
-  a: toApp('Arc'),
   b: toApp('Safari'), // Browser
   c: toApp('Calendar'),
   d: toIDE('DataGrip'),
