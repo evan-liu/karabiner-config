@@ -19,7 +19,7 @@ import {
   vimModes,
   vimNormalMode,
 } from './layers/vim'
-import { appModifiers } from './rules/app-modifiers'
+import { appMappings } from './rules/app-mappings'
 import { duoModifier } from './utils/duo-modifier'
 
 const rules = [
@@ -87,7 +87,7 @@ const rules = [
 
   vimModes,
   appleKeyboard,
-  appModifiers,
+  appMappings,
 ]
 
 writeToProfile('Default', rules, {

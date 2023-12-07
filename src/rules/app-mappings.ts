@@ -7,32 +7,35 @@ import {
   withCondition,
 } from 'karabiner.ts'
 import { airmail, ifAirmail } from '../apps/airmail'
-import { arc, ifArc } from '../apps/arc'
+import { chrome, ifChrome } from '../apps/chrome'
+import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
+import { ifNotion, notion } from '../apps/notion'
 import { ifObsidian, obsidian } from '../apps/obsidian'
 import { ifSafari, safari } from '../apps/safari'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
-import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
 import { ifWarp, warp } from '../apps/warp'
 import { ifZoom, zoom } from '../apps/zoom'
-import { ifNotion, notion } from '../apps/notion'
+import { toResizeWindow, toSlackWindow } from '../utils/to-resize-window'
 
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
 
-export const appModifiers = rule('apps and modifiers').manipulators([
+export const appMappings = rule('app mappings').manipulators([
   withCondition(ifAirmail)([
     tapModifier('‹⌘', airmail.revealHideSidebar),
 
     tapModifier('›⌥', airmail.gotoFirstMessage),
+
+    map(1, 'Meh').to(toResizeWindow('Airmail')),
   ]),
 
-  withCondition(ifArc)([
-    tapModifier('‹⌘', arc.revealHideSidebar),
-    tapModifier('‹⌥', arc.refreshThePage),
+  withCondition(ifChrome)([
+    tapModifier('‹⌥', chrome.refreshThePage),
 
-    tapModifier('›⌘', arc.developerTools),
-    tapModifier('›⌥', arc.openCommandBar),
+    tapModifier('›⌘', chrome.developerTools),
+
+    map(1, 'Meh').to(toResizeWindow('Google Chrome')),
   ]),
 
   withCondition(ifSafari)([
@@ -58,6 +61,8 @@ export const appModifiers = rule('apps and modifiers').manipulators([
 
     tapModifier('›⌘', slack.hideRightBar),
     tapModifier('›⌥', slack.open),
+
+    map(1, 'Meh').to(toSlackWindow()),
   ]),
 
   withCondition(ifSourceTree)([
@@ -90,5 +95,7 @@ export const appModifiers = rule('apps and modifiers').manipulators([
     tapModifier('›⌥', warp.toggleCommandPalette),
     tapModifier('›⌃', warp.toggleNavigationPalette),
     tapModifier('›⌘', warp.toggleWarpAI),
+
+    map(1, 'Meh').to(toResizeWindow('Warp')),
   ]),
 ])
