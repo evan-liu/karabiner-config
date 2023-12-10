@@ -42,6 +42,11 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('‹⌘', safari.showHideSideBar),
     tapModifier('‹⌥', safari.reloadPage),
     tapModifier('›⌘', safari.showWebInspector),
+
+    map('h', '⌃').to('home'),
+    map('j', '⌃').to('page_down'),
+    map('k', '⌃').to('page_up'),
+    map('l', '⌃').to('end'),
   ]),
 
   withCondition(ifIde)([
