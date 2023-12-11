@@ -47,6 +47,8 @@ export const appMappings = rule('app mappings').manipulators([
     map('j', '⌃').to('page_down'),
     map('k', '⌃').to('page_up'),
     map('l', '⌃').to('end'),
+
+    map(1, 'Meh').to(toResizeWindow('Safari')),
   ]),
 
   withCondition(ifIde)([
