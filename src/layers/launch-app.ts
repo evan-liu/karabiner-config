@@ -1,6 +1,7 @@
 import { to$, toApp } from 'karabiner.ts'
 
 export const launchApp = {
+  a: toApp('Poe'), // AI
   b: toApp('Safari'), // Browser
   c: toApp('Calendar'),
   d: toIDE('DataGrip'),
