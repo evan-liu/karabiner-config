@@ -14,7 +14,7 @@ tell application "Google Chrome"
       if URL of t contains "${check}" then
         set foundTab to true
         tell window windowIndex
-          tell tab tabIndex to select
+          set active tab index to tabIndex
         end tell
         exit repeat
       end if
