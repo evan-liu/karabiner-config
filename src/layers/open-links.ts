@@ -1,5 +1,6 @@
-import { env } from 'node:process'
 import { ToEvent } from 'karabiner.ts'
+import { env } from 'node:process'
+import { toChrome } from '../utils/to-chrome'
 import { toSafari } from '../utils/to-safari'
 
 const workGitHubOrg = env.WORK_GH_ORG!
@@ -18,11 +19,11 @@ export const openLinks = {
 }
 
 function toLink(link: string, check?: string) {
-  return toSafari(env.SAFARI_SPACE!, link, check)
+  return toSafari(link, check)
 }
 
 function toWorkLink(link: string, check?: string) {
-  return toSafari(env.SAFARI_WORK_SPACE!, link, check)
+  return toChrome(link, check)
 }
 
 function workRepos(i = 1, result: Record<string, ToEvent> = {}) {

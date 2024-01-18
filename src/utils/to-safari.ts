@@ -1,13 +1,7 @@
 import { to$ } from 'karabiner.ts'
 
-export function toSafari(space: string, link: string, check = link) {
-  // key code for space 1 is 18 (2 -> 19, etc.)
+export function toSafari(link: string, check = link) {
   return to$(`osascript -e '
-tell application "System Events"
-  key code ${+space + 17} using (control down)
-  delay 0.5
-end tell 
-
 tell application "Safari"
   activate
   
