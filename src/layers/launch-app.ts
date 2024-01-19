@@ -11,7 +11,7 @@ export const launchApp = {
   k: toApp('Lens'), // K8s
   m: toApp('Airmail'), // Mail
   n: toApp('Obsidian'), // Notes
-  r: toIDE('Rider'),
+  r: toIDE('RustRover'),
   s: toApp('Slack'),
   t: toApp('Warp'), // Terminal
   w: toIDE('WebStorm'),
@@ -19,6 +19,8 @@ export const launchApp = {
   y: toIDE('PyCharm\\ Professional\\ Edition'),
   z: toApp('zoom.us'),
   ',': toApp('System Settings'),
+
+  3: toIDE('Rider'),
 }
 
 // `open -a` sometimes gets confused by the non-standard path
