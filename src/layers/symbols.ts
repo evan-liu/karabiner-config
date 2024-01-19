@@ -18,6 +18,8 @@ export const symbols = [
     ',': '=',
     '.': '-',
     '/': '+',
+
+    '␣': '_',
   } as const)((k, v) => map(k).to(toSymbol[v])),
 ]
 
