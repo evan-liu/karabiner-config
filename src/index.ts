@@ -69,7 +69,7 @@ const rules = [
     .notification('vim - h ← j ↓ k ↑ l →'),
   duoLayer('s', ';')
     .manipulators(symbols)
-    .notification('^ { [ ( $,    _ } ] ),\n% _ = - +'),
+    .notification('^ { [ ( $,    & } ] ),\n% ! @ # *'),
   duoLayer('d', ';')
     .manipulators(digitsAndDelete)
     .notification('_ 4 5 6 ⌫,   _ 7 8 9,\n0 1 2 3'),
