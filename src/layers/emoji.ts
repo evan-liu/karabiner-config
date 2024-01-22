@@ -20,8 +20,13 @@ const emojiMap = {
 }
 
 export const emojiHint = Object.entries(emojiMap)
-  .map(([k, v]) => `${v} ${k}`)
-  .join('    ')
+  .reduce(
+    (r, [k, v]) => [r[0].concat(v), r[1].concat(k)],
+    [[] as string[], [] as string[]],
+  )
+  .map((v, i) => v.join(i === 0 ? ' ' : '    '))
+  .map((v, i) => (i === 1 ? `    ${v}` : v))
+  .join('\n')
 
 export const emoji = [
   map(';').to(system.emojiPicker),

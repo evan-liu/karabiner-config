@@ -7,11 +7,11 @@ import {
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
-import { digitsAndDelete } from './layers/digits-delete'
+import { digitsAndDelete, digitsAndDeleteHint } from './layers/digits-delete'
 import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
 import { openLinks } from './layers/open-links'
-import { symbols } from './layers/symbols'
+import { symbols, symbolsHint } from './layers/symbols'
 import { system } from './layers/system'
 import {
   toVimNormalMode,
@@ -67,13 +67,10 @@ const rules = [
     .condition(ifVar('vim-mode', 'visual').unless())
     .manipulators(vimNormalMode)
     .notification('vim - h ← j ↓ k ↑ l →'),
-  duoLayer('s', ';')
-    .manipulators(symbols)
-    .notification('^ { [ ( $,    & } ] ),\n% ! @ # *'),
+  duoLayer('s', ';').manipulators(symbols).notification(symbolsHint),
   duoLayer('d', ';')
     .manipulators(digitsAndDelete)
-    .notification('_ 4 5 6 ⌫,   _ 7 8 9,\n0 1 2 3'),
-
+    .notification(digitsAndDeleteHint),
   duoLayer('z', 'x').manipulators(emoji).notification(emojiHint),
   duoLayer('l', ';').manipulators(launchApp).notification('Launch App 🚀 📱'),
   duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
