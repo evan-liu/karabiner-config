@@ -1,13 +1,15 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
-// ! @ # $ % ^ & * ( )
-// 1 2 3 4 5 6 7 8 9 0
 export const symbols = [
   withMapper({
-    y: '&', // 7
+    // ! @ # $ % ^ & * ( )    _ +
+    // 1 2 3 4 5 6 7 8 9 0    - =
+
+    y: '?',
     u: '}',
     i: ']',
     o: ')', // 0
+    p: '&', // 7
 
     h: '^', // 6
     j: '{',
@@ -22,6 +24,7 @@ export const symbols = [
     '/': '*', // 8
 
     '␣': '_',
+    '⏎': '+',
   } as const)((k, v) => map(k).to(toSymbol[v])),
 ]
 
