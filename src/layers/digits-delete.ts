@@ -1,8 +1,8 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
 export const digitsAndDeleteHint = `\
-7  8  9      4  5  6  ⌫      0  1  2  3
-u   i   o      h   j   k   l        n  m  ,   .`
+0    1  2  3    4  5  6    7  8  9    ⌫ ⌦ 
+N   M  ,   .     J  K  L    U  I  O     ;    '`
 
 export const digitsAndDelete = [
   // digits keypad_{i}

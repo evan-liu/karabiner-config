@@ -21,11 +21,10 @@ const emojiMap = {
 
 export const emojiHint = Object.entries(emojiMap)
   .reduce(
-    (r, [k, v]) => [r[0].concat(v), r[1].concat(k)],
+    (r, [k, v]) => [r[0].concat(v), r[1].concat(k.toUpperCase())],
     [[] as string[], [] as string[]],
   )
   .map((v, i) => v.join(i === 0 ? ' ' : '    '))
-  .map((v, i) => (i === 1 ? `    ${v}` : v))
   .join('\n')
 
 export const emoji = [
