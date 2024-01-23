@@ -1,8 +1,8 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
 export const symbolsHint = `\
-&  !  @  #  *      ^   {  [  (   $      ?  }   ]  )  %      _  +
-N  M  ,   .  /       H  J  K  L  ;      Y  U  I  O  P      ␣  ⏎`
+&   !  @ #  *      ^   {  [   (  $      ?  }  ]   )  %      _   +
+N  M  ,   .  /       H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎`
 
 export const symbols = [
   withMapper({
