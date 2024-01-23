@@ -2,6 +2,10 @@ import { ToEvent } from 'karabiner.ts'
 import { env } from 'node:process'
 import { toChrome } from '../utils/to-chrome'
 import { toSafari } from '../utils/to-safari'
+import {
+  toConfirmDefaultBrowser,
+  toSetDefaultBrowser,
+} from '../utils/to-set-default-browser'
 
 const workGitHubOrg = env.WORK_GH_ORG!
 const workJiraOrg = env.WORK_JIRA_ORG!
@@ -9,7 +13,10 @@ const workJiraProj = env.WORK_JIRA_PROJ!
 
 const workJira = `https://${workJiraOrg}.atlassian.net/`
 export const openLinks = {
-  c: toLink('https://chat.openai.com/'),
+  c: toSetDefaultBrowser('chrome'),
+  s: toSetDefaultBrowser('safari'),
+  '⏎': toConfirmDefaultBrowser(),
+
   g: toLink('https://github.com'),
   j: toWorkLink(`${workJira}/browse/${workJiraProj}`, workJira),
   m: toLink('https://mail.google.com'),
