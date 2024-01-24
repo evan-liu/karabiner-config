@@ -17,11 +17,12 @@ export const openLinks = {
   s: toSetDefaultBrowser('safari'),
   '⏎': toConfirmDefaultBrowser(),
 
-  g: toLink('https://github.com'),
-  j: toWorkLink(`${workJira}/browse/${workJiraProj}`, workJira),
   m: toLink('https://mail.google.com'),
   w: toLink('https://www.metservice.com/towns-cities/locations/auckland'), // Weather
   y: toLink('https://music.youtube.com'),
+
+  j: toWorkLink(`${workJira}/browse/${workJiraProj}`, workJira),
+  g: toWorkLink('https://github.com'),
   ...workRepos(),
 }
 
