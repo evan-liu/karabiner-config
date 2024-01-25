@@ -11,6 +11,10 @@ import {
 } from 'karabiner.ts'
 import { toLocalSound } from '../utils/sounds'
 
+export const vimHint = `\
+←  ↓  ↑  →     ⌫ 
+H  J    K   L       '`
+
 export const vimNormalMode = [
   withModifier('??')({
     h: toKey('←'),
@@ -33,6 +37,8 @@ export const vimNormalMode = [
     x: toKey('x', '⌘'),
     u: toKey('z', '⌘'),
   },
+
+  { "'": toKey('⌫') },
 ]
 
 export const toVimNormalMode = [

@@ -16,6 +16,7 @@ import { system } from './layers/system'
 import {
   toVimNormalMode,
   toVimVisualMode,
+  vimHint,
   vimModes,
   vimNormalMode,
 } from './layers/vim'
@@ -66,7 +67,7 @@ const rules = [
   duoLayer('f', ';', 'vim')
     .condition(ifVar('vim-mode', 'visual').unless())
     .manipulators(vimNormalMode)
-    .notification('vim - h ← j ↓ k ↑ l →'),
+    .notification(vimHint),
   duoLayer('s', ';').manipulators(symbols).notification(symbolsHint),
   duoLayer('d', ';')
     .manipulators(digitsAndDelete)

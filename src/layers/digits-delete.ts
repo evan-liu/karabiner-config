@@ -1,8 +1,8 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
 export const digitsAndDeleteHint = `\
-0    1  2  3    4  5  6    7  8  9    ⌫ ⌦ 
-N   M  ,   .     J  K  L    U  I  O     ;    '`
+0    1  2  3    4  5  6    7  8  9    +  -  /  *    .    ⌫_⌥_⌘  ⌦
+N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
 
 export const digitsAndDelete = [
   // digits keypad_{i}
@@ -12,14 +12,23 @@ export const digitsAndDelete = [
     ...['j', 'k', 'l'], // 4 5 6
     ...['u', 'i', 'o'], // 7 8 9
   ] as const)((k, i) => map(k).to(`keypad_${i as 0}`)),
-  map('/').to('keypad_period'), // 0 1 2 3 .
+
+  // + - / * .
+  {
+    p: toKey('=', '⇧'), // +
+    ';': toKey('-'), // // -
+    // / stay           // /
+    ']': toKey(8, '⇧'), // *
+
+    '[': toKey('keypad_period'),
+  },
 
   // delete ⌫ ⌦
   {
-    "'": toKey('⌦'),
-    ';': toKey('⌫'),
+    '\\': toKey('⌦'),
+
+    "'": toKey('⌫'),
     h: toKey('⌫', '⌥'),
     y: toKey('⌫', '⌘'),
-    p: toKey('⌦', '⌘'),
   },
 ]

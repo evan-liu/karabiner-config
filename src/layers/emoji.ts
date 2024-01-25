@@ -1,4 +1,4 @@
-import { map, toPaste, withMapper } from 'karabiner.ts'
+import { map, toKey, toPaste, withMapper } from 'karabiner.ts'
 import { system } from '../apps/system'
 
 // See https://gitmoji.dev/
@@ -32,17 +32,19 @@ export const emoji = [
 
   withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
 
-  withMapper({ 4: '⇥', 5: '⎋', 6: '⌘', 7: '⌥', 8: '⌃', 9: '⇧', 0: '⇪' })(
-    (k, v) => map(k).toPaste(v),
-  ),
+  { 2: toPaste('⌫'), 3: toPaste('⌦'), 4: toPaste('⇥'), 5: toPaste('⎋') },
+  { 6: toPaste('⌘'), 7: toPaste('⌥'), 8: toPaste('⌃'), 9: toPaste('⇧') },
+  { 0: toPaste('⇪'), ',': toPaste('‹'), '.': toPaste('›') },
+
   withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⌫', '⌦'])((k) =>
     map(k).toPaste(k),
   ),
-  { ',': toPaste('‹'), '.': toPaste('›') },
 
   // Code snippets
   map('l').toTypeSequence('console.log()←'),
   map("'").toTypeSequence('⌫"'),
   map('[').toTypeSequence('[␣]␣'),
   map(']').toTypeSequence('-␣[␣]␣'),
+
+  { "'": toKey('⌫'), ';': toKey('⌦') },
 ]
