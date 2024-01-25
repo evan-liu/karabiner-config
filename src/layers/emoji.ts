@@ -46,5 +46,5 @@ export const emoji = [
   map('[').toTypeSequence('[␣]␣'),
   map(']').toTypeSequence('-␣[␣]␣'),
 
-  { "'": toKey('⌫'), ';': toKey('⌦') },
+  { "'": toKey('⌫'), '\\': toKey('⌦') },
 ]

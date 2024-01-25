@@ -38,7 +38,7 @@ export const vimNormalMode = [
     u: toKey('z', '⌘'),
   },
 
-  { "'": toKey('⌫') },
+  { "'": toKey('⌫'), '\\': toKey('⌦') },
 ]
 
 export const toVimNormalMode = [
