@@ -76,6 +76,8 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('‹⌥', sourceTree.commit),
 
     tapModifier('›⌥', sourceTree.fetch),
+
+    map(1, 'Meh').to(toResizeWindow('Sourcetree')),
   ]),
 
   withCondition(ifZoom)([
