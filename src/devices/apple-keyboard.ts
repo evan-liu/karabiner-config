@@ -7,4 +7,6 @@ export const appleKeyboard = rule('Apple', ifAppleKeyboard).manipulators([
 
   map('›⌘', '⌥').toHyper(),
   map('›⌥', '⇧').toMeh(),
+
+  map('␣', '⇧').to('⏎'), // ⏎ on Apple keyboard hurts my pinky...
 ])
