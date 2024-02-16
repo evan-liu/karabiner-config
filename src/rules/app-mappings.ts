@@ -1,5 +1,4 @@
 import {
-  ifEventChanged,
   map,
   rule,
   SideModifierAlias,
@@ -111,7 +110,13 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifChatGPT)([
+    tapModifier('‹⌘', chatGPT.toggleSidebar),
+    tapModifier('‹⌥', chatGPT.openNewChat),
+
+    tapModifier('›⌥', chatGPT.focusChatInput),
+
     map(',', '⌘').to(chatGPT.controlCenter),
+
     map(1, 'Meh').to(toResizeWindow('ChatGPT')),
   ]),
 ])
