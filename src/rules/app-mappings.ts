@@ -1,4 +1,5 @@
 import {
+  ifEventChanged,
   map,
   rule,
   SideModifierAlias,
@@ -7,6 +8,7 @@ import {
   withCondition,
 } from 'karabiner.ts'
 import { airmail, ifAirmail } from '../apps/airmail'
+import { chatGPT, ifChatGPT } from '../apps/chatgpt'
 import { chrome, ifChrome } from '../apps/chrome'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
 import { ifNotion, notion } from '../apps/notion'
@@ -106,5 +108,10 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('›⌘', warp.toggleWarpAI),
 
     map(1, 'Meh').to(toResizeWindow('Warp')),
+  ]),
+
+  withCondition(ifChatGPT)([
+    map(',', '⌘').to(chatGPT.controlCenter),
+    map(1, 'Meh').to(toResizeWindow('ChatGPT')),
   ]),
 ])
