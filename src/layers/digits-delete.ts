@@ -31,4 +31,7 @@ export const digitsAndDelete = [
     h: toKey('⌫', '⌥'),
     y: toKey('⌫', '⌘'),
   },
+
+  // F1 - F9
+  withMapper([1, 2, 3, 4, 5, 6, 7, 8, 9])((k) => map(k).to(`f${k}`)),
 ]
