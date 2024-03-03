@@ -49,7 +49,7 @@ const rules = [
 
     duoModifier('hk', '⌘⇧'),
     duoModifier('hl', '⌃⇧'),
-    duoModifier('h;', '⌘⇧'),
+    duoModifier('h;', '⌥⇧'),
 
     duoModifier('m,', '⌘⌥'),
     duoModifier('m.', '⌘⌃'),
