@@ -89,7 +89,7 @@ const rules = [
 ]
 
 writeToProfile('Default', rules, {
-  'basic.simultaneous_threshold_milliseconds': 100,
-  'duo_layer.threshold_milliseconds': 200,
+  'basic.simultaneous_threshold_milliseconds': 50,
+  'duo_layer.threshold_milliseconds': 100,
   'duo_layer.notification': true,
 })
