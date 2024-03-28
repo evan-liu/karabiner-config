@@ -1,25 +1,18 @@
 import {
   duoLayer,
-  ifVar,
   layer,
   mapSimultaneous,
   rule,
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
-import { digitsAndDelete, digitsAndDeleteHint } from './layers/digits-delete'
+import { digitsAndDel, digitsAndDelHint } from './layers/digits-delete'
 import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
 import { openLinks } from './layers/open-links'
 import { symbols, symbolsHint } from './layers/symbols'
 import { system } from './layers/system'
-import {
-  toVimNormalMode,
-  toVimVisualMode,
-  vimHint,
-  vimModes,
-  vimNormalMode,
-} from './layers/vim'
+import { vim, vimHint } from './layers/vim'
 import { appMappings } from './rules/app-mappings'
 import { duoModifier } from './utils/duo-modifier'
 
@@ -58,20 +51,11 @@ const rules = [
     duoModifier('m/', '⌘⌥⌃'),
   ]),
 
-  rule('to vim modes', ifVar('vim').unless()).manipulators([
-    mapSimultaneous(['a', ';']).to(toVimNormalMode),
-    mapSimultaneous(['v', ';']).to(toVimVisualMode),
-  ]),
-
   // ; can be released once layer is activated
-  duoLayer('f', ';', 'vim')
-    .condition(ifVar('vim-mode', 'visual').unless())
-    .manipulators(vimNormalMode)
-    .notification(vimHint),
+  duoLayer('f', ';').manipulators(vim).notification(vimHint),
   duoLayer('s', ';').manipulators(symbols).notification(symbolsHint),
-  duoLayer('d', ';')
-    .manipulators(digitsAndDelete)
-    .notification(digitsAndDeleteHint),
+  duoLayer('d', ';').manipulators(digitsAndDel).notification(digitsAndDelHint),
+
   duoLayer('z', 'x').manipulators(emoji).notification(emojiHint),
   duoLayer('l', ';').manipulators(launchApp).notification('Launch App 🚀 📱'),
   duoLayer('.', '/').manipulators(openLinks).notification('Open Link 🔗'),
@@ -83,7 +67,6 @@ const rules = [
     mapSimultaneous(['f', 'k']).to('⏎', 'Hyper'), // Scroll
   ]),
 
-  vimModes,
   appleKeyboard,
   appMappings,
 ]

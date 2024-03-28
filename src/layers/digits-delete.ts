@@ -1,10 +1,10 @@
 import { map, toKey, withMapper } from 'karabiner.ts'
 
-export const digitsAndDeleteHint = `\
+export const digitsAndDelHint = `\
 0    1  2  3    4  5  6    7  8  9    +  -  /  *    .    ⌫_⌥_⌘  ⌦
 N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
 
-export const digitsAndDelete = [
+export const digitsAndDel = [
   // digits keypad_{i}
   withMapper([
     'n', //             // 0
