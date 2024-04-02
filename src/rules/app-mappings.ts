@@ -15,6 +15,7 @@ import { ifObsidian, obsidian } from '../apps/obsidian'
 import { ifSafari, safari } from '../apps/safari'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
+import { ifSpark, spark } from '../apps/spark'
 import { ifWarp, warp } from '../apps/warp'
 import { ifZoom, zoom } from '../apps/zoom'
 import { toResizeWindow, toSlackWindow } from '../utils/to-resize-window'
@@ -29,6 +30,16 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('›⌥', airmail.gotoFirstMessage),
 
     map(1, 'Meh').to(toResizeWindow('Airmail')),
+  ]),
+
+  withCondition(ifSpark)([
+    tapModifier('‹⌘', spark.openSidebar),
+
+    tapModifier('‹⌥', spark.fetch),
+
+    tapModifier('›⌥', spark.actions),
+
+    map(1, 'Meh').to(toResizeWindow('Spark Desktop')),
   ]),
 
   withCondition(ifChrome)([

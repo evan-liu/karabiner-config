@@ -9,7 +9,7 @@ export const launchApp = {
   g: toApp('Google Chrome'),
   i: toApp('WeChat'), // IM
   k: toApp('Lens'), // K8s
-  m: toApp('Airmail'), // Mail
+  m: toApp('Spark Desktop'), // Mail
   n: toApp('Obsidian'), // Notes
   r: toIDE('RustRover'),
   s: toApp('Slack'),
