@@ -1,4 +1,9 @@
-import { toApp, toMouseCursorPosition, toPointingButton } from 'karabiner.ts'
+import {
+  toApp,
+  toKey,
+  toMouseCursorPosition,
+  toPointingButton,
+} from 'karabiner.ts'
 import { toClearNotifications } from '../utils/to-clear-notifications'
 
 export const system = {
@@ -14,4 +19,7 @@ export const system = {
   n: toClearNotifications(),
 
   ',': toApp('System Settings'),
+
+  j: toKey('⇥', '⌘'),
+  k: toKey('⇥', '⌘⇧'),
 }
