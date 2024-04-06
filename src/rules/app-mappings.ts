@@ -17,6 +17,7 @@ import { ifSlack, slack } from '../apps/slack'
 import { ifSourceTree, sourceTree } from '../apps/source-tree'
 import { ifSpark, spark } from '../apps/spark'
 import { ifWarp, warp } from '../apps/warp'
+import { ifZed, zed } from '../apps/zed'
 import { ifZoom, zoom } from '../apps/zoom'
 import { toResizeWindow, toSlackWindow } from '../utils/to-resize-window'
 
@@ -72,6 +73,13 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('›⌘', ide.toolWindows_unitTests).condition(ifRider),
     tapModifier('›⌥', ide.aceJump),
     tapModifier('›⌃', ide.findAction),
+  ]),
+
+  withCondition(ifZed)([
+    tapModifier('‹⌘', zed.leftDock),
+    tapModifier('›⌥', zed.fileFinder),
+
+    map(1, 'Meh').to(toResizeWindow('Zed')),
   ]),
 
   withCondition(ifSlack)([

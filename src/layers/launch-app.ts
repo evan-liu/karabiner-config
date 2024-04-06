@@ -5,6 +5,7 @@ export const launchApp = {
   b: toApp('Safari'), // Browser
   c: toApp('Calendar'),
   d: toIDE('DataGrip'),
+  e: toApp('Zed'), // Editor
   f: toApp('Finder'),
   g: toApp('Google Chrome'),
   i: toApp('WeChat'), // IM
