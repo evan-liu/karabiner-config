@@ -77,6 +77,8 @@ export const appMappings = rule('app mappings').manipulators([
 
   withCondition(ifZed)([
     tapModifier('‹⌘', zed.leftDock),
+
+    tapModifier('›⌘', zed.terminal),
     tapModifier('›⌥', zed.fileFinder),
 
     map(1, 'Meh').to(toResizeWindow('Zed')),
