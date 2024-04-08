@@ -1,4 +1,5 @@
 package-lock.json
+.zed/tasks.json
 
 # Logs
 logs
