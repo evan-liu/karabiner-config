@@ -1,7 +1,0 @@
-[
-  {
-    "label": "karabiner-config:build",
-    "command": "npm run build",
-    "reveal": "always"
-  }
-]
