@@ -76,6 +76,7 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifZed)([
+    tapModifier('‹⌥', zed.taskRerun),
     tapModifier('‹⌘', zed.leftDock),
 
     tapModifier('›⌘', zed.terminal),

@@ -6,4 +6,5 @@ export const zed = {
   leftDock: toKey(1, '⌘'),
   fileFinder: toKey('p', '⌘'),
   terminal: toKey('`', '⌃'),
+  taskRerun: toKey('t', '⌥'),
 }
