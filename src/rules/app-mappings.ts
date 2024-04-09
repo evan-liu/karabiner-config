@@ -24,6 +24,12 @@ import { toResizeWindow, toSlackWindow } from '../utils/to-resize-window'
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
 
+const tabNavi = [
+  // Pre/Next tab in most apps
+  map('h', '⌥').to('[', '⌘⇧'),
+  map('l', '⌥').to(']', '⌘⇧'),
+]
+
 export const appMappings = rule('app mappings').manipulators([
   withCondition(ifAirmail)([
     tapModifier('‹⌘', airmail.revealHideSidebar),
@@ -44,6 +50,8 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifChrome)([
+    ...tabNavi,
+
     tapModifier('‹⌥', chrome.refreshThePage),
 
     tapModifier('›⌘', chrome.developerTools),
@@ -52,6 +60,8 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifSafari)([
+    ...tabNavi,
+
     tapModifier('‹⌘', safari.showHideSideBar),
     tapModifier('‹⌥', safari.reloadPage),
     tapModifier('›⌘', safari.showWebInspector),
@@ -65,6 +75,8 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifIde)([
+    ...tabNavi,
+
     tapModifier('‹⌘', ide.activeToolWindow_hideAllToolWindows),
     tapModifier('‹⌥', ide.run_run),
     tapModifier('‹⌃', ide.other_runAnyThing),
@@ -76,6 +88,8 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifZed)([
+    ...tabNavi,
+
     tapModifier('‹⌥', zed.taskRerun),
     tapModifier('‹⌘', zed.leftDock),
 
