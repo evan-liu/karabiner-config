@@ -29,6 +29,11 @@ const tabNavi = [
   map('h', '⌥').to('[', '⌘⇧'),
   map('l', '⌥').to(']', '⌘⇧'),
 ]
+const historyNavi = [
+  // Back/Forward history in most apps
+  map('h', '⌃').to('[', '⌘'),
+  map('l', '⌃').to(']', '⌘'),
+]
 
 export const appMappings = rule('app mappings').manipulators([
   withCondition(ifAirmail)([
@@ -51,6 +56,7 @@ export const appMappings = rule('app mappings').manipulators([
 
   withCondition(ifChrome)([
     ...tabNavi,
+    ...historyNavi,
 
     tapModifier('‹⌥', chrome.refreshThePage),
 
@@ -61,6 +67,7 @@ export const appMappings = rule('app mappings').manipulators([
 
   withCondition(ifSafari)([
     ...tabNavi,
+    ...historyNavi,
 
     tapModifier('‹⌘', safari.showHideSideBar),
     tapModifier('‹⌥', safari.reloadPage),
@@ -100,6 +107,8 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifSlack)([
+    ...historyNavi,
+
     tapModifier('‹⌘', slack.showHideSideBar),
     tapModifier('‹⌥', slack.moveFocusToTheNextSection),
 
