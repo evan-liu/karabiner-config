@@ -6,7 +6,6 @@ import {
   toKey,
   withCondition,
 } from 'karabiner.ts'
-import { airmail, ifAirmail } from '../apps/airmail'
 import { chatGPT, ifChatGPT } from '../apps/chatgpt'
 import { chrome, ifChrome } from '../apps/chrome'
 import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
@@ -36,14 +35,6 @@ const historyNavi = [
 ]
 
 export const appMappings = rule('app mappings').manipulators([
-  withCondition(ifAirmail)([
-    tapModifier('‹⌘', airmail.revealHideSidebar),
-
-    tapModifier('›⌥', airmail.gotoFirstMessage),
-
-    map(1, 'Meh').to(toResizeWindow('Airmail')),
-  ]),
-
   withCondition(ifSpark)([
     tapModifier('‹⌘', spark.openSidebar),
 
