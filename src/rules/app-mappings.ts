@@ -37,9 +37,9 @@ const historyNavi = [
 export const appMappings = rule('app mappings').manipulators([
   withCondition(ifSpark)([
     tapModifier('‹⌘', spark.openSidebar),
-
     tapModifier('‹⌥', spark.fetch),
 
+    tapModifier('›⌘', spark.changeLayout),
     tapModifier('›⌥', spark.actions),
 
     map(1, 'Meh').to(toResizeWindow('Spark Desktop')),
@@ -62,12 +62,8 @@ export const appMappings = rule('app mappings').manipulators([
 
     tapModifier('‹⌘', safari.showHideSideBar),
     tapModifier('‹⌥', safari.reloadPage),
-    tapModifier('›⌘', safari.showWebInspector),
 
-    map('h', '⌃').to('home'),
-    map('j', '⌃').to('page_down'),
-    map('k', '⌃').to('page_up'),
-    map('l', '⌃').to('end'),
+    tapModifier('›⌘', safari.showWebInspector),
 
     map(1, 'Meh').to(toResizeWindow('Safari')),
   ]),
