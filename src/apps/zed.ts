@@ -3,9 +3,11 @@ import { ifApp, toKey } from 'karabiner.ts'
 export const ifZed = ifApp('^dev.zed.Zed$')
 
 export const zed = {
-  leftDock: toKey(1, '⌘'),
-  fileFinder: toKey('p', '⌘'),
-  terminal: toKey('`', '⌃'),
-  taskRerun: toKey('t', '⌥'),
   closeAllDocks: toKey('y', '⌘⌥'),
+  taskRerun: toKey('t', '⌥'),
+
+  terminal: toKey('`', '⌃'),
+  fileFinder: toKey('p', '⌘'),
+
+  leftDock: toKey(1, '⌘'),
 }
