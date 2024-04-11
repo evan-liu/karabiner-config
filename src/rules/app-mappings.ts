@@ -85,7 +85,7 @@ export const appMappings = rule('app mappings').manipulators([
     ...tabNavi,
 
     tapModifier('‹⌥', zed.taskRerun),
-    tapModifier('‹⌘', zed.leftDock),
+    tapModifier('‹⌘', zed.closeAllDocks),
 
     tapModifier('›⌘', zed.terminal),
     tapModifier('›⌥', zed.fileFinder),
