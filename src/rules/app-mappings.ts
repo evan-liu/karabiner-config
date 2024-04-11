@@ -23,15 +23,20 @@ import { toResizeWindow, toSlackWindow } from '../utils/to-resize-window'
 const tapModifier = (v: SideModifierAlias, to: ToEvent) =>
   map(v).to(v).toIfAlone(to)
 
+const historyNavi = [
+  // Back/Forward history in most apps
+  map('h', '⌃').to('[', '⌘'),
+  map('l', '⌃').to(']', '⌘'),
+]
 const tabNavi = [
   // Pre/Next tab in most apps
   map('h', '⌥').to('[', '⌘⇧'),
   map('l', '⌥').to(']', '⌘⇧'),
 ]
-const historyNavi = [
-  // Back/Forward history in most apps
-  map('h', '⌃').to('[', '⌘'),
-  map('l', '⌃').to(']', '⌘'),
+const switcher = [
+  // Pre/Next switcher in most apps
+  map('h', '⌘⌥⌃').to('⇥', '⌃⇧'),
+  map('l', '⌘⌥⌃').to('⇥', '⌃'),
 ]
 
 export const appMappings = rule('app mappings').manipulators([
@@ -46,8 +51,9 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifChrome)([
-    ...tabNavi,
     ...historyNavi,
+    ...tabNavi,
+    ...switcher,
 
     tapModifier('‹⌥', chrome.refreshThePage),
 
@@ -57,8 +63,9 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifSafari)([
-    ...tabNavi,
     ...historyNavi,
+    ...tabNavi,
+    ...switcher,
 
     tapModifier('‹⌘', safari.showHideSideBar),
     tapModifier('‹⌥', safari.reloadPage),
@@ -69,7 +76,9 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifIde)([
+    ...historyNavi,
     ...tabNavi,
+    ...switcher,
 
     tapModifier('‹⌘', ide.activeToolWindow_hideAllToolWindows),
     tapModifier('‹⌥', ide.run_run),
@@ -82,7 +91,9 @@ export const appMappings = rule('app mappings').manipulators([
   ]),
 
   withCondition(ifZed)([
+    ...historyNavi,
     ...tabNavi,
+    ...switcher,
 
     tapModifier('‹⌘', zed.closeAllDocks),
     tapModifier('‹⌥', zed.taskRerun),
