@@ -6,6 +6,7 @@ export const zed = {
   closeAllDocks: toKey('y', '⌘⌥'),
   taskRerun: toKey('t', '⌥'),
 
+  projectPanel: toKey('e', '⌘⇧'),
   terminal: toKey('`', '⌃'),
   fileFinder: toKey('p', '⌘'),
 
