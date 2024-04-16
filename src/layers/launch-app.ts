@@ -4,27 +4,20 @@ export const launchApp = {
   a: toApp('ChatGPT'), // AI
   b: toApp('Safari'), // Browser
   c: toApp('Calendar'),
-  d: toIDE('DataGrip'),
   e: toApp('Zed'), // Editor
   f: toApp('Finder'),
   g: toApp('Google Chrome'),
   i: toApp('WeChat'), // IM
-  k: toApp('Lens'), // K8s
   m: toApp('Spark Desktop'), // Mail
-  n: toApp('Obsidian'), // Notes
-  r: toIDE('RustRover'),
+  r: toUserApp('RustRover'),
   s: toApp('Slack'),
-  t: toApp('Warp'), // Terminal
-  w: toIDE('WebStorm'),
-  x: toApp('Xcode'),
-  y: toIDE('PyCharm\\ Professional\\ Edition'),
+  w: toUserApp('WebStorm'),
   z: toApp('zoom.us'),
-  ',': toApp('System Settings'),
 
-  3: toIDE('Rider'),
+  ',': toApp('System Settings'),
 }
 
 // `open -a` sometimes gets confused by the non-standard path
-function toIDE(name: string) {
+function toUserApp(name: string) {
   return to$(`open ~/Applications/${name}.app`)
 }
