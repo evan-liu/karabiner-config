@@ -1,37 +1,13 @@
-import { ToEvent } from 'karabiner.ts'
-import { env } from 'node:process'
-import { toChrome } from '../utils/to-chrome'
-import { toSafari } from '../utils/to-safari'
+import { FromKeyParam, map, withMapper } from 'karabiner.ts'
 
-const workGitHubOrg = env.WORK_GH_ORG!
-const workJiraOrg = env.WORK_JIRA_ORG!
-const workJiraProj = env.WORK_JIRA_PROJ!
-
-const workJira = `https://${workJiraOrg}.atlassian.net/`
-export const openLinks = {
-  m: toLink('https://mail.google.com'),
-  w: toLink('https://www.metservice.com/towns-cities/locations/auckland'), // Weather
-  y: toLink('https://music.youtube.com'),
-
-  j: toWorkLink(`${workJira}/browse/${workJiraProj}`, workJira),
-  g: toWorkLink('https://github.com'),
-  ...workRepos(),
+try {
+  var links = require('../../links.json')
+} catch {
+  console.log('link.json not found')
 }
 
-function toLink(link: string, check?: string) {
-  return toSafari(link, check)
-}
-
-function toWorkLink(link: string, check?: string) {
-  return toChrome(link, check)
-}
-
-function workRepos(i = 1, result: Record<string, ToEvent> = {}) {
-  const repo = env[`WORK_GH_REPO_${i}`]
-  if (!repo) return result
-
-  const link = `https://github.com/${workGitHubOrg}/${repo}`
-  result[i] = toWorkLink(link)
-  result[i + 5] = toLink(link)
-  return workRepos(i + 1, result)
-}
+export const openLinks = [
+  withMapper(links as Record<FromKeyParam, string>)((k, v) =>
+    map(k).to$(`open "${v}"`),
+  ),
+]
