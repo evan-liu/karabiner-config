@@ -4,6 +4,7 @@ export const launchApp = {
   a: toApp('ChatGPT'), // AI
   b: toApp('Safari'), // Browser
   c: toApp('Calendar'),
+  d: toApp('Eudb_en'), // Dictionary
   e: toApp('Zed'), // Editor
   f: toApp('Finder'),
   g: toApp('Google Chrome'),
