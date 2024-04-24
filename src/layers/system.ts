@@ -19,8 +19,7 @@ export const system = {
 
   n: toClearNotifications(),
 
-  ',': toApp('System Settings'),
-  '.': toSleepSystem(),
+  '␣': toSleepSystem(),
 
   j: toKey('⇥', '⌘'),
   k: toKey('⇥', '⌘⇧'),
