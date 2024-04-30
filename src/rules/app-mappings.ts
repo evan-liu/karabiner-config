@@ -54,6 +54,7 @@ export const appMappings = rule('app mappings').manipulators([
     tapModifier('‹⌥', chrome.refreshThePage),
 
     tapModifier('›⌘', chrome.developerTools),
+    tapModifier('›⌥', chrome.searchTabs),
 
     map(1, 'Meh').to(toResizeWindow('Google Chrome')),
   ]),

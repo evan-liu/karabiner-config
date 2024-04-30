@@ -6,4 +6,5 @@ export const ifChrome = ifApp('^com.google.Chrome$')
 export const chrome = {
   developerTools: toKey('i', '⌘⌥'),
   refreshThePage: toKey('r', '⌘'),
+  searchTabs: toKey('a', '⌘⇧'),
 }
