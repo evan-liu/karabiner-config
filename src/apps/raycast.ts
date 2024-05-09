@@ -1,6 +1,8 @@
 import { to$ } from 'karabiner.ts'
 
 export const raycast = {
+  confetti: to$('open raycast://confetti'),
+
   quickOpen: cmd('evan-liu/quick-open/index'),
 
   easydict: cmd('isfeng/easydict/easydict'),
