@@ -14,6 +14,7 @@ import { symbols, symbolsHint } from './layers/symbols'
 import { system } from './layers/system'
 import { vim, vimHint } from './layers/vim'
 import { appMappings } from './rules/app-mappings'
+import { raycastMappings } from './rules/raycast-mappings'
 import { duoModifier } from './utils/duo-modifier'
 
 const rules = [
@@ -69,6 +70,7 @@ const rules = [
 
   appleKeyboard,
   appMappings,
+  raycastMappings,
 ]
 
 writeToProfile('Default', rules, {
