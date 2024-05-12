@@ -9,6 +9,7 @@ export const raycastMappings = rule('Raycast').manipulators([
     e: raycast.searchEmojiSymbols,
     g: raycast.gitmoji,
     m: raycast.searchMenuItems,
+    n: raycast.githubNotifications,
     s: raycast.searchSnippets,
     v: raycast.clipboardHistory,
     w: raycast.switchWindows,

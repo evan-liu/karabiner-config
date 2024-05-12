@@ -13,6 +13,7 @@ export const raycast = {
   switchWindows: cmd('raycast/navigation/switch-windows'),
   searchSnippets: cmd('raycast/snippets/search-snippets'),
   clipboardHistory: cmd('raycast/clipboard-history/clipboard-history'),
+  githubNotifications: cmd('raycast/github/notifications'),
 
   win: {
     firstThird: win('first-third'),
