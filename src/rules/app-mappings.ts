@@ -79,12 +79,9 @@ export const appMappings = rule('app mappings').manipulators([
 
     tapModifier('‹⌘', ide.activeToolWindow_hideAllToolWindows),
     tapModifier('‹⌥', ide.run_run),
-    tapModifier('‹⌃', ide.other_runAnyThing),
 
-    tapModifier('›⌘', ide.toolWindows_terminal).condition(ifWebStorm),
-    tapModifier('›⌘', ide.toolWindows_unitTests).condition(ifRider),
-    tapModifier('›⌥', ide.aceJump),
-    tapModifier('›⌃', ide.findAction),
+    tapModifier('›⌘', ide.toolWindows_terminal),
+    tapModifier('›⌥', ide.findAction),
   ]),
 
   withCondition(ifZed)([

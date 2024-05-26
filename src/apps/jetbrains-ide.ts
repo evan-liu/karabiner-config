@@ -170,7 +170,6 @@ export const jetBrainsIde = {
   other_selectFileInProjectView: toKey(1, '⌘⇧'),
   other_runAnyThing: toKey('f5', 'Hyper'),
 
-  aceJump: toKey(';', '⌃'),
   switcher: toKey('⇥', '⌃'),
   switcherBackward: toKey('⇥', '⌃⇧'),
 
