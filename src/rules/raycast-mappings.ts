@@ -5,8 +5,10 @@ export const raycastMappings = rule('Raycast').manipulators([
   map('␣', '⌥').to(raycast.quickOpen),
 
   withModifier('Hyper')({
+    c: raycast.calendarMySchedule,
     d: raycast.easydict,
     e: raycast.searchEmojiSymbols,
+    f: raycast.findInGoogleMaps,
     g: raycast.gitmoji,
     m: raycast.searchMenuItems,
     n: raycast.githubNotifications,

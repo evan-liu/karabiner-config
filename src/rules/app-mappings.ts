@@ -3,12 +3,11 @@ import {
   rule,
   SideModifierAlias,
   ToEvent,
-  toKey,
   withCondition,
 } from 'karabiner.ts'
 import { chatGPT, ifChatGPT } from '../apps/chatgpt'
 import { chrome, ifChrome } from '../apps/chrome'
-import { ide, ifIde, ifRider, ifWebStorm } from '../apps/jetbrains-ide'
+import { ide, ifIde } from '../apps/jetbrains-ide'
 import { ifSafari, safari } from '../apps/safari'
 import { ifSlack, slack } from '../apps/slack'
 import { ifSpark, spark } from '../apps/spark'

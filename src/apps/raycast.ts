@@ -1,13 +1,13 @@
 import { to$ } from 'karabiner.ts'
 
 export const raycast = {
-  confetti: to$('open raycast://confetti'),
-
   quickOpen: cmd('evan-liu/quick-open/index'),
 
   easydict: cmd('isfeng/easydict/easydict'),
   gitmoji: cmd('ricoberger/gitmoji/gitmoji'),
-
+  findInGoogleMaps: cmd('ratoru/google-maps-search/find'),
+  calendarMySchedule: cmd('raycast/calendar/my-schedule'),
+  confetti: cmd('raycast/raycast/confetti'),
   searchEmojiSymbols: cmd('raycast/emoji-symbols/search-emoji-symbols'),
   searchMenuItems: cmd('raycast/navigation/search-menu-items'),
   switchWindows: cmd('raycast/navigation/switch-windows'),
