@@ -17,6 +17,11 @@ const emojiMap = {
   t: '🤔', // _thinking_face
   u: '⬆️', // Upgrade dependencies
   v: '🔖', // release / Version tags
+
+  k: '🛠️', // Tools
+  l: '📚', // Learns
+  o: '💭', // Opinions and thoughts
+  i: '👨‍💻', // Experiences and stories
 }
 
 export const emojiHint = Object.entries(emojiMap)

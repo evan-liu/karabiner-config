@@ -6,6 +6,7 @@ import {
   writeToProfile,
 } from 'karabiner.ts'
 import { appleKeyboard } from './devices/apple-keyboard'
+import { moonlander } from './devices/moonlander'
 import { digitsAndDel, digitsAndDelHint } from './layers/digits-delete'
 import { emoji, emojiHint } from './layers/emoji'
 import { launchApp } from './layers/launch-app'
@@ -69,6 +70,7 @@ const rules = [
   ]),
 
   appleKeyboard,
+  moonlander,
   appMappings,
   raycastMappings,
 ]
