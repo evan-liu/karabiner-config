@@ -19,7 +19,6 @@ const emojiMap = {
   v: '🔖', // release / Version tags
 
   k: '🛠️', // Tools
-  l: '📚', // Learns
   o: '💭', // Opinions and thoughts
   i: '👨‍💻', // Experiences and stories
 }
