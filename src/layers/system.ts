@@ -1,5 +1,4 @@
 import {
-  toApp,
   toKey,
   toMouseCursorPosition,
   toPointingButton,
