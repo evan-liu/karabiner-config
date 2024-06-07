@@ -599,7 +599,7 @@ function appleKeyboard() {
     map('›⌘', '⌥').toHyper(),
     map('›⌥', '⇧').toMeh(),
 
-    map('fn').to(toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
+    map('fn').to('fn').toIfAlone(toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
   ])
 }
 
@@ -609,6 +609,6 @@ function moonlanderKeyboard() {
     map('⎋', '⇧').to('⇪'),
     map('⎋', '⇪').to('⇪'),
 
-    map('‹⌃').to(toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
+    map('‹⌃').to('‹⌃').toIfAlone(toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
   ])
 }
