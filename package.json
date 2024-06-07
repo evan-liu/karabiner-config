@@ -1,7 +1,7 @@
 {
   "name": "karabiner-config",
   "scripts": {
-    "build": "ts-node src/index.ts",
+    "build": "ts-node karabiner-config.ts",
     "update": "npm update karabiner.ts"
   },
   "devDependencies": {
