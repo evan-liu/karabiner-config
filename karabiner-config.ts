@@ -355,18 +355,6 @@ function appMappings() {
   ]
 
   return rule('app mappings').manipulators([
-    //region Spark
-    withCondition(ifApp('^com.readdle.SparkDesktop'))([
-      tapModifier('‹⌘', toKey('/')), // openSidebar
-      tapModifier('‹⌥', toKey('r', '⌘')), // fetch
-
-      tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
-      tapModifier('›⌥', toKey('k', '⌘')), // actions
-
-      map(1, 'Meh').to(toResizeWindow('Spark Desktop')),
-    ]),
-    //endregion
-
     //region Chrome
     withCondition(ifApp('^com.google.Chrome$'))([
       ...historyNavi,
@@ -438,6 +426,18 @@ function appMappings() {
       tapModifier('›⌥', toKey('k', '⌘')), // open
 
       map(1, 'Meh').to(toSlackWindow()),
+    ]),
+    //endregion
+
+    //region Spark
+    withCondition(ifApp('^com.readdle.SparkDesktop'))([
+      tapModifier('‹⌘', toKey('/')), // openSidebar
+      tapModifier('‹⌥', toKey('r', '⌘')), // fetch
+
+      tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
+      tapModifier('›⌥', toKey('k', '⌘')), // actions
+
+      map(1, 'Meh').to(toResizeWindow('Spark Desktop')),
     ]),
     //endregion
 
