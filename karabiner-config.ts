@@ -3,31 +3,28 @@ import {
   FromKeyParam,
   ifApp,
   ifDevice,
-  KeyAlias,
   layer,
-  LetterKeyCode,
   map,
   mapSimultaneous,
-  ModifierKeyAlias,
-  modifierKeyAliases,
-  MultiModifierAlias,
-  multiModifierAliases,
   rule,
-  SideModifierAlias,
   to$,
   toApp,
-  ToEvent,
   toKey,
   toMouseCursorPosition,
   toPaste,
   toPointingButton,
-  toRemoveNotificationMessage,
   toSleepSystem,
   withCondition,
   withMapper,
   withModifier,
   writeToProfile,
 } from 'karabiner.ts'
+import {
+  duoModifier,
+  tapModifier,
+  toClearNotifications,
+  toResizeWindow,
+} from './utils'
 
 writeToProfile(
   'Default',
@@ -258,30 +255,18 @@ function launchAppLayer() {
       i: toApp('WeChat'), // IM
       m: toApp('Spark Desktop'), // Mail
       s: toApp('Slack'),
-      w: toUserApp('WebStorm'),
+      w: to$(`open ~/Applications/WebStorm.app`),
       z: toApp('zoom.us'),
 
       ',': toApp('System Settings'),
     })
-
-  // `open -a` sometimes gets confused by the non-standard path
-  function toUserApp(name: string) {
-    return to$(`open ~/Applications/${name}.app`)
-  }
 }
 
 function openLinkLayer() {
+  let links = require('./links.json') as Record<FromKeyParam, string>
   return duoLayer('.', '/')
     .notification('Open Link 🔗')
-    .manipulators([withMapper(links())((k, v) => map(k).to$(`open "${v}"`))])
-
-  function links(): Partial<Record<FromKeyParam, string>> {
-    try {
-      return require('./links.json')
-    } catch {
-      return {}
-    }
-  }
+    .manipulators([withMapper(links)((k, v) => map(k).to$(`open "${v}"`))])
 }
 
 function systemLayer() {
@@ -295,49 +280,16 @@ function systemLayer() {
 
     '⏎': toPointingButton('button1'),
 
-    n: toClearNotifications(),
+    n: toClearNotifications,
 
     '␣': toSleepSystem(),
 
     j: toKey('⇥', '⌘'),
     k: toKey('⇥', '⌘⇧'),
   })
-
-  /** @see https://gist.github.com/lancethomps/a5ac103f334b171f70ce2ff983220b4f?permalink_comment_id=4698498#gistcomment-4698498 */
-  function toClearNotifications() {
-    return to$(`osascript -e '\
-tell application "System Events"
-  try
-    repeat
-      set _groups to groups of UI element 1 of scroll area 1 of group 1 of window "Notification Center" of application process "NotificationCenter"
-      set numGroups to number of _groups
-      if numGroups = 0 then
-        exit repeat
-      end if
-      repeat with _group in _groups
-        set _actions to actions of _group
-        set actionPerformed to false
-        repeat with _action in _actions
-          if description of _action is in {"Clear All", "Close"} then
-            perform _action
-            set actionPerformed to true
-            exit repeat
-          end if
-        end repeat
-        if actionPerformed then
-          exit repeat
-        end if
-      end repeat
-    end repeat
-  end try
-end tell'`)
-  }
 }
 
 function appMappings() {
-  let tapModifier = (v: SideModifierAlias, to: ToEvent) =>
-    map(v).to(v).toIfAlone(to)
-
   let historyNavi = [
     // Back/Forward history in most apps
     map('h', '⌃').to('[', '⌘'),
@@ -425,7 +377,11 @@ function appMappings() {
       tapModifier('›⌘', toKey('.', '⌘')), // hideRightBar
       tapModifier('›⌥', toKey('k', '⌘')), // open
 
-      map(1, 'Meh').to(toSlackWindow()),
+      map(1, 'Meh').to(
+        // After the 1/4 width, leave some space for opening thread in a new window
+        // before the last 1/4 width
+        toResizeWindow('Slack', { x: 1263, y: 25 }, { w: 1760, h: 1415 }),
+      ),
     ]),
     //endregion
 
@@ -451,82 +407,55 @@ function appMappings() {
     ]),
     //endregion
   ])
-
-  function toResizeWindow(
-    app: string,
-    position = { x: 0, y: 220 }, // First window, below widgets
-    size = { w: 1262, h: 1220 }, // First 1/4 width, screen height - widgets height
-  ) {
-    return to$(`osascript -e '\
-set windowPosition to {${position.x}, ${position.y}}
-set windowSize to {${size.w}, ${size.h}}
-
-tell application "System Events"
-  tell process "${app}"
-    set frontWindow to first window
-    set position of frontWindow to windowPosition
-    set size of frontWindow to windowSize
-  end tell
-end tell'`)
-  }
-
-  function toSlackWindow() {
-    // After the 1/4 width, leave some space for opening thread in new window
-    // before the last 1/4 width
-    return toResizeWindow('Slack', { x: 1263, y: 25 }, { w: 1760, h: 1415 })
-  }
 }
 
 function raycast() {
+  let r = {
+    ext: (name: string) => to$(`open raycast://extensions/${name}`),
+    win: (name: string) =>
+      to$(`open -g raycast://extensions/raycast/window-management/${name}`),
+  }
   return rule('Raycast').manipulators([
-    map('␣', '⌥').to(cmd('evan-liu/quick-open/index')),
+    map('␣', '⌥').to(r.ext('evan-liu/quick-open/index')),
 
     withModifier('Hyper')({
-      c: cmd('raycast/calendar/my-schedule'),
-      d: cmd('isfeng/easydict/easydict'),
-      e: cmd('raycast/emoji-symbols/search-emoji-symbols'),
-      f: cmd('ratoru/google-maps-search/find'),
-      g: cmd('ricoberger/gitmoji/gitmoji'),
-      m: cmd('raycast/navigation/search-menu-items'),
-      n: cmd('raycast/github/notifications'),
-      s: cmd('raycast/snippets/search-snippets'),
-      v: cmd('raycast/clipboard-history/clipboard-history'),
-      w: cmd('raycast/navigation/switch-windows'),
+      c: r.ext('raycast/calendar/my-schedule'),
+      d: r.ext('isfeng/easydict/easydict'),
+      e: r.ext('raycast/emoji-symbols/search-emoji-symbols'),
+      f: r.ext('ratoru/google-maps-search/find'),
+      g: r.ext('ricoberger/gitmoji/gitmoji'),
+      m: r.ext('raycast/navigation/search-menu-items'),
+      n: r.ext('raycast/github/notifications'),
+      s: r.ext('raycast/snippets/search-snippets'),
+      v: r.ext('raycast/clipboard-history/clipboard-history'),
+      w: r.ext('raycast/navigation/switch-windows'),
     }),
     withModifier('Hyper')({
-      '↑': win('previous-display'),
-      '↓': win('next-display'),
-      '←': win('previous-desktop'),
-      '→': win('next-desktop'),
+      '↑': r.win('previous-isplay'),
+      '↓': r.win('next-display'),
+      '←': r.win('previous-desktop'),
+      '→': r.win('next-desktop'),
     }),
     withModifier('Hyper')({
-      1: win('first-third'),
-      2: win('center-third'),
-      3: win('last-third'),
-      4: win('first-two-thirds'),
-      5: win('last-two-thirds'),
-      9: win('left-half'),
-      0: win('right-half'),
+      1: r.win('first-third'),
+      2: r.win('center-third'),
+      3: r.win('last-third'),
+      4: r.win('first-two-thirds'),
+      5: r.win('last-two-thirds'),
+      9: r.win('left-half'),
+      0: r.win('right-half'),
     }),
     withModifier('Meh')({
-      1: win('first-fourth'),
-      2: win('second-fourth'),
-      3: win('third-fourth'),
-      4: win('last-fourth'),
-      5: win('center'),
-      6: win('center-half'),
-      7: win('center-two-thirds'),
-      8: win('maximize'),
+      1: r.win('first-fourth'),
+      2: r.win('second-fourth'),
+      3: r.win('third-fourth'),
+      4: r.win('last-fourth'),
+      5: r.win('center'),
+      6: r.win('center-half'),
+      7: r.win('center-two-thirds'),
+      8: r.win('maximize'),
     }),
   ])
-
-  function cmd(name: string) {
-    return to$(`open raycast://extensions/${name}`)
-  }
-
-  function win(name: string) {
-    return to$(`open -g raycast://extensions/raycast/window-management/${name}`)
-  }
 }
 
 function homerow() {
@@ -570,24 +499,6 @@ function duoModifiers() {
 
     duoModifier('m/', '⌘⌥⌃'),
   ])
-
-  function duoModifier(
-    keys: `${LetterKeyCode | KeyAlias}${LetterKeyCode | KeyAlias}`,
-    modifier: '⌘' | '⌥' | '⌃' | '⇧' | MultiModifierAlias,
-  ) {
-    let id = keys + modifier
-    let [firstMod, ...restMods] = (
-      modifier in modifierKeyAliases
-        ? [modifierKeyAliases[modifier as ModifierKeyAlias]]
-        : multiModifierAliases[modifier as MultiModifierAlias]
-    ) as Array<'command' | 'control' | 'option' | 'shift'>
-    let to_after_key_up = [toRemoveNotificationMessage(id)]
-    return mapSimultaneous(keys.split('') as (LetterKeyCode | KeyAlias)[], {
-      to_after_key_up,
-    })
-      .toNotificationMessage(id, modifier) // Must go first or to() doesn't work
-      .to(`left_${firstMod}`, restMods)
-  }
 }
 
 function appleKeyboard() {
