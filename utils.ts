@@ -13,27 +13,17 @@ import {
   toRemoveNotificationMessage,
 } from 'karabiner.ts'
 
+export function raycastExt(name: string) {
+  return to$(`open raycast://extensions/${name}`)
+}
+
+export function raycastWin(name: string) {
+  return to$(`open -g raycast://extensions/raycast/window-management/${name}`)
+}
+
 /** Map when tap a modifier key; keep as modifier when hold */
 export function tapModifier(v: SideModifierAlias | 'fn', to: ToEvent) {
   return map(v).to(v).toIfAlone(to)
-}
-
-export function toResizeWindow(
-  app: string,
-  position = { x: 0, y: 220 }, // First window, below widgets
-  size = { w: 1262, h: 1220 }, // First 1/4 width, screen height - widgets height
-) {
-  return to$(`osascript -e '\
-set windowPosition to {${position.x}, ${position.y}}
-set windowSize to {${size.w}, ${size.h}}
-
-tell application "System Events"
-  tell process "${app}"
-    set frontWindow to first window
-    set position of frontWindow to windowPosition
-    set size of frontWindow to windowSize
-  end tell
-end tell'`)
 }
 
 export function duoModifier(
@@ -54,12 +44,22 @@ export function duoModifier(
     .to(`left_${firstMod}`, restMods)
 }
 
-export function raycastExt(name: string) {
-  return to$(`open raycast://extensions/${name}`)
-}
+export function toResizeWindow(
+  app: string,
+  position = { x: 0, y: 220 }, // First window, below widgets
+  size = { w: 1262, h: 1220 }, // First 1/4 width, screen height - widgets height
+) {
+  return to$(`osascript -e '\
+set windowPosition to {${position.x}, ${position.y}}
+set windowSize to {${size.w}, ${size.h}}
 
-export function raycastWin(name: string) {
-  return to$(`open -g raycast://extensions/raycast/window-management/${name}`)
+tell application "System Events"
+  tell process "${app}"
+    set frontWindow to first window
+    set position of frontWindow to windowPosition
+    set size of frontWindow to windowSize
+  end tell
+end tell'`)
 }
 
 /** @see https://gist.github.com/lancethomps/a5ac103f334b171f70ce2ff983220b4f?permalink_comment_id=4698498#gistcomment-4698498 */
