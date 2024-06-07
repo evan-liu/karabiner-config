@@ -14,7 +14,7 @@ import {
 } from 'karabiner.ts'
 
 /** Map when tap a modifier key; keep as modifier when hold */
-export function tapModifier(v: SideModifierAlias, to: ToEvent) {
+export function tapModifier(v: SideModifierAlias | 'fn', to: ToEvent) {
   return map(v).to(v).toIfAlone(to)
 }
 
