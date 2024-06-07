@@ -412,11 +412,6 @@ function appMappings() {
 }
 
 function raycast() {
-  let r = {
-    ext: (name: string) => to$(`open raycast://extensions/${name}`),
-    win: (name: string) =>
-      to$(`open -g raycast://extensions/raycast/window-management/${name}`),
-  }
   return rule('Raycast').manipulators([
     map('␣', '⌥').to(raycastExt('evan-liu/quick-open/index')),
 
