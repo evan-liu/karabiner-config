@@ -212,6 +212,7 @@ function emojiLayer() {
   }
 
   let emojiHint = Object.entries(emojiMap)
+    .slice(0, 15)
     .reduce(
       (r, [k, v]) => [r[0].concat(v), r[1].concat(k.toUpperCase())],
       [[] as string[], [] as string[]],
@@ -222,7 +223,7 @@ function emojiLayer() {
   return duoLayer('z', 'x')
     .notification(emojiHint)
     .manipulators([
-      map(';').to(toKey('␣', '⌘⌃')), // emojiPicker
+      map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
 
       withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
 
