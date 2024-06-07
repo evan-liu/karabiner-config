@@ -57,7 +57,7 @@ writeToProfile(
 
 function vimLayer() {
   let hint = `\
-←  ↓  ↑  →     ⌫ 
+←  ↓  ↑  →     ⌫
 H  J    K   L       '`
   return duoLayer('f', ';')
     .notification(hint)
@@ -249,7 +249,6 @@ function launchAppLayer() {
   return duoLayer('l', ';')
     .notification('Launch App 🚀 📱')
     .manipulators({
-      a: toApp('ChatGPT'), // AI
       b: toApp('Safari'), // Browser
       c: toApp('Calendar'),
       d: toApp('Eudb_en'), // Dictionary
@@ -258,7 +257,6 @@ function launchAppLayer() {
       g: toApp('Google Chrome'),
       i: toApp('WeChat'), // IM
       m: toApp('Spark Desktop'), // Mail
-      r: toUserApp('RustRover'),
       s: toApp('Slack'),
       w: toUserApp('WebStorm'),
       z: toApp('zoom.us'),
