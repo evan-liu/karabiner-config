@@ -54,6 +54,14 @@ export function duoModifier(
     .to(`left_${firstMod}`, restMods)
 }
 
+export function raycastExt(name: string) {
+  return to$(`open raycast://extensions/${name}`)
+}
+
+export function raycastWin(name: string) {
+  return to$(`open -g raycast://extensions/raycast/window-management/${name}`)
+}
+
 /** @see https://gist.github.com/lancethomps/a5ac103f334b171f70ce2ff983220b4f?permalink_comment_id=4698498#gistcomment-4698498 */
 export let toClearNotifications = to$(`osascript -e '\
 tell application "System Events"
