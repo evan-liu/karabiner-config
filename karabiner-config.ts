@@ -309,6 +309,13 @@ function appMappings() {
     map('l', '⌘⌥⌃').to('⇥', '⌃'),
   ]
 
+  // Tap ‹⌘ -> Show/Hide UI (e.g. left sidebars)
+  // Tap ‹⌥ -> Run current task (re-run)
+  // Tap ‹⌃ -> Run list
+  // Tap ›⌘ -> Show/Hide UI (e.g. right sidebars)
+  // Tap ›⌥ -> Command Palette (e.g. ⌘K, ⌘P)
+  // Tap ›⌃ -> History (e.g. recent files)
+
   return rule('app mappings').manipulators([
     //region Chrome
     withCondition(ifApp('^com.google.Chrome$'))([
@@ -347,10 +354,12 @@ function appMappings() {
       ...switcher,
 
       tapModifier('‹⌘', toKey('⎋', '⌘⇧')), // hideAllToolWindows
-      tapModifier('‹⌥', toKey('r', '⌥⇧')), // run
+      tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
+      tapModifier('‹⌃', toKey('r', '⌥⌃')), // Run...
 
       tapModifier('›⌘', toKey(4, '⌥')), // toolWindows_terminal
       tapModifier('›⌥', toKey('a', '⌘⇧')), // findAction
+      tapModifier('›⌃', toKey('e', '⌘')), // recentFiles
     ]),
     //endregion
 
@@ -361,10 +370,12 @@ function appMappings() {
       ...switcher,
 
       tapModifier('‹⌘', toKey('y', '⌘⌥')), // closeAllDocks
-      tapModifier('‹⌥', toKey('t', '⌥')), // taskRerun
+      tapModifier('‹⌥', toKey('t', '⌥')), // task::Rerun
+      tapModifier('‹⌃', toKey('t', '⌥⇧')), // task::Spawn
 
       tapModifier('›⌘', toKey('`', '⌃')), // terminal
-      tapModifier('›⌥', toKey('p', '⌘')), // fileFinder
+      tapModifier('›⌥', toKey('a', '⌘⇧')), // command
+      tapModifier('›⌃', toKey('p', '⌘')), // fileFinder
 
       map(1, 'Meh').to(toResizeWindow('Zed')),
     ]),
