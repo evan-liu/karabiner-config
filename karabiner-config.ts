@@ -257,6 +257,7 @@ function launchAppLayer() {
       g: toApp('Google Chrome'),
       i: toApp('WeChat'), // IM
       m: toApp('Spark Desktop'), // Mail
+      r: to$(`open ~/Applications/Rider.app`),
       s: toApp('Slack'),
       w: to$(`open ~/Applications/WebStorm.app`),
       z: toApp('zoom.us'),
