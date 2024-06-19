@@ -202,11 +202,11 @@ function emojiLayer() {
     p: '👍', // _plus_one +1
     r: '♻️', // Refactor code
     s: '😅', // _sweat_smile
-    t: '🤔', // _thinking_face
     u: '⬆️', // Upgrade dependencies
     v: '🔖', // release / Version tags
 
-    k: '🛠️', // Tools
+    t: '🛠️', // Tools
+    k: '📚', // Knowledge learnt
     o: '💭', // Opinions and thoughts
     i: '👨‍💻', // Experiences and stories
   }
