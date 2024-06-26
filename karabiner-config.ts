@@ -249,6 +249,7 @@ function launchAppLayer() {
   return duoLayer('l', ';')
     .notification('Launch App 🚀 📱')
     .manipulators({
+      a: toApp('ChatGPT'), // AI
       b: toApp('Safari'), // Browser
       c: toApp('Calendar'),
       d: toApp('Eudb_en'), // Dictionary
