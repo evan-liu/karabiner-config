@@ -236,6 +236,8 @@ function emojiLayer() {
       ),
 
       // Code snippets
+      map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
+      map('l').toTypeSequence('log⇥').condition(ifApp('^com.jetbrains.WebStorm$')),
       map('l').toTypeSequence('console.log()←'),
 
       map("'").toTypeSequence('⌫"'),
