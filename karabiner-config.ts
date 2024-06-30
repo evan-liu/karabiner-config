@@ -236,7 +236,10 @@ function emojiLayer() {
       ),
 
       // Code snippets
+      map('l').toTypeSequence('Console.WriteLine();←←')
+        .condition(ifApp('^com.jetbrains.rider$')),
       map('l').toTypeSequence('console.log()←'),
+
       map("'").toTypeSequence('⌫"'),
       map('[').toTypeSequence('[␣]␣'),
       map(']').toTypeSequence('-␣[␣]␣'),
