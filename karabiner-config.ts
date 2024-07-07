@@ -205,8 +205,6 @@ function emojiLayer() {
     u: '⬆️', // Upgrade dependencies
     v: '🔖', // release / Version tags
 
-    t: '🛠️', // Tools
-    k: '📚', // Knowledge learnt
     o: '💭', // Opinions and thoughts
     i: '👨‍💻', // Experiences and stories
   }
@@ -239,7 +237,7 @@ function emojiLayer() {
       map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
       map('l').toTypeSequence('log⇥').condition(ifApp('^com.jetbrains.WebStorm$')),
       map('l').toTypeSequence('console.log()←'),
-
+      map('k').toTypeSequence('()␣=>␣'),
       map("'").toTypeSequence('⌫"'),
       map('[').toTypeSequence('[␣]␣'),
       map(']').toTypeSequence('-␣[␣]␣'),
