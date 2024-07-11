@@ -363,6 +363,8 @@ function appMappings() {
       tapModifier('›⌘', toKey(4, '⌥')), // toolWindows_terminal
       tapModifier('›⌥', toKey('a', '⌘⇧')), // findAction
       tapModifier('›⌃', toKey('e', '⌘')), // recentFiles
+
+      map(1, 'Meh').to(toResizeWindow('WebStorm')),
     ]),
     //endregion
 
