@@ -412,7 +412,7 @@ function appMappings() {
       tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
       tapModifier('›⌥', toKey('k', '⌘')), // actions
 
-      map(1, 'Meh').to(toResizeWindow('Spark Desktop')),
+      map(1, 'Meh').to(toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 })),
     ]),
     //endregion
 
