@@ -261,6 +261,7 @@ function launchAppLayer() {
       m: toApp('Spark Desktop'), // Mail
       r: to$(`open ~/Applications/Rider.app`),
       s: toApp('Slack'),
+      v: toApp('Visual Studio Code'),
       w: to$(`open ~/Applications/WebStorm.app`),
       z: toApp('zoom.us'),
 
@@ -383,6 +384,23 @@ function appMappings() {
       tapModifier('›⌃', toKey('p', '⌘')), // fileFinder
 
       map(1, 'Meh').to(toResizeWindow('Zed')),
+    ]),
+    //endregion
+
+    //region VSCode
+    withCondition(ifApp('^com.microsoft.VSCode$'))([
+      ...tabNavi,
+      ...switcher,
+      map('h', '⌃').to('-', '⌃'),
+      map('l', '⌃').to('-', '⌃⇧'),
+
+      tapModifier('‹⌘', toKey('b', '⌘')), // Tobble Sidebar visibility
+
+      tapModifier('›⌘', toKey('`', '⌃')), // terminal
+      tapModifier('›⌥', toKey('p', '⌘⇧')), // Show Command Palette
+      tapModifier('›⌃', toKey('p', '⌘')), // Quick Open, Go to File...
+
+      map(1, 'Meh').to(toResizeWindow('Code')),
     ]),
     //endregion
 
