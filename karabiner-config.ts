@@ -394,7 +394,7 @@ function appMappings() {
       map('h', '⌃').to('-', '⌃'),
       map('l', '⌃').to('-', '⌃⇧'),
 
-      tapModifier('‹⌘', toKey('b', '⌘')), // Tobble Sidebar visibility
+      tapModifier('‹⌘', toKey('⎋', '⌘')), // Tobble Sidebar visibility
 
       tapModifier('›⌘', toKey('`', '⌃')), // terminal
       tapModifier('›⌥', toKey('p', '⌘⇧')), // Show Command Palette
