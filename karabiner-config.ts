@@ -235,7 +235,9 @@ function emojiLayer() {
 
       // Code snippets
       map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
-      map('l').toTypeSequence('log⇥').condition(ifApp('^com.jetbrains.WebStorm$')),
+      map('l')
+        .toTypeSequence('log⇥')
+        .condition(ifApp('^com.jetbrains.WebStorm$')),
       map('l').toTypeSequence('console.log()←'),
       map('k').toTypeSequence('()␣=>␣'),
       map("'").toTypeSequence('⌫"'),
@@ -431,7 +433,9 @@ function appMappings() {
       tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
       tapModifier('›⌥', toKey('k', '⌘')), // actions
 
-      map(1, 'Meh').to(toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 })),
+      map(1, 'Meh').to(
+        toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 }),
+      ),
     ]),
     //endregion
 
@@ -537,7 +541,7 @@ function duoModifiers() {
 function appleKeyboard() {
   let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
   return rule('Apple Keyboard', ifAppleKeyboard).manipulators([
-    map('⇪').to('⎋'),
+    map('⇪', '?⌘').to('⎋'),
     map('⇪', '⇧').to('⇪'),
 
     map('›⌘', '⌥').toHyper(),
