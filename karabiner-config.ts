@@ -32,14 +32,21 @@ writeToProfile(
   'Default',
   [
     vimLayer(),
-    symbolsLayer(),
-    digitsAndDelLayer(),
-    emojiLayer(),
+    symbolLayer(),
+    digitAndDeleteLayer(),
+    emojiAndSnippetLayer(),
     launchAppLayer(),
     openLinkLayer(),
     systemLayer(),
 
-    appMappings(),
+    chrome(),
+    safari(),
+    jetBrainsIDE(),
+    zed(),
+    vsCode(),
+    slack(),
+    spark(),
+    zoom(),
     raycast(),
     homerow(),
 
@@ -75,7 +82,7 @@ H  J    K   L       '`
   ])
 }
 
-function symbolsLayer() {
+function symbolLayer() {
   let hint = `\
 &   !  @ #    ^   {  [   (  $      ?  }  ]   )  %      _   +      ⌫
 N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
@@ -145,7 +152,7 @@ N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
   ])
 }
 
-function digitsAndDelLayer() {
+function digitAndDeleteLayer() {
   let hint = `\
 0    1  2  3    4  5  6    7  8  9    +  -  /  *    .    ⌫_⌥_⌘  ⌦
 N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
@@ -182,7 +189,7 @@ N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
   ])
 }
 
-function emojiLayer() {
+function emojiAndSnippetLayer() {
   // See https://gitmoji.dev/
   let emojiMap = {
     b: '🐛', // Fix a bug
@@ -292,156 +299,162 @@ function systemLayer() {
   })
 }
 
-function appMappings() {
-  let historyNavi = [
-    // Back/Forward history in most apps
+// In all apps:
+//
+// Tap ‹⌘ -> Show/Hide UI (e.g. left sidebars)
+// Tap ‹⌥ -> Run current task (re-run)
+// Tap ‹⌃ -> Run list
+// Tap ›⌘ -> Show/Hide UI (e.g. right sidebars)
+// Tap ›⌥ -> Command Palette (e.g. ⌘K, ⌘P)
+// Tap ›⌃ -> History (e.g. recent files)
+
+/** Back/Forward history in most apps */
+function historyNavi() {
+  return [
     map('h', '⌃').to('[', '⌘'),
     map('l', '⌃').to(']', '⌘'),
   ]
-  let tabNavi = [
-    // Pre/Next tab in most apps
+}
+
+/** Pre/Next tab in most apps */
+function tabNavi() {
+  return [
     map('h', '⌥').to('[', '⌘⇧'),
     map('l', '⌥').to(']', '⌘⇧'),
   ]
-  let switcher = [
-    // Pre/Next switcher in most apps
+}
+
+/** Pre/Next switcher in most apps */
+function switcher() {
+  return [
     map('h', '⌘⌥⌃').to('⇥', '⌃⇧'),
     map('l', '⌘⌥⌃').to('⇥', '⌃'),
   ]
+}
 
-  // Tap ‹⌘ -> Show/Hide UI (e.g. left sidebars)
-  // Tap ‹⌥ -> Run current task (re-run)
-  // Tap ‹⌃ -> Run list
-  // Tap ›⌘ -> Show/Hide UI (e.g. right sidebars)
-  // Tap ›⌥ -> Command Palette (e.g. ⌘K, ⌘P)
-  // Tap ›⌃ -> History (e.g. recent files)
+function chrome() {
+  return rule('Chrome').condition(ifApp('^com.google.Chrome$')).manipulators([
+    ...historyNavi(),
+    ...tabNavi(),
+    ...switcher(),
 
-  return rule('app mappings').manipulators([
-    //region Chrome
-    withCondition(ifApp('^com.google.Chrome$'))([
-      ...historyNavi,
-      ...tabNavi,
-      ...switcher,
+    tapModifier('‹⌥', toKey('r', '⌘')), // refreshThePage
 
-      tapModifier('‹⌥', toKey('r', '⌘')), // refreshThePage
+    tapModifier('›⌘', toKey('i', '⌘⌥')), // developerTools
+    tapModifier('›⌥', toKey('a', '⌘⇧')), // searchTabs
 
-      tapModifier('›⌘', toKey('i', '⌘⌥')), // developerTools
-      tapModifier('›⌥', toKey('a', '⌘⇧')), // searchTabs
+    map(1, 'Meh').to(toResizeWindow('Google Chrome')),
+  ])
+}
 
-      map(1, 'Meh').to(toResizeWindow('Google Chrome')),
-    ]),
-    //endregion
+function safari() {
+  return rule('Safari').condition(ifApp('^com.apple.Safari$')).manipulators([
+    ...historyNavi(),
+    ...tabNavi(),
+    ...switcher(),
 
-    //region Safari
-    withCondition(ifApp('^com.apple.Safari$'))([
-      ...historyNavi,
-      ...tabNavi,
-      ...switcher,
+    tapModifier('‹⌘', toKey('l', '⌘⇧')), // showHideSideBar
+    tapModifier('‹⌥', toKey('r', '⌘')), // reloadPage
 
-      tapModifier('‹⌘', toKey('l', '⌘⇧')), // showHideSideBar
-      tapModifier('‹⌥', toKey('r', '⌘')), // reloadPage
+    tapModifier('›⌘', toKey('i', '⌘⌥')), // showWebInspector
 
-      tapModifier('›⌘', toKey('i', '⌘⌥')), // showWebInspector
+    map(1, 'Meh').to(toResizeWindow('Safari')),
+  ])
+}
 
-      map(1, 'Meh').to(toResizeWindow('Safari')),
-    ]),
-    //endregion
+function jetBrainsIDE() {
+  return rule('JetBrains IDE').condition(ifApp('^com.jetbrains.[\\w-]+$')).manipulators([
+    ...historyNavi(),
+    ...tabNavi(),
+    ...switcher(),
 
-    //region JetBrains IDE
-    withCondition(ifApp('^com.jetbrains.[\\w-]+$'))([
-      ...historyNavi,
-      ...tabNavi,
-      ...switcher,
+    tapModifier('‹⌘', toKey('⎋', '⌘⇧')), // hideAllToolWindows
+    tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
+    tapModifier('‹⌃', toKey('r', '⌥⌃')), // Run...
 
-      tapModifier('‹⌘', toKey('⎋', '⌘⇧')), // hideAllToolWindows
-      tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
-      tapModifier('‹⌃', toKey('r', '⌥⌃')), // Run...
+    tapModifier('›⌘', toKey(4, '⌥')), // toolWindows_terminal
+    tapModifier('›⌥', toKey('a', '⌘⇧')), // findAction
+    tapModifier('›⌃', toKey('e', '⌘')), // recentFiles
 
-      tapModifier('›⌘', toKey(4, '⌥')), // toolWindows_terminal
-      tapModifier('›⌥', toKey('a', '⌘⇧')), // findAction
-      tapModifier('›⌃', toKey('e', '⌘')), // recentFiles
+    map(1, 'Meh').to(toResizeWindow('WebStorm')),
+  ])
+}
 
-      map(1, 'Meh').to(toResizeWindow('WebStorm')),
-    ]),
-    //endregion
+function zed() {
+  return rule('Zed').condition(ifApp('^dev.zed.Zed$')).manipulators([
+    ...historyNavi(),
+    ...tabNavi(),
+    ...switcher(),
 
-    //region Zed
-    withCondition(ifApp('^dev.zed.Zed$'))([
-      ...historyNavi,
-      ...tabNavi,
-      ...switcher,
+    tapModifier('‹⌘', toKey('y', '⌘⌥')), // closeAllDocks
+    tapModifier('‹⌥', toKey('t', '⌥')), // task::Rerun
+    tapModifier('‹⌃', toKey('t', '⌥⇧')), // task::Spawn
 
-      tapModifier('‹⌘', toKey('y', '⌘⌥')), // closeAllDocks
-      tapModifier('‹⌥', toKey('t', '⌥')), // task::Rerun
-      tapModifier('‹⌃', toKey('t', '⌥⇧')), // task::Spawn
+    tapModifier('›⌘', toKey('`', '⌃')), // terminal
+    tapModifier('›⌥', toKey('a', '⌘⇧')), // command
+    tapModifier('›⌃', toKey('p', '⌘')), // fileFinder
 
-      tapModifier('›⌘', toKey('`', '⌃')), // terminal
-      tapModifier('›⌥', toKey('a', '⌘⇧')), // command
-      tapModifier('›⌃', toKey('p', '⌘')), // fileFinder
+    map(1, 'Meh').to(toResizeWindow('Zed')),
+  ])
+}
 
-      map(1, 'Meh').to(toResizeWindow('Zed')),
-    ]),
-    //endregion
+function vsCode() {
+  return rule('VSCode').condition(ifApp('^com.microsoft.VSCode$')).manipulators([
+    ...tabNavi(),
+    ...switcher(),
+    map('h', '⌃').to('-', '⌃'),
+    map('l', '⌃').to('-', '⌃⇧'),
 
-    //region VSCode
-    withCondition(ifApp('^com.microsoft.VSCode$'))([
-      ...tabNavi,
-      ...switcher,
-      map('h', '⌃').to('-', '⌃'),
-      map('l', '⌃').to('-', '⌃⇧'),
+    tapModifier('‹⌘', toKey('⎋', '⌘')), // Tobble Sidebar visibility
+    tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
 
-      tapModifier('‹⌘', toKey('⎋', '⌘')), // Tobble Sidebar visibility
-      tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
+    tapModifier('›⌘', toKey('`', '⌃')), // terminal
+    tapModifier('›⌥', toKey('p', '⌘⇧')), // Show Command Palette
+    tapModifier('›⌃', toKey('p', '⌘')), // Quick Open, Go to File...
 
-      tapModifier('›⌘', toKey('`', '⌃')), // terminal
-      tapModifier('›⌥', toKey('p', '⌘⇧')), // Show Command Palette
-      tapModifier('›⌃', toKey('p', '⌘')), // Quick Open, Go to File...
+    map(1, 'Meh').to(toResizeWindow('Code')),
+  ])
+}
 
-      map(1, 'Meh').to(toResizeWindow('Code')),
-    ]),
-    //endregion
+function slack() {
+  return rule('Slack').condition(ifApp('^com.tinyspeck.slackmacgap$')).manipulators([
+    ...historyNavi(),
 
-    //region Slack
-    withCondition(ifApp('^com.tinyspeck.slackmacgap$'))([
-      ...historyNavi,
+    tapModifier('‹⌘', toKey('d', '⌘⇧')), // showHideSideBar
+    tapModifier('‹⌥', toKey('f6')), // moveFocusToTheNextSection
 
-      tapModifier('‹⌘', toKey('d', '⌘⇧')), // showHideSideBar
-      tapModifier('‹⌥', toKey('f6')), // moveFocusToTheNextSection
+    tapModifier('›⌘', toKey('.', '⌘')), // hideRightBar
+    tapModifier('›⌥', toKey('k', '⌘')), // open
 
-      tapModifier('›⌘', toKey('.', '⌘')), // hideRightBar
-      tapModifier('›⌥', toKey('k', '⌘')), // open
+    map(1, 'Meh').to(
+      // After the 1/4 width, leave some space for opening thread in a new window
+      // before the last 1/4 width
+      toResizeWindow('Slack', { x: 1263, y: 25 }, { w: 1760, h: 1415 }),
+    ),
+  ])
+}
 
-      map(1, 'Meh').to(
-        // After the 1/4 width, leave some space for opening thread in a new window
-        // before the last 1/4 width
-        toResizeWindow('Slack', { x: 1263, y: 25 }, { w: 1760, h: 1415 }),
-      ),
-    ]),
-    //endregion
+function spark() {
+  return rule('Spark').condition(ifApp('^com.readdle.SparkDesktop')).manipulators([
+    tapModifier('‹⌘', toKey('/')), // openSidebar
+    tapModifier('‹⌥', toKey('r', '⌘')), // fetch
 
-    //region Spark
-    withCondition(ifApp('^com.readdle.SparkDesktop'))([
-      tapModifier('‹⌘', toKey('/')), // openSidebar
-      tapModifier('‹⌥', toKey('r', '⌘')), // fetch
+    tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
+    tapModifier('›⌥', toKey('k', '⌘')), // actions
 
-      tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
-      tapModifier('›⌥', toKey('k', '⌘')), // actions
+    map(1, 'Meh').to(
+      toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 }),
+    ),
+  ])
+}
 
-      map(1, 'Meh').to(
-        toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 }),
-      ),
-    ]),
-    //endregion
+function zoom() {
+  return rule('Zoom').condition(ifApp('^us.zoom.xos$')).manipulators([
+    tapModifier('‹⌘', toKey('a', '⌘⇧')), // muteUnmuteMyAudio
+    tapModifier('‹⌥', toKey('s', '⌘⇧')), // startStopScreenSharing
 
-    //region Zoom
-    withCondition(ifApp('^us.zoom.xos$'))([
-      tapModifier('‹⌘', toKey('a', '⌘⇧')), // muteUnmuteMyAudio
-      tapModifier('‹⌥', toKey('s', '⌘⇧')), // startStopScreenSharing
-
-      tapModifier('›⌘', toKey('v', '⌘⇧')), // startStopVideo
-      tapModifier('›⌥', toKey('h', '⌘⇧')), // showHideChatPanel
-    ]),
-    //endregion
+    tapModifier('›⌘', toKey('v', '⌘⇧')), // startStopVideo
+    tapModifier('›⌥', toKey('h', '⌘⇧')), // showHideChatPanel
   ])
 }
 
