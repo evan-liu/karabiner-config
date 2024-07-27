@@ -226,12 +226,13 @@ function emojiLayer() {
     ),
 
     // Code snippets
-    map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
-    map('l')
-      .toTypeSequence('log⇥')
-      .condition(ifApp('^com.jetbrains.WebStorm$')),
+    withCondition(ifApp('^com.microsoft.VSCode$'))([
+      map('l').toTypeSequence('clog⇥'),
+      map('k').toTypeSequence('afun⇥'),
+    ]),
     map('l').toTypeSequence('console.log()←'),
     map('k').toTypeSequence('()␣=>␣'),
+
     map("'").toTypeSequence('⌫"'),
     map('[').toTypeSequence('[␣]␣'),
     map(']').toTypeSequence('-␣[␣]␣'),
