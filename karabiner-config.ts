@@ -49,7 +49,7 @@ writeToProfile(
   ],
   {
     'basic.simultaneous_threshold_milliseconds': 50,
-    'duo_layer.threshold_milliseconds': 100,
+    'duo_layer.threshold_milliseconds': 50,
     'duo_layer.notification': true,
   },
 )
@@ -58,23 +58,21 @@ function vimLayer() {
   let hint = `\
 ←  ↓  ↑  →     ⌫
 H  J    K   L       '`
-  return duoLayer('f', ';')
-    .notification(hint)
-    .manipulators([
-      withModifier('??')({
-        h: toKey('←'),
-        j: toKey('↓'),
-        k: toKey('↑'),
-        l: toKey('→'),
+  return duoLayer('f', ';').threshold(250).notification(hint).manipulators([
+    withModifier('??')({
+      h: toKey('←'),
+      j: toKey('↓'),
+      k: toKey('↑'),
+      l: toKey('→'),
 
-        ';': toKey('›⇧'),
-        d: toKey('‹⌘'),
-        s: toKey('‹⌃'),
-        a: toKey('‹⌥'),
-      }),
+      ';': toKey('›⇧'),
+      d: toKey('‹⌘'),
+      s: toKey('‹⌃'),
+      a: toKey('‹⌥'),
+    }),
 
-      { "'": toKey('⌫'), '\\': toKey('⌦') },
-    ])
+    { "'": toKey('⌫'), '\\': toKey('⌦') },
+  ])
 }
 
 function symbolsLayer() {
@@ -115,77 +113,73 @@ N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
     '>': toKey('.', '⇧'),
   }
 
-  return duoLayer('s', ';')
-    .notification(hint)
-    .manipulators([
-      withMapper({
-        // ! @ # $ % ^ & * ( )    _ +
-        // 1 2 3 4 5 6 7 8 9 0    - =
+  return duoLayer('s', ';').threshold(250).notification(hint).manipulators([
+    withMapper({
+      // ! @ # $ % ^ & * ( )    _ +
+      // 1 2 3 4 5 6 7 8 9 0    - =
 
-        y: '?',
-        u: '}',
-        i: ']',
-        o: ')', // 0
-        p: '%', // 5
+      y: '?',
+      u: '}',
+      i: ']',
+      o: ')', // 0
+      p: '%', // 5
 
-        h: '^', // 6
-        j: '{',
-        k: '[',
-        l: '(', // 9
-        ';': '$', // 4
+      h: '^', // 6
+      j: '{',
+      k: '[',
+      l: '(', // 9
+      ';': '$', // 4
 
-        n: '&', // 7
-        m: '!', // 1
-        ',': '@', // 2
-        '.': '#', // 3
+      n: '&', // 7
+      m: '!', // 1
+      ',': '@', // 2
+      '.': '#', // 3
 
-        ']': '*', // 8
+      ']': '*', // 8
 
-        '␣': '_',
-        '⏎': '+',
-      } as const)((k, v) => map(k).to(toSymbol[v])),
+      '␣': '_',
+      '⏎': '+',
+    } as const)((k, v) => map(k).to(toSymbol[v])),
 
-      { "'": toKey('⌫') },
-    ])
+    { "'": toKey('⌫') },
+  ])
 }
 
 function digitsAndDelLayer() {
   let hint = `\
 0    1  2  3    4  5  6    7  8  9    +  -  /  *    .    ⌫_⌥_⌘  ⌦
 N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
-  return duoLayer('d', ';')
-    .notification(hint)
-    .manipulators([
-      // digits keypad_{i}
-      withMapper([
-        'n', //             // 0
-        ...['m', ',', '.'], // 1 2 3
-        ...['j', 'k', 'l'], // 4 5 6
-        ...['u', 'i', 'o'], // 7 8 9
-      ] as const)((k, i) => map(k).to(`keypad_${i as 0}`)),
+  return duoLayer('d', ';').threshold(250).notification(hint).manipulators([
+    // digits keypad_{i}
+    withMapper([
+      'n', //             // 0
+      ...['m', ',', '.'], // 1 2 3
+      ...['j', 'k', 'l'], // 4 5 6
+      ...['u', 'i', 'o'], // 7 8 9
+    ] as const)((k, i) => map(k).to(`keypad_${i as 0}`)),
 
-      // + - / * .
-      {
-        p: toKey('=', '⇧'), // +
-        ';': toKey('-'), // // -
-        // / stay           // /
-        ']': toKey(8, '⇧'), // *
+    // + - / * .
+    {
+      p: toKey('=', '⇧'), // +
+      ';': toKey('-'), // // -
+      // / stay           // /
+      ']': toKey(8, '⇧'), // *
 
-        '[': toKey('keypad_period'),
-      },
+      '[': toKey('keypad_period'),
+    },
 
-      // delete ⌫ ⌦
-      {
-        '\\': toKey('⌦'),
+    // delete ⌫ ⌦
+    {
+      '\\': toKey('⌦'),
 
-        "'": toKey('⌫'),
-        h: toKey('⌫', '⌥'),
-        y: toKey('⌫', '⌘'),
-      },
+      "'": toKey('⌫'),
+      h: toKey('⌫', '⌥'),
+      y: toKey('⌫', '⌘'),
+    },
 
-      // F1 - F9
-      withMapper([1, 2, 3, 4, 5, 6, 7, 8, 9])((k) => map(k).to(`f${k}`)),
-    ])
+    // F1 - F9
+    withMapper([1, 2, 3, 4, 5, 6, 7, 8, 9])((k) => map(k).to(`f${k}`)),
+  ])
 }
 
 function emojiLayer() {
@@ -218,57 +212,53 @@ function emojiLayer() {
     .map((v, i) => v.join(i === 0 ? ' ' : '    '))
     .join('\n')
 
-  return duoLayer('z', 'x')
-    .notification(emojiHint)
-    .manipulators([
-      map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
+  return duoLayer('z', 'x').notification(emojiHint).manipulators([
+    map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
 
-      withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
+    withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
 
-      { 2: toPaste('⌫'), 3: toPaste('⌦'), 4: toPaste('⇥'), 5: toPaste('⎋') },
-      { 6: toPaste('⌘'), 7: toPaste('⌥'), 8: toPaste('⌃'), 9: toPaste('⇧') },
-      { 0: toPaste('⇪'), ',': toPaste('‹'), '.': toPaste('›') },
+    { 2: toPaste('⌫'), 3: toPaste('⌦'), 4: toPaste('⇥'), 5: toPaste('⎋') },
+    { 6: toPaste('⌘'), 7: toPaste('⌥'), 8: toPaste('⌃'), 9: toPaste('⇧') },
+    { 0: toPaste('⇪'), ',': toPaste('‹'), '.': toPaste('›') },
 
-      withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⌫', '⌦'])((k) =>
-        map(k).toPaste(k),
-      ),
+    withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⌫', '⌦'])((k) =>
+      map(k).toPaste(k),
+    ),
 
-      // Code snippets
-      map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
-      map('l')
-        .toTypeSequence('log⇥')
-        .condition(ifApp('^com.jetbrains.WebStorm$')),
-      map('l').toTypeSequence('console.log()←'),
-      map('k').toTypeSequence('()␣=>␣'),
-      map("'").toTypeSequence('⌫"'),
-      map('[').toTypeSequence('[␣]␣'),
-      map(']').toTypeSequence('-␣[␣]␣'),
+    // Code snippets
+    map('l').toTypeSequence('cw⇥').condition(ifApp('^com.jetbrains.rider$')),
+    map('l')
+      .toTypeSequence('log⇥')
+      .condition(ifApp('^com.jetbrains.WebStorm$')),
+    map('l').toTypeSequence('console.log()←'),
+    map('k').toTypeSequence('()␣=>␣'),
+    map("'").toTypeSequence('⌫"'),
+    map('[').toTypeSequence('[␣]␣'),
+    map(']').toTypeSequence('-␣[␣]␣'),
 
-      { "'": toKey('⌫'), '\\': toKey('⌦') },
-    ])
+    { "'": toKey('⌫'), '\\': toKey('⌦') },
+  ])
 }
 
 function launchAppLayer() {
-  return duoLayer('l', ';')
-    .notification('Launch App 🚀 📱')
-    .manipulators({
-      a: toApp('ChatGPT'), // AI
-      b: toApp('Safari'), // Browser
-      c: toApp('Calendar'),
-      d: toApp('Eudb_en'), // Dictionary
-      e: toApp('Zed'), // Editor
-      f: toApp('Finder'),
-      g: toApp('Google Chrome'),
-      i: toApp('WeChat'), // IM
-      m: toApp('Spark Desktop'), // Mail
-      r: to$(`open ~/Applications/Rider.app`),
-      s: toApp('Slack'),
-      v: toApp('Visual Studio Code'),
-      w: to$(`open ~/Applications/WebStorm.app`),
-      z: toApp('zoom.us'),
+  return duoLayer('l', ';').notification('Launch App 🚀 📱').manipulators({
+    a: toApp('ChatGPT'), // AI
+    b: toApp('Safari'), // Browser
+    c: toApp('Calendar'),
+    d: toApp('Eudb_en'), // Dictionary
+    e: toApp('Zed'), // Editor
+    f: toApp('Finder'),
+    g: toApp('Google Chrome'),
+    i: toApp('WeChat'), // IM
+    m: toApp('Spark Desktop'), // Mail
+    r: to$(`open ~/Applications/Rider.app`),
+    s: toApp('Slack'),
+    v: toApp('Visual Studio Code'),
+    w: to$(`open ~/Applications/WebStorm.app`),
+    z: toApp('zoom.us'),
 
-      ',': toApp('System Settings'),
-    })
+    ',': toApp('System Settings'),
+  })
 }
 
 function openLinkLayer() {
