@@ -48,8 +48,8 @@ writeToProfile(
     moonlanderKeyboard(),
   ],
   {
-    'basic.simultaneous_threshold_milliseconds': 100,
-    'duo_layer.threshold_milliseconds': 100,
+    'basic.simultaneous_threshold_milliseconds': 50,
+    'duo_layer.threshold_milliseconds': 50,
     'duo_layer.notification': true,
   },
 )
