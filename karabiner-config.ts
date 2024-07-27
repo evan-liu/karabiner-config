@@ -227,13 +227,14 @@ function emojiLayer() {
 
     // Code snippets
     withCondition(ifApp('^com.microsoft.VSCode$'))([
-      map('k').toTypeSequence('afun'),
+      map('k').to('f20').to('k'),
+      map('l').to('f20').to('l'),
     ]),
     withCondition(ifApp('^com.jetbrains.WebStorm$'))([
       map('k').toTypeSequence('afun'),
     ]),
-    map('l').toTypeSequence('console.log()←'),
     map('k').toTypeSequence('()␣=>␣'),
+    map('l').toTypeSequence('console.log()←'),
 
     map("'").toTypeSequence('⌫"'),
     map('[').toTypeSequence('[␣]␣'),
