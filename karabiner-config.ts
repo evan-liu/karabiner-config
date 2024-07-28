@@ -20,10 +20,13 @@ import {
   writeToProfile,
 } from 'karabiner.ts'
 import {
-  duoModifier,
+  duoModifiers,
+  historyNavi,
   raycastExt,
   raycastWin,
-  tapModifier,
+  switcher,
+  tabNavi,
+  tapModifiers,
   toClearNotifications,
   toResizeWindow,
 } from './utils'
@@ -31,28 +34,29 @@ import {
 writeToProfile(
   'Default',
   [
-    vimLayer(),
-    symbolLayer(),
-    digitAndDeleteLayer(),
-    emojiAndSnippetLayer(),
-    launchAppLayer(),
-    openLinkLayer(),
-    systemLayer(),
+    layer_vim(),
+    layer_symbol(),
+    layer_digitAndDelete(),
+    layer_emojiAndSnippet(),
+    layer_launchApp(),
+    layer_openLink(),
+    layer_system(),
 
-    chrome(),
-    safari(),
-    jetBrainsIDE(),
-    zed(),
-    vsCode(),
-    slack(),
-    spark(),
-    zoom(),
-    raycast(),
-    homerow(),
+    app_chrome(),
+    app_safari(),
+    app_jetBrainsIDE(),
+    app_zed(),
+    app_vsCode(),
+    app_slack(),
+    app_spark(),
+    app_zoom(),
+    app_raycast(),
+    app_homerow(),
 
-    duoModifiers(),
-    appleKeyboard(),
-    moonlanderKeyboard(),
+    rule_duoModifiers(),
+
+    keyboard_apple(),
+    keyboard_moonlander(),
   ],
   {
     'basic.simultaneous_threshold_milliseconds': 50,
@@ -61,11 +65,12 @@ writeToProfile(
   },
 )
 
-function vimLayer() {
+function layer_vim() {
   let hint = `\
 ←  ↓  ↑  →     ⌫
 H  J    K   L       '`
-  return duoLayer('f', ';').threshold(250).notification(hint).manipulators([
+  let layer = duoLayer('f', ';').threshold(250).notification(hint)
+  return layer.manipulators([
     withModifier('??')({
       h: toKey('←'),
       j: toKey('↓'),
@@ -82,7 +87,7 @@ H  J    K   L       '`
   ])
 }
 
-function symbolLayer() {
+function layer_symbol() {
   let hint = `\
 &   !  @ #    ^   {  [   (  $      ?  }  ]   )  %      _   +      ⌫
 N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
@@ -120,7 +125,8 @@ N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
     '>': toKey('.', '⇧'),
   }
 
-  return duoLayer('s', ';').threshold(250).notification(hint).manipulators([
+  let layer = duoLayer('s', ';').threshold(250).notification(hint)
+  return layer.manipulators([
     withMapper({
       // ! @ # $ % ^ & * ( )    _ +
       // 1 2 3 4 5 6 7 8 9 0    - =
@@ -152,11 +158,12 @@ N  M  ,   .    H  J  K  L  ;      Y  U  I  O  P       ␣  ⏎      '`
   ])
 }
 
-function digitAndDeleteLayer() {
+function layer_digitAndDelete() {
   let hint = `\
 0    1  2  3    4  5  6    7  8  9    +  -  /  *    .    ⌫_⌥_⌘  ⌦
 N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
-  return duoLayer('d', ';').threshold(250).notification(hint).manipulators([
+  let layer = duoLayer('d', ';').threshold(250).notification(hint)
+  return layer.manipulators([
     // digits keypad_{i}
     withMapper([
       'n', //             // 0
@@ -189,7 +196,7 @@ N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
   ])
 }
 
-function emojiAndSnippetLayer() {
+function layer_emojiAndSnippet() {
   // See https://gitmoji.dev/
   let emojiMap = {
     b: '🐛', // Fix a bug
@@ -219,7 +226,8 @@ function emojiAndSnippetLayer() {
     .map((v, i) => v.join(i === 0 ? ' ' : '    '))
     .join('\n')
 
-  return duoLayer('z', 'x').notification(emojiHint).manipulators([
+  let layer = duoLayer('z', 'x').notification(emojiHint)
+  return layer.manipulators([
     map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
 
     withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
@@ -251,8 +259,9 @@ function emojiAndSnippetLayer() {
   ])
 }
 
-function launchAppLayer() {
-  return duoLayer('l', ';').notification('Launch App 🚀 📱').manipulators({
+function layer_launchApp() {
+  let layer = duoLayer('l', ';').notification('Launch App 🚀 📱')
+  return layer.manipulators({
     a: toApp('ChatGPT'), // AI
     b: toApp('Safari'), // Browser
     c: toApp('Calendar'),
@@ -272,14 +281,15 @@ function launchAppLayer() {
   })
 }
 
-function openLinkLayer() {
+function layer_openLink() {
   let links = require('./links.json') as Record<FromKeyParam, string>
-  return duoLayer('.', '/')
-    .notification('Open Link 🔗')
-    .manipulators([withMapper(links)((k, v) => map(k).to$(`open "${v}"`))])
+  let layer = duoLayer('.', '/').notification('Open Link 🔗')
+  return layer.manipulators([
+    withMapper(links)((k, v) => map(k).to$(`open "${v}"`)),
+  ])
 }
 
-function systemLayer() {
+function layer_system() {
   return layer('`', 'system').manipulators({
     1: toMouseCursorPosition({ x: '25%', y: '50%', screen: 0 }),
     2: toMouseCursorPosition({ x: '50%', y: '50%', screen: 0 }),
@@ -299,132 +309,111 @@ function systemLayer() {
   })
 }
 
-// In all apps:
-//
-// Tap ‹⌘ -> Show/Hide UI (e.g. left sidebars)
-// Tap ‹⌥ -> Run current task (re-run)
-// Tap ‹⌃ -> Run list
-// Tap ›⌘ -> Show/Hide UI (e.g. right sidebars)
-// Tap ›⌥ -> Command Palette (e.g. ⌘K, ⌘P)
-// Tap ›⌃ -> History (e.g. recent files)
-
-/** Back/Forward history in most apps */
-function historyNavi() {
-  return [
-    map('h', '⌃').to('[', '⌘'),
-    map('l', '⌃').to(']', '⌘'),
-  ]
-}
-
-/** Pre/Next tab in most apps */
-function tabNavi() {
-  return [
-    map('h', '⌥').to('[', '⌘⇧'),
-    map('l', '⌥').to(']', '⌘⇧'),
-  ]
-}
-
-/** Pre/Next switcher in most apps */
-function switcher() {
-  return [
-    map('h', '⌘⌥⌃').to('⇥', '⌃⇧'),
-    map('l', '⌘⌥⌃').to('⇥', '⌃'),
-  ]
-}
-
-function chrome() {
-  return rule('Chrome').condition(ifApp('^com.google.Chrome$')).manipulators([
+function app_chrome() {
+  return rule('Chrome', ifApp('^com.google.Chrome$')).manipulators([
     ...historyNavi(),
     ...tabNavi(),
     ...switcher(),
 
-    tapModifier('‹⌥', toKey('r', '⌘')), // refreshThePage
+    ...tapModifiers({
+      '‹⌥': toKey('r', '⌘'), // refreshThePage
 
-    tapModifier('›⌘', toKey('i', '⌘⌥')), // developerTools
-    tapModifier('›⌥', toKey('a', '⌘⇧')), // searchTabs
+      '›⌘': toKey('i', '⌘⌥'), // developerTools
+      '›⌥': toKey('a', '⌘⇧'), // searchTabs
+    }),
 
     map(1, 'Meh').to(toResizeWindow('Google Chrome')),
   ])
 }
 
-function safari() {
-  return rule('Safari').condition(ifApp('^com.apple.Safari$')).manipulators([
+function app_safari() {
+  return rule('Safari', ifApp('^com.apple.Safari$')).manipulators([
     ...historyNavi(),
     ...tabNavi(),
     ...switcher(),
 
-    tapModifier('‹⌘', toKey('l', '⌘⇧')), // showHideSideBar
-    tapModifier('‹⌥', toKey('r', '⌘')), // reloadPage
+    ...tapModifiers({
+      '‹⌘': toKey('l', '⌘⇧'), // showHideSideBar
+      '‹⌥': toKey('r', '⌘'), // reloadPage
 
-    tapModifier('›⌘', toKey('i', '⌘⌥')), // showWebInspector
+      '›⌘': toKey('i', '⌘⌥'), // showWebInspector
+    }),
 
     map(1, 'Meh').to(toResizeWindow('Safari')),
   ])
 }
 
-function jetBrainsIDE() {
-  return rule('JetBrains IDE').condition(ifApp('^com.jetbrains.[\\w-]+$')).manipulators([
+function app_jetBrainsIDE() {
+  return rule('JetBrains IDE', ifApp('^com.jetbrains.[\\w-]+$')).manipulators([
     ...historyNavi(),
     ...tabNavi(),
     ...switcher(),
 
-    tapModifier('‹⌘', toKey('⎋', '⌘⇧')), // hideAllToolWindows
-    tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
-    tapModifier('‹⌃', toKey('r', '⌥⌃')), // Run...
+    ...tapModifiers({
+      '‹⌘': toKey('⎋', '⌘⇧'), // hideAllToolWindows
+      '‹⌥': toKey('r', '⌥⇧'), // Run
+      '‹⌃': toKey('r', '⌥⌃'), // Run...
 
-    tapModifier('›⌘', toKey(4, '⌥')), // toolWindows_terminal
-    tapModifier('›⌥', toKey('a', '⌘⇧')), // findAction
-    tapModifier('›⌃', toKey('e', '⌘')), // recentFiles
+      '›⌘': toKey(4, '⌥'), // toolWindows_terminal
+      '›⌥': toKey('a', '⌘⇧'), // findAction
+      '›⌃': toKey('e', '⌘'), // recentFiles
+    }),
 
     map(1, 'Meh').to(toResizeWindow('WebStorm')),
   ])
 }
 
-function zed() {
-  return rule('Zed').condition(ifApp('^dev.zed.Zed$')).manipulators([
+function app_zed() {
+  return rule('Zed', ifApp('^dev.zed.Zed$')).manipulators([
     ...historyNavi(),
     ...tabNavi(),
     ...switcher(),
 
-    tapModifier('‹⌘', toKey('y', '⌘⌥')), // closeAllDocks
-    tapModifier('‹⌥', toKey('t', '⌥')), // task::Rerun
-    tapModifier('‹⌃', toKey('t', '⌥⇧')), // task::Spawn
+    ...tapModifiers({
+      '‹⌘': toKey('y', '⌘⌥'), // closeAllDocks
+      '‹⌥': toKey('t', '⌥'), // task::Rerun
+      '‹⌃': toKey('t', '⌥⇧'), // task::Spawn
 
-    tapModifier('›⌘', toKey('`', '⌃')), // terminal
-    tapModifier('›⌥', toKey('a', '⌘⇧')), // command
-    tapModifier('›⌃', toKey('p', '⌘')), // fileFinder
+      '›⌘': toKey('`', '⌃'), // terminal
+      '›⌥': toKey('a', '⌘⇧'), // command
+      '›⌃': toKey('p', '⌘'), // fileFinder
+    }),
 
     map(1, 'Meh').to(toResizeWindow('Zed')),
   ])
 }
 
-function vsCode() {
-  return rule('VSCode').condition(ifApp('^com.microsoft.VSCode$')).manipulators([
+function app_vsCode() {
+  return rule('VSCode', ifApp('^com.microsoft.VSCode$')).manipulators([
     ...tabNavi(),
     ...switcher(),
     map('h', '⌃').to('-', '⌃'),
     map('l', '⌃').to('-', '⌃⇧'),
 
-    tapModifier('‹⌘', toKey('⎋', '⌘')), // Tobble Sidebar visibility
-    tapModifier('‹⌥', toKey('r', '⌥⇧')), // Run
+    ...tapModifiers({
+      '‹⌘': toKey('⎋', '⌘'), // Tobble Sidebar visibility
+      '‹⌥': toKey('r', '⌥⇧'), // Run
 
-    tapModifier('›⌘', toKey('`', '⌃')), // terminal
-    tapModifier('›⌥', toKey('p', '⌘⇧')), // Show Command Palette
-    tapModifier('›⌃', toKey('p', '⌘')), // Quick Open, Go to File...
+      '›⌘': toKey('`', '⌃'), // terminal
+      '›⌥': toKey('p', '⌘⇧'), // Show Command Palette
+      '›⌃': toKey('p', '⌘'), // Quick Open, Go to File...
+    }),
 
     map(1, 'Meh').to(toResizeWindow('Code')),
   ])
 }
 
-function slack() {
-  return rule('Slack').condition(ifApp('^com.tinyspeck.slackmacgap$')).manipulators([
+function app_slack() {
+  return rule('Slack', ifApp('^com.tinyspeck.slackmacgap$')).manipulators([
     ...historyNavi(),
 
-    tapModifier('‹⌘', toKey('d', '⌘⇧')), // showHideSideBar
-    tapModifier('‹⌥', toKey('f6')), // moveFocusToTheNextSection
+    ...tapModifiers({
+      '‹⌘': toKey('d', '⌘⇧'), // showHideSideBar
+      '‹⌥': toKey('f6'), // moveFocusToTheNextSection
 
-    tapModifier('›⌘', toKey('.', '⌘')), // hideRightBar
-    tapModifier('›⌥', toKey('k', '⌘')), // open
+      '›⌘': toKey('.', '⌘'), // hideRightBar
+      '›⌥': toKey('k', '⌘'), // open
+    }),
 
     map(1, 'Meh').to(
       // After the 1/4 width, leave some space for opening thread in a new window
@@ -434,13 +423,15 @@ function slack() {
   ])
 }
 
-function spark() {
-  return rule('Spark').condition(ifApp('^com.readdle.SparkDesktop')).manipulators([
-    tapModifier('‹⌘', toKey('/')), // openSidebar
-    tapModifier('‹⌥', toKey('r', '⌘')), // fetch
+function app_spark() {
+  return rule('Spark', ifApp('^com.readdle.SparkDesktop')).manipulators([
+    ...tapModifiers({
+      '‹⌘': toKey('/'), // openSidebar
+      '‹⌥': toKey('r', '⌘'), // fetch
 
-    tapModifier('›⌘', toKey('/', '⌘')), // changeLayout
-    tapModifier('›⌥', toKey('k', '⌘')), // actions
+      '›⌘': toKey('/', '⌘'), // changeLayout
+      '›⌥': toKey('k', '⌘'), // actions
+    }),
 
     map(1, 'Meh').to(
       toResizeWindow('Spark Desktop', undefined, { w: 1644, h: 1220 }),
@@ -448,17 +439,19 @@ function spark() {
   ])
 }
 
-function zoom() {
-  return rule('Zoom').condition(ifApp('^us.zoom.xos$')).manipulators([
-    tapModifier('‹⌘', toKey('a', '⌘⇧')), // muteUnmuteMyAudio
-    tapModifier('‹⌥', toKey('s', '⌘⇧')), // startStopScreenSharing
+function app_zoom() {
+  return rule('Zoom', ifApp('^us.zoom.xos$')).manipulators(
+    tapModifiers({
+      '‹⌘': toKey('a', '⌘⇧'), // muteUnmuteMyAudio
+      '‹⌥': toKey('s', '⌘⇧'), // startStopScreenSharing
 
-    tapModifier('›⌘', toKey('v', '⌘⇧')), // startStopVideo
-    tapModifier('›⌥', toKey('h', '⌘⇧')), // showHideChatPanel
-  ])
+      '›⌘': toKey('v', '⌘⇧'), // startStopVideo
+      '›⌥': toKey('h', '⌘⇧'), // showHideChatPanel
+    }),
+  )
 }
 
-function raycast() {
+function app_raycast() {
   return rule('Raycast').manipulators([
     map('␣', '⌥').to(raycastExt('evan-liu/quick-open/index')),
 
@@ -502,50 +495,36 @@ function raycast() {
   ])
 }
 
-function homerow() {
+function app_homerow() {
   return rule('Homerow').manipulators([
     mapSimultaneous(['f', 'j']).to('␣', 'Hyper'), // Click
     mapSimultaneous(['f', 'k']).to('⏎', 'Hyper'), // Scroll
   ])
 }
 
-function duoModifiers() {
-  return rule('duo-modifiers').manipulators([
-    duoModifier('fd', '⌘'),
-    duoModifier('fs', '⌃'),
-    duoModifier('fa', '⌥'),
+function rule_duoModifiers() {
+  return rule('duo-modifiers').manipulators(
+    duoModifiers({
+      '⌘': ['fd', 'jk'], // ⌘ first as used the most
+      '⌃': ['fs', 'jl'], // ⌃ second as Vim uses it
+      '⌥': ['fa', 'j;'], // ⌥ last as used the least
 
-    duoModifier('ds', '⇧'),
+      '⇧': ['ds', 'kl'],
 
-    duoModifier('gd', '⌘⇧'),
-    duoModifier('gs', '⌃⇧'),
-    duoModifier('ga', '⌥⇧'),
+      '⌘⇧': ['gd', 'hk'],
+      '⌃⇧': ['gs', 'hl'],
+      '⌥⇧': ['ga', 'h;'],
 
-    duoModifier('vc', '⌘⌥'),
-    duoModifier('vx', '⌘⌃'),
-    duoModifier('cx', '⌥⌃'),
+      '⌘⌥': ['vc', 'm,'],
+      '⌘⌃': ['vx', 'm.'],
+      '⌥⌃': ['cx', ',.'],
 
-    duoModifier('vz', '⌘⌥⌃'),
-
-    duoModifier('jk', '⌘'),
-    duoModifier('jl', '⌃'),
-    duoModifier('j;', '⌥'),
-
-    duoModifier('kl', '⇧'),
-
-    duoModifier('hk', '⌘⇧'),
-    duoModifier('hl', '⌃⇧'),
-    duoModifier('h;', '⌥⇧'),
-
-    duoModifier('m,', '⌘⌥'),
-    duoModifier('m.', '⌘⌃'),
-    duoModifier(',.', '⌥⌃'),
-
-    duoModifier('m/', '⌘⌥⌃'),
-  ])
+      '⌘⌥⌃': ['vz', 'm/'],
+    }),
+  )
 }
 
-function appleKeyboard() {
+function keyboard_apple() {
   let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
   return rule('Apple Keyboard', ifAppleKeyboard).manipulators([
     map('⇪', '?⌘').to('⎋'),
@@ -554,16 +533,20 @@ function appleKeyboard() {
     map('›⌘', '⌥').toHyper(),
     map('›⌥', '⇧').toMeh(),
 
-    tapModifier('fn', toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
+    ...tapModifiers({
+      fn: toKey('␣', '⌘⇧'), // selectNextSourceInInputMenu
+    }),
   ])
 }
 
-function moonlanderKeyboard() {
+function keyboard_moonlander() {
   let ifMoonlander = ifDevice({ vendor_id: 12951, product_id: 6505 })
   return rule('Moonlander', ifMoonlander).manipulators([
     map('⎋', '⇧').to('⇪'),
     map('⎋', '⇪').to('⇪'),
 
-    tapModifier('‹⌃', toKey('␣', '⌘⇧')), // selectNextSourceInInputMenu
+    ...tapModifiers({
+      '‹⌃': toKey('␣', '⌘⇧'), // selectNextSourceInInputMenu
+    }),
   ])
 }
