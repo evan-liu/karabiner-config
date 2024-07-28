@@ -29,15 +29,15 @@ export function switcher() {
 }
 
 /**
- * Map when tap a modifier key; keep as modifier when hold
+ * Map when tap a modifier key; keep as modifier when hold.
  *
- *   ‹⌘ -> Show/Hide UI (e.g. left sidebars)
- *   ‹⌥ -> Run current task (re-run)
- *   ‹⌃ -> Run list
+ * - ‹⌘ Show/Hide UI (e.g. left sidebars, or all UI)
+ * - ‹⌥ Run current task (re-run)
+ * - ‹⌃ Run list
  *
- *   ›⌘ -> Show/Hide UI (e.g. right sidebars)
- *   ›⌥ -> Command Palette (e.g. ⌘K, ⌘P)
- *   ›⌃ -> History (e.g. recent files)
+ * - ›⌘ Show/Hide UI (e.g. right sidebars, or terminal)
+ * - ›⌥ Command Palette (e.g. ⌘K, ⌘P)
+ * - ›⌃ History (e.g. recent files)
  */
 export function tapModifiers(
   v: Partial<Record<SideModifierAlias | 'fn', ToEvent>>,
