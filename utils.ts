@@ -48,6 +48,7 @@ export function tapModifiers(
   })
 }
 
+/** Modifiers via 2 keys. e.g. f+d -> ⌘ */
 export function duoModifiers(
   v: Partial<
     Record<
@@ -87,29 +88,6 @@ export function raycastExt(name: string) {
 
 export function raycastWin(name: string) {
   return to$(`open -g raycast://extensions/raycast/window-management/${name}`)
-}
-
-/** Map when tap a modifier key; keep as modifier when hold */
-export function tapModifier(v: SideModifierAlias | 'fn', to: ToEvent) {
-  return map(v).to(v).toIfAlone(to)
-}
-
-export function duoModifier(
-  keys: `${LetterKeyCode | KeyAlias}${LetterKeyCode | KeyAlias}`,
-  modifier: '⌘' | '⌥' | '⌃' | '⇧' | MultiModifierAlias,
-) {
-  let id = keys + modifier
-  let [firstMod, ...restMods] = (
-    modifier in modifierKeyAliases
-      ? [modifierKeyAliases[modifier as ModifierKeyAlias]]
-      : multiModifierAliases[modifier as MultiModifierAlias]
-  ) as Array<'command' | 'control' | 'option' | 'shift'>
-  let to_after_key_up = [toRemoveNotificationMessage(id)]
-  return mapSimultaneous(keys.split('') as (LetterKeyCode | KeyAlias)[], {
-    to_after_key_up,
-  })
-    .toNotificationMessage(id, modifier) // Must go first or to() doesn't work
-    .to(`left_${firstMod}`, restMods)
 }
 
 export function toResizeWindow(
