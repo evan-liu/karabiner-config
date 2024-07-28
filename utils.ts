@@ -15,17 +15,26 @@ import {
 
 /** Back/Forward history in most apps */
 export function historyNavi() {
-  return [map('h', '⌃').to('[', '⌘'), map('l', '⌃').to(']', '⌘')]
+  return [
+    map('h', '⌃').to('[', '⌘'), //
+    map('l', '⌃').to(']', '⌘'),
+  ]
 }
 
 /** Pre/Next tab in most apps */
 export function tabNavi() {
-  return [map('h', '⌥').to('[', '⌘⇧'), map('l', '⌥').to(']', '⌘⇧')]
+  return [
+    map('h', '⌥').to('[', '⌘⇧'), //
+    map('l', '⌥').to(']', '⌘⇧'),
+  ]
 }
 
 /** Pre/Next switcher in most apps */
 export function switcher() {
-  return [map('h', '⌘⌥⌃').to('⇥', '⌃⇧'), map('l', '⌘⌥⌃').to('⇥', '⌃')]
+  return [
+    map('h', '⌘⌥⌃').to('⇥', '⌃⇧'), //
+    map('l', '⌘⌥⌃').to('⇥', '⌃'),
+  ]
 }
 
 /**
