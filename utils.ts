@@ -13,7 +13,7 @@ import {
   toRemoveNotificationMessage,
 } from 'karabiner.ts'
 
-/** Back/Forward history in most apps */
+/** Back/Forward history in most apps. */
 export function historyNavi() {
   return [
     map('h', '⌃').to('[', '⌘'), //
@@ -21,7 +21,7 @@ export function historyNavi() {
   ]
 }
 
-/** Pre/Next tab in most apps */
+/** Pre/Next tab in most apps. */
 export function tabNavi() {
   return [
     map('h', '⌥').to('[', '⌘⇧'), //
@@ -29,7 +29,7 @@ export function tabNavi() {
   ]
 }
 
-/** Pre/Next switcher in most apps */
+/** Pre/Next switcher in most apps. */
 export function switcher() {
   return [
     map('h', '⌘⌥⌃').to('⇥', '⌃⇧'), //

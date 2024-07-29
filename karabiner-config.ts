@@ -527,7 +527,7 @@ function rule_duoModifiers() {
 function keyboard_apple() {
   let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
   return rule('Apple Keyboard', ifAppleKeyboard).manipulators([
-    map('⇪', '?⌘').to('⎋'),
+    map('⇪', '?⌘⌃').to('⎋'),
     map('⇪', '⇧').to('⇪'),
 
     map('›⌘', '⌥').toHyper(),
