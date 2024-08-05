@@ -273,6 +273,7 @@ function layer_launchApp() {
     m: toApp('Spark Desktop'), // Mail
     r: to$(`open ~/Applications/Rider.app`),
     s: toApp('Slack'),
+    t: toApp('Warp'), // Terminal
     v: toApp('Visual Studio Code'),
     w: to$(`open ~/Applications/WebStorm.app`),
     z: toApp('zoom.us'),
