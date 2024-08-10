@@ -50,6 +50,8 @@ writeToProfile(
     app_slack(),
     app_spark(),
     app_zoom(),
+    app_chatGPT(),
+
     app_raycast(),
     app_homerow(),
 
@@ -500,6 +502,12 @@ function app_homerow() {
   return rule('Homerow').manipulators([
     mapSimultaneous(['f', 'j']).to('␣', 'Hyper'), // Click
     mapSimultaneous(['f', 'k']).to('⏎', 'Hyper'), // Scroll
+  ])
+}
+
+function app_chatGPT() {
+  return rule('ChatGPT', ifApp('^com.openai.chat$')).manipulators([
+    map(1, 'Meh').to(toResizeWindow('ChatGPT')),
   ])
 }
 
