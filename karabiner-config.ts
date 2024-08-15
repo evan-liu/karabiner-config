@@ -48,6 +48,7 @@ writeToProfile(
     app_zed(),
     app_vsCode(),
     app_slack(),
+    app_warp(),
     app_spark(),
     app_zoom(),
     app_chatGPT(),
@@ -403,6 +404,13 @@ function app_vsCode() {
     }),
 
     map(1, 'Meh').to(toResizeWindow('Code')),
+  ])
+}
+
+function app_warp() {
+  return rule('Warp', ifApp('^dev.warp.Warp')).manipulators([
+    ...tabNavi(),
+    map(1, 'Meh').to(toResizeWindow('Warp')),
   ])
 }
 
