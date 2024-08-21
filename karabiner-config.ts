@@ -542,7 +542,7 @@ function rule_duoModifiers() {
 }
 
 function keyboard_apple() {
-  let ifAppleKeyboard = ifDevice({ vendor_id: 1452, product_id: 835 })
+  let ifAppleKeyboard = ifDevice({ vendor_id: 12951 }).unless() // Not Moonlander
   return rule('Apple Keyboard', ifAppleKeyboard).manipulators([
     map('⇪', '?⌘⌃').to('⎋'),
     map('⇪', '⇧').to('⇪'),
