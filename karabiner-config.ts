@@ -47,6 +47,7 @@ writeToProfile(
     app_jetBrainsIDE(),
     app_zed(),
     app_vsCode(),
+    app_cursor(),
     app_slack(),
     app_warp(),
     app_spark(),
@@ -278,6 +279,7 @@ function layer_launchApp() {
     r: to$(`open ~/Applications/Rider.app`),
     s: toApp('Slack'),
     t: toApp('Warp'), // Terminal
+    u: toApp('Cursor'), // cUrsor
     v: toApp('Visual Studio Code'),
     w: to$(`open ~/Applications/WebStorm.app`),
     z: toApp('zoom.us'),
@@ -405,6 +407,24 @@ function app_vsCode() {
     }),
 
     map(1, 'Meh').to(toResizeWindow('Code')),
+  ])
+}
+
+function app_cursor() {
+  return rule('Cursor', ifApp('^com.todesktop.230313mzl4w4u92$')).manipulators([
+    ...tabNavi(),
+    ...switcher(),
+    map('h', '⌃').to('-', '⌃'),
+    map('l', '⌃').to('-', '⌃⇧'),
+
+    ...tapModifiers({
+      '‹⌘': toKey('⎋', '⌘'), // Tobble Sidebar visibility
+      '‹⌥': toKey('r', '⌥⇧'), // Run
+
+      '›⌘': toKey('`', '⌃'), // terminal
+      '›⌥': toKey('p', '⌘⇧'), // Show Command Palette
+      '›⌃': toKey('p', '⌘'), // Quick Open, Go to File...
+    }),
   ])
 }
 
