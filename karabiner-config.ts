@@ -489,7 +489,7 @@ function app_raycast() {
 
     withModifier('Hyper')({
       c: raycastExt('raycast/calendar/my-schedule'),
-      d: raycastExt('isfeng/easydict/easydict'),
+      d: raycastExt('raycast/dictionary/define-word'),
       e: raycastExt('raycast/emoji-symbols/search-emoji-symbols'),
       f: raycastExt('ratoru/google-maps-search/find'),
       g: raycastExt('ricoberger/gitmoji/gitmoji'),
