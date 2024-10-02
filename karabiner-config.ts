@@ -279,7 +279,7 @@ function layer_launchApp() {
     r: to$(`open ~/Applications/Rider.app`),
     s: toApp('Slack'),
     t: toApp('Warp'), // Terminal
-    u: toApp('Cursor'), // cUrsor
+    u: toApp('Spotify'), // mUsic
     v: toApp('Visual Studio Code'),
     w: to$(`open ~/Applications/WebStorm.app`),
     z: toApp('zoom.us'),
