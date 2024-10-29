@@ -571,6 +571,9 @@ function keyboard_apple() {
     map('›⌘', '⌥').toHyper(),
     map('›⌥', '⇧').toMeh(),
 
+    map('‹⌥', 'fn').toPointingButton('button1'),
+    map('‹⌃', 'fn').toPointingButton('button2'),
+
     ...tapModifiers({
       fn: toKey('␣', '⌘⇧'), // selectNextSourceInInputMenu
     }),
