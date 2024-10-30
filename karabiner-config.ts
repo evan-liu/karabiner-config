@@ -568,15 +568,11 @@ function keyboard_apple() {
     map('⇪', '?⌘⌃').to('⎋'),
     map('⇪', '⇧').to('⇪'),
 
-    map('›⌘', '›⇧').toHyper(),
-    map('›⌥', '›⇧').toMeh(),
+    map('‹⌃', 'fn').toHyper(),
+    map('‹⌥', 'fn').toMeh(),
 
-    map('‹⌥', 'fn').toPointingButton('button1'),
-    map('‹⌃', 'fn').toPointingButton('button2'),
-
-    ...tapModifiers({
-      fn: toKey('␣', '⌘⇧'), // selectNextSourceInInputMenu
-    }),
+    map('›⌘', '›⇧').toPointingButton('button1'),
+    map('›⌥', '›⇧').toPointingButton('button2'),
   ])
 }
 
