@@ -568,11 +568,8 @@ function keyboard_apple() {
     map('⇪', '?⌘⌃').to('⎋'),
     map('⇪', '⇧').to('⇪'),
 
-    map('‹⌃', 'fn').toHyper(),
-    map('‹⌥', 'fn').toMeh(),
-
-    map('›⌘', '›⇧').toPointingButton('button1'),
-    map('›⌥', '›⇧').toPointingButton('button2'),
+    map('›⌥', '›⇧').toHyper(),
+    map('›⌘', '›⇧').toMeh(),
   ])
 }
 
