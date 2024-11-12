@@ -283,6 +283,7 @@ function layer_launchApp() {
     u: toApp('Spotify'), // mUsic
     v: toApp('Visual Studio Code'),
     w: to$(`open ~/Applications/WebStorm.app`),
+    y: to$(String.raw`open ~/Applications/PyCharm\ Professional\ Edition.app`),
     z: toApp('zoom.us'),
 
     ',': toApp('System Settings'),
