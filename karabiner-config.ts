@@ -214,7 +214,8 @@ function layer_emojiAndSnippet() {
     p: '👍', // _plus_one +1
     r: '♻️', // Refactor code
     s: '😅', // _sweat_smile
-    u: '⬆️', // Upgrade dependencies
+    t: '🧵', // _thread
+    u: '💄', // UI/Style
     v: '🔖', // release / Version tags
 
     o: '💭', // Opinions and thoughts
