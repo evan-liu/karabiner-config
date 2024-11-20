@@ -204,7 +204,7 @@ function layer_emojiAndSnippet() {
   // See https://gitmoji.dev/
   let emojiMap = {
     b: '🐛', // Fix a bug
-    c: '🔧', // add or update Configuration files
+    c: '📅', // _calendar
     d: '📝', // add or update Documentation
     f: '🚩', // add, update, or remove Feature Flags
     h: '💯', // _hundred
@@ -234,6 +234,7 @@ function layer_emojiAndSnippet() {
   let layer = duoLayer('z', 'x').notification(emojiHint)
   return layer.manipulators([
     map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
+    map('g').to(raycastExt('ricoberger/gitmoji/gitmoji')),
 
     withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
 
