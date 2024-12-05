@@ -256,7 +256,7 @@ function layer_emojiAndSnippet() {
     ]),
     map('k').toTypeSequence('()␣=>␣'),
     map('l').toTypeSequence('console.log()←'),
-    map('/').toTypeSequence('clsx()←'),
+    map('/').toTypeSequence('cn()←'),
 
     map("'").toTypeSequence('⌫"'),
     map('[').toTypeSequence('[␣]␣'),
