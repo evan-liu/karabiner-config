@@ -217,9 +217,6 @@ function layer_emojiAndSnippet() {
     t: '🧵', // _thread
     u: '💄', // UI/Style
     v: '🔖', // release / Version tags
-
-    o: '💭', // Opinions and thoughts
-    i: '👨‍💻', // Experiences and stories
   }
 
   let emojiHint = Object.entries(emojiMap)
@@ -256,6 +253,7 @@ function layer_emojiAndSnippet() {
     ]),
     map('k').toTypeSequence('()␣=>␣'),
     map('l').toTypeSequence('console.log()←'),
+    map('o').toTypeSequence('console.assert()←'),
     map('/').toTypeSequence('cn()←'),
 
     map("'").toTypeSequence('⌫"'),
