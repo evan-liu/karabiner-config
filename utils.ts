@@ -77,10 +77,9 @@ export function duoModifiers(
           : multiModifierAliases[m as MultiModifierAlias]
       ) as Array<'command' | 'control' | 'option' | 'shift'>
 
-      let to_after_key_up = [toRemoveNotificationMessage(id)]
       result.push(
         mapSimultaneous(keys.split('') as (LetterKeyCode | KeyAlias)[], {
-          to_after_key_up,
+          to_after_key_up: [toRemoveNotificationMessage(id)],
         })
           .toNotificationMessage(id, m) // Must go first or to() doesn't work
           .to(`left_${firstMod}`, restMods),
@@ -144,3 +143,8 @@ tell application "System Events"
     end repeat
   end try
 end tell'`)
+
+export function toSystemSetting(pane: string) {
+  let path = `/System/Library/PreferencePanes/${pane}.prefPane`
+  return to$(`open -b com.apple.systempreferences ${path}`)
+}

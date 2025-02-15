@@ -3,17 +3,21 @@ import {
   FromKeyParam,
   ifApp,
   ifDevice,
+  ifVar,
   layer,
   map,
   mapSimultaneous,
   rule,
   to$,
   toApp,
+  ToEvent,
   toKey,
   toMouseCursorPosition,
   toPaste,
   toPointingButton,
+  toRemoveNotificationMessage,
   toSleepSystem,
+  toUnsetVar,
   withCondition,
   withMapper,
   withModifier,
@@ -29,45 +33,172 @@ import {
   tapModifiers,
   toClearNotifications,
   toResizeWindow,
+  toSystemSetting,
 } from './utils'
 
-writeToProfile(
-  'Default',
-  [
-    layer_vim(),
-    layer_symbol(),
-    layer_digitAndDelete(),
-    layer_emojiAndSnippet(),
-    layer_launchApp(),
-    layer_openLink(),
-    layer_system(),
+function main() {
+  writeToProfile(
+    'Default',
+    [
+      rule_duoModifiers(),
+      rule_leaderKey(),
 
-    app_chrome(),
-    app_safari(),
-    app_jetBrainsIDE(),
-    app_zed(),
-    app_vsCode(),
-    app_cursor(),
-    app_slack(),
-    app_warp(),
-    app_spark(),
-    app_zoom(),
-    app_chatGPT(),
+      layer_vim(),
+      layer_symbol(),
+      layer_digitAndDelete(),
+      layer_snippet(),
+      layer_launchApp(),
+      layer_openLink(),
+      layer_system(),
 
-    app_raycast(),
-    app_homerow(),
+      app_chrome(),
+      app_safari(),
+      app_jetBrainsIDE(),
+      app_zed(),
+      app_vsCode(),
+      app_cursor(),
+      app_slack(),
+      app_warp(),
+      app_spark(),
+      app_zoom(),
+      app_chatGPT(),
 
-    rule_duoModifiers(),
+      app_raycast(),
+      app_homerow(),
 
-    keyboard_apple(),
-    keyboard_moonlander(),
-  ],
-  {
-    'basic.simultaneous_threshold_milliseconds': 50,
-    'duo_layer.threshold_milliseconds': 50,
-    'duo_layer.notification': true,
-  },
-)
+      keyboard_apple(),
+      keyboard_moonlander(),
+    ],
+    {
+      'basic.simultaneous_threshold_milliseconds': 50,
+      'duo_layer.threshold_milliseconds': 50,
+      'duo_layer.notification': true,
+    },
+  )
+}
+
+function rule_duoModifiers() {
+  return rule('duo-modifiers').manipulators(
+    duoModifiers({
+      '⌘': ['fd', 'jk'], // ⌘ first as used the most
+      '⌃': ['fs', 'jl'], // ⌃ second as Vim uses it
+      '⌥': ['fa', 'j;'], // ⌥ last as used the least
+
+      '⇧': ['ds', 'kl'],
+
+      '⌘⇧': ['gd', 'hk'],
+      '⌃⇧': ['gs', 'hl'],
+      '⌥⇧': ['ga', 'h;'],
+
+      '⌘⌥': ['vc', 'm,'],
+      '⌘⌃': ['vx', 'm.'],
+      '⌥⌃': ['cx', ',.'],
+
+      '⌘⌥⌃': ['vz', 'm/'],
+    }),
+  )
+}
+
+function rule_leaderKey() {
+  let _var = 'leader'
+  let escape = [toUnsetVar(_var), toRemoveNotificationMessage(_var)]
+
+  let mappings = {
+    e: {
+      name: 'Emoji',
+      mapping: {
+        c: '📅', // Calendar
+        h: '💯', // Hundred
+        j: '😂', // Joy
+        p: '👍', // Plus_one +1
+        s: '😅', // Sweat_smile
+        t: '🧵', // Thread
+      },
+      action: toPaste,
+    },
+    g: {
+      name: 'Gitmoji', // See https://gitmoji.dev/
+      mapping: {
+        b: '🐛', // fix a Bug
+        d: '📝', // add or update Documentation
+        f: '🚩', // add, update, or remove Feature Flags
+        m: '🔀', // Merge branches
+        n: '✨', // introduce New features
+        r: '♻️', // Refactor code
+        u: '💄', // UI/Style
+        v: '🔖', // release / Version tags
+      },
+      action: toPaste,
+    },
+    r: {
+      name: 'Raycast',
+      mapping: {
+        c: ['raycast/calendar/my-schedule', 'Calendar'],
+        d: ['raycast/dictionary/define-word', 'Dictionary'],
+        e: ['raycast/emoji-symbols/search-emoji-symbols', 'Emoji'],
+        g: ['ricoberger/gitmoji/gitmoji', 'Gitmoji'],
+        s: ['raycast/snippets/search-snippets', 'Snippets'],
+        v: ['raycast/clipboard-history/clipboard-history', 'Clipboard'],
+      },
+      action: raycastExt,
+    },
+    s: {
+      name: 'SystemSetting',
+      mapping: {
+        a: 'Appearance',
+        d: 'Displays',
+        k: 'Keyboard',
+        o: 'Dock',
+      },
+      action: toSystemSetting,
+    },
+  } satisfies {
+    [key: string]: {
+      name: string
+      mapping: { [key: string]: string | string[] }
+      action: (v: string) => ToEvent | ToEvent[]
+    }
+  }
+
+  let keys = Object.keys(mappings) as Array<keyof typeof mappings>
+  let hint = keys.map((x) => `${x}_${mappings[x].name}`).join(' ')
+
+  return rule('Leader Key').manipulators([
+    // 0: Inactive -> Leader
+    withCondition(ifVar(_var, 0))([
+      mapSimultaneous(['f', 'l'], undefined, 250)
+        .toVar(_var, 1)
+        .toNotificationMessage(_var, hint),
+    ]),
+
+    // 0.unless: Leader or NestedLeader -> Inactive
+    withCondition(ifVar(_var, 0).unless())([
+      withMapper(['⎋', '⇪'])((x) => map(x).to(escape)),
+    ]),
+
+    // 1: Leader -> NestedLeader
+    withCondition(ifVar(_var, 1))(
+      keys.map((k) => {
+        let hint = Object.entries(mappings[k].mapping)
+          .map(([k, v]) => `${k}_${Array.isArray(v) ? v[1] : v}`)
+          .join(' ')
+        return map(k).toVar(_var, k).toNotificationMessage(_var, hint)
+      }),
+    ),
+
+    // NestLayer
+    ...keys.map((nestedLeaderKey) => {
+      let { mapping, action } = mappings[nestedLeaderKey]
+      let actionKeys = Object.keys(mapping) as Array<keyof typeof mapping>
+      return withCondition(ifVar(_var, nestedLeaderKey))(
+        actionKeys.map((x) => {
+          let v = Array.isArray(mapping[x]) ? mapping[x][0] : mapping[x]
+          return map(x).to(action(v)).to(escape)
+        }),
+      )
+    }),
+  ])
+}
 
 function layer_vim() {
   let hint = `\
@@ -200,41 +331,8 @@ N   M  ,   .     J  K  L    U  I  O    P  ;   /  ]    [      '   H   Y    \\`
   ])
 }
 
-function layer_emojiAndSnippet() {
-  // See https://gitmoji.dev/
-  let emojiMap = {
-    b: '🐛', // Fix a bug
-    c: '📅', // _calendar
-    d: '📝', // add or update Documentation
-    f: '🚩', // add, update, or remove Feature Flags
-    h: '💯', // _hundred
-    j: '😂', // _joy
-    m: '🔀', // Merge branches
-    n: '✨', // introduce New features
-    p: '👍', // _plus_one +1
-    r: '♻️', // Refactor code
-    s: '😅', // _sweat_smile
-    t: '🧵', // _thread
-    u: '💄', // UI/Style
-    v: '🔖', // release / Version tags
-  }
-
-  let emojiHint = Object.entries(emojiMap)
-    .slice(0, 15)
-    .reduce(
-      (r, [k, v]) => [r[0].concat(v), r[1].concat(k.toUpperCase())],
-      [[] as string[], [] as string[]],
-    )
-    .map((v, i) => v.join(i === 0 ? ' ' : '    '))
-    .join('\n')
-
-  let layer = duoLayer('z', 'x').notification(emojiHint)
-  return layer.manipulators([
-    map(';').to(raycastExt('raycast/emoji-symbols/search-emoji-symbols')),
-    map('g').to(raycastExt('ricoberger/gitmoji/gitmoji')),
-
-    withMapper(emojiMap)((k, v) => map(k).toPaste(v)),
-
+function layer_snippet() {
+  return duoLayer('z', 'x').manipulators([
     { 2: toPaste('⌫'), 3: toPaste('⌦'), 4: toPaste('⇥'), 5: toPaste('⎋') },
     { 6: toPaste('⌘'), 7: toPaste('⌥'), 8: toPaste('⌃'), 9: toPaste('⇧') },
     { 0: toPaste('⇪'), ',': toPaste('‹'), '.': toPaste('›') },
@@ -243,7 +341,6 @@ function layer_emojiAndSnippet() {
       map(k).toPaste(k),
     ),
 
-    // Code snippets
     withCondition(ifApp('^com.microsoft.VSCode$'))([
       map('k').to('f20').to('k'),
       map('l').to('f20').to('l'),
@@ -489,19 +586,7 @@ function app_raycast() {
     map('␣', '⌥').to(raycastExt('evan-liu/quick-open/index')),
 
     withModifier('Hyper')({
-      c: raycastExt('raycast/calendar/my-schedule'),
-      d: raycastExt('raycast/dictionary/define-word'),
-      e: raycastExt('raycast/emoji-symbols/search-emoji-symbols'),
-      f: raycastExt('ratoru/google-maps-search/find'),
-      g: raycastExt('ricoberger/gitmoji/gitmoji'),
-      m: raycastExt('raycast/navigation/search-menu-items'),
-      n: raycastExt('raycast/github/notifications'),
-      s: raycastExt('raycast/snippets/search-snippets'),
-      v: raycastExt('raycast/clipboard-history/clipboard-history'),
-      w: raycastExt('raycast/navigation/switch-windows'),
-    }),
-    withModifier('Hyper')({
-      '↑': raycastWin('previous-isplay'),
+      '↑': raycastWin('previous-display'),
       '↓': raycastWin('next-display'),
       '←': raycastWin('previous-desktop'),
       '→': raycastWin('next-desktop'),
@@ -541,28 +626,6 @@ function app_chatGPT() {
   ])
 }
 
-function rule_duoModifiers() {
-  return rule('duo-modifiers').manipulators(
-    duoModifiers({
-      '⌘': ['fd', 'jk'], // ⌘ first as used the most
-      '⌃': ['fs', 'jl'], // ⌃ second as Vim uses it
-      '⌥': ['fa', 'j;'], // ⌥ last as used the least
-
-      '⇧': ['ds', 'kl'],
-
-      '⌘⇧': ['gd', 'hk'],
-      '⌃⇧': ['gs', 'hl'],
-      '⌥⇧': ['ga', 'h;'],
-
-      '⌘⌥': ['vc', 'm,'],
-      '⌘⌃': ['vx', 'm.'],
-      '⌥⌃': ['cx', ',.'],
-
-      '⌘⌥⌃': ['vz', 'm/'],
-    }),
-  )
-}
-
 function keyboard_apple() {
   let ifAppleKeyboard = ifDevice({ vendor_id: 12951 }).unless() // Not Moonlander
   return rule('Apple Keyboard', ifAppleKeyboard).manipulators([
@@ -585,3 +648,5 @@ function keyboard_moonlander() {
     }),
   ])
 }
+
+main()
