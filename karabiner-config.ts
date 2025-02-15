@@ -164,19 +164,19 @@ function rule_leaderKey() {
   let hint = keys.map((x) => `${x}_${mappings[x].name}`).join(' ')
 
   return rule('Leader Key').manipulators([
-    // 0: Inactive -> Leader
+    // 0: Inactive -> Leader (1)
     withCondition(ifVar(_var, 0))([
       mapSimultaneous(['f', 'l'], undefined, 250)
         .toVar(_var, 1)
         .toNotificationMessage(_var, hint),
     ]),
 
-    // 0.unless: Leader or NestedLeader -> Inactive
+    // 0.unless: Leader or NestedLeader -> Inactive (0)
     withCondition(ifVar(_var, 0).unless())([
       withMapper(['⎋', '⇪'])((x) => map(x).to(escape)),
     ]),
 
-    // 1: Leader -> NestedLeader
+    // 1: Leader -> NestedLeader (🔤)
     withCondition(ifVar(_var, 1))(
       keys.map((k) => {
         let hint = Object.entries(mappings[k].mapping)
@@ -186,7 +186,7 @@ function rule_leaderKey() {
       }),
     ),
 
-    // NestLayer
+    // 🔤: NestedLeader
     ...keys.map((nestedLeaderKey) => {
       let { mapping, action } = mappings[nestedLeaderKey]
       let actionKeys = Object.keys(mapping) as Array<keyof typeof mapping>
