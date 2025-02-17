@@ -8,7 +8,6 @@ import {
   map,
   mapSimultaneous,
   rule,
-  to$,
   toApp,
   ToEvent,
   toKey,
@@ -47,7 +46,6 @@ function main() {
       layer_symbol(),
       layer_digitAndDelete(),
       layer_snippet(),
-      layer_launchApp(),
       layer_openLink(),
       layer_system(),
 
@@ -104,6 +102,26 @@ function rule_leaderKey() {
   let escape = [toUnsetVar(_var), toRemoveNotificationMessage(_var)]
 
   let mappings = {
+    a: {
+      name: 'App',
+      mapping: {
+        a: 'ChatGPT', // AI
+        c: 'Calendar',
+        d: 'Eudb_en', // Dictionary
+        e: 'Zed', // Editor
+        f: 'Finder',
+        g: 'Google Chrome',
+        i: 'WeChat', // IM
+        m: 'Spark Desktop', // Mail
+        s: 'Slack',
+        t: 'Warp', // Terminal
+        u: 'Spotify', // mUsic
+        w: 'WebStorm',
+        z: 'zoom.us',
+        ';': 'System Settings',
+      },
+      action: toApp,
+    },
     e: {
       name: 'Emoji',
       mapping: {
@@ -166,7 +184,7 @@ function rule_leaderKey() {
   return rule('Leader Key').manipulators([
     // 0: Inactive -> Leader (1)
     withCondition(ifVar(_var, 0))([
-      mapSimultaneous(['f', 'l'], undefined, 250)
+      mapSimultaneous(['l', ';'], undefined, 250)
         .toVar(_var, 1)
         .toNotificationMessage(_var, hint),
     ]),
@@ -359,31 +377,6 @@ function layer_snippet() {
 
     { "'": toKey('⌫'), '\\': toKey('⌦') },
   ])
-}
-
-function layer_launchApp() {
-  let layer = duoLayer('l', ';').notification('Launch App 🚀 📱')
-  return layer.manipulators({
-    a: toApp('ChatGPT'), // AI
-    b: toApp('Safari'), // Browser
-    c: toApp('Calendar'),
-    d: toApp('Eudb_en'), // Dictionary
-    e: toApp('Zed'), // Editor
-    f: toApp('Finder'),
-    g: toApp('Google Chrome'),
-    i: toApp('WeChat'), // IM
-    m: toApp('Spark Desktop'), // Mail
-    r: to$(`open ~/Applications/Rider.app`),
-    s: toApp('Slack'),
-    t: toApp('Warp'), // Terminal
-    u: toApp('Spotify'), // mUsic
-    v: toApp('Visual Studio Code'),
-    w: to$(`open ~/Applications/WebStorm.app`),
-    y: to$(String.raw`open ~/Applications/PyCharm\ Professional\ Edition.app`),
-    z: toApp('zoom.us'),
-
-    ',': toApp('System Settings'),
-  })
 }
 
 function layer_openLink() {
