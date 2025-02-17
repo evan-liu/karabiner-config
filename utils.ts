@@ -1,15 +1,15 @@
 import {
-  KeyAlias,
-  LetterKeyCode,
+  type KeyAlias,
+  type LetterKeyCode,
   map,
   mapSimultaneous,
-  ModifierKeyAlias,
+  type ModifierKeyAlias,
   modifierKeyAliases,
-  MultiModifierAlias,
+  type MultiModifierAlias,
   multiModifierAliases,
-  SideModifierAlias,
+  type SideModifierAlias,
   to$,
-  ToEvent,
+  type ToEvent,
   toRemoveNotificationMessage,
 } from 'karabiner.ts'
 

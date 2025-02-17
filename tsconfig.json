@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES2021",
-    "lib": ["ES2021"],
+    "module": "NodeNext",
+    "target": "ESNext",
+    "lib": ["ESNext"],
     "moduleResolution": "Node",
 
     "strict": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "sourceMap": true
-  },
-  "exclude": ["node_modules"]
+    "importsNotUsedAsValues": "error",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
+  }
 }

@@ -1,6 +1,5 @@
 import {
   duoLayer,
-  FromKeyParam,
   ifApp,
   ifDevice,
   ifVar,
@@ -8,8 +7,9 @@ import {
   map,
   mapSimultaneous,
   rule,
+  to$,
   toApp,
-  ToEvent,
+  type ToEvent,
   toKey,
   toMouseCursorPosition,
   toPaste,
@@ -22,6 +22,7 @@ import {
   withModifier,
   writeToProfile,
 } from 'karabiner.ts'
+
 import {
   duoModifiers,
   historyNavi,
@@ -33,7 +34,7 @@ import {
   toClearNotifications,
   toResizeWindow,
   toSystemSetting,
-} from './utils'
+} from './utils.ts'
 
 function main() {
   writeToProfile(
@@ -46,7 +47,6 @@ function main() {
       layer_symbol(),
       layer_digitAndDelete(),
       layer_snippet(),
-      layer_openLink(),
       layer_system(),
 
       app_chrome(),
@@ -147,6 +147,11 @@ function rule_leaderKey() {
         v: '🔖', // release / Version tags
       },
       action: toPaste,
+    },
+    l: {
+      name: 'Link',
+      mapping: require('./links.json') as { [key: string]: string[] },
+      action: (x) => to$(`open ${x}`),
     },
     r: {
       name: 'Raycast',
@@ -376,14 +381,6 @@ function layer_snippet() {
     map(']').toTypeSequence('-␣[␣]␣'),
 
     { "'": toKey('⌫'), '\\': toKey('⌦') },
-  ])
-}
-
-function layer_openLink() {
-  let links = require('./links.json') as Record<FromKeyParam, string>
-  let layer = duoLayer('.', '/').notification('Open Link 🔗')
-  return layer.manipulators([
-    withMapper(links)((k, v) => map(k).to$(`open "${v}"`)),
   ])
 }
 
