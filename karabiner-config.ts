@@ -145,6 +145,7 @@ function rule_leaderKey() {
         r: '♻️', // Refactor code
         u: '💄', // UI/Style
         v: '🔖', // release / Version tags
+        x: '🔥', // remove code or files
       },
       action: toPaste,
     },
