@@ -1,6 +1,7 @@
 import {
   type KeyAlias,
   type LetterKeyCode,
+  type ManipulatorBuilder,
   map,
   mapSimultaneous,
   type ModifierKeyAlias,
@@ -10,6 +11,8 @@ import {
   type SideModifierAlias,
   to$,
   type ToEvent,
+  toKey,
+  toNotificationMessage,
   toRemoveNotificationMessage,
 } from 'karabiner.ts'
 
@@ -66,7 +69,7 @@ export function duoModifiers(
     >
   >,
 ) {
-  let result = []
+  let result: ManipulatorBuilder[] = []
 
   for (let [m, k] of Object.entries(v)) {
     for (let keys of k) {
@@ -77,13 +80,27 @@ export function duoModifiers(
           : multiModifierAliases[m as MultiModifierAlias]
       ) as Array<'command' | 'control' | 'option' | 'shift'>
 
-      result.push(
-        mapSimultaneous(keys.split('') as (LetterKeyCode | KeyAlias)[], {
-          to_after_key_up: [toRemoveNotificationMessage(id)],
-        })
-          .toNotificationMessage(id, m) // Must go first or to() doesn't work
-          .to(`left_${firstMod}`, restMods),
-      )
+      const keyArray = keys.split('') as (LetterKeyCode | KeyAlias)[]
+      const modifierAction = `left_${firstMod}` as const
+
+      for (const orderedKeys of [keyArray, keyArray.toReversed()]) {
+        result.push(
+          mapSimultaneous(orderedKeys, {
+            key_down_order: 'strict',
+            to_after_key_up: [toRemoveNotificationMessage(id)],
+          })
+            .to(modifierAction, restMods, { lazy: true })
+            .toIfHeldDown([
+              toNotificationMessage(id, m),
+              toKey(modifierAction, restMods),
+            ])
+            .toIfAlone(orderedKeys.map((x) => toKey(x)))
+            .parameters({
+              'basic.to_if_held_down_threshold_milliseconds': 150,
+              'basic.to_if_alone_timeout_milliseconds': 150,
+            }),
+        )
+      }
     }
   }
 
