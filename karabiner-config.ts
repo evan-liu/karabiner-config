@@ -521,6 +521,7 @@ function app_warp() {
   return rule('Warp', ifApp('^dev.warp.Warp')).manipulators([
     ...tabNavi(),
     map(1, 'Meh').to(toResizeWindow('Warp')),
+    map('⏎', '⇧').to('j', '⌃'),
   ])
 }
 
