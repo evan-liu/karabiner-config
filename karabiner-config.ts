@@ -615,6 +615,10 @@ function app_homerow() {
 function app_chatGPT() {
   return rule('ChatGPT', ifApp('^com.openai.chat$')).manipulators([
     map(1, 'Meh').to(toResizeWindow('ChatGPT')),
+
+    ...tapModifiers({
+      '‹⌘': toKey('s', '⌘⌃'), // openSidebar
+    }),
   ])
 }
 
