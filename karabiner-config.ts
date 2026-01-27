@@ -455,6 +455,7 @@ function app_jetBrainsIDE() {
       '›⌃': toKey('e', '⌘'), // recentFiles
     }),
 
+    map('⎋', '⌘').to('⎋', '⌘⇧'),
     map(1, 'Meh').to(toResizeWindow('WebStorm')),
   ])
 }
@@ -475,6 +476,7 @@ function app_zed() {
       '›⌃': toKey('p', '⌘'), // fileFinder
     }),
 
+    map('⎋', '⌘').to('⎋', '⌘⇧'),
     map(1, 'Meh').to(toResizeWindow('Zed')),
   ])
 }
