@@ -467,7 +467,7 @@ function app_zed() {
     ...switcher(),
 
     ...tapModifiers({
-      '‹⌘': toKey('y', '⌘⌥'), // closeAllDocks
+      '‹⌘': toKey('⎋', '⌘⇧'), // closeAllDocks
       '‹⌥': toKey('t', '⌥'), // task::Rerun
       '‹⌃': toKey('t', '⌥⇧'), // task::Spawn
 
