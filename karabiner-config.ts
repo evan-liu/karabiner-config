@@ -113,6 +113,7 @@ function rule_leaderKey() {
         g: 'Google Chrome',
         i: 'WeChat', // IM
         m: 'Spark Desktop', // Mail
+        r: 'Rider',
         s: 'Slack',
         t: 'Warp', // Terminal
         u: 'Spotify', // mUsic
