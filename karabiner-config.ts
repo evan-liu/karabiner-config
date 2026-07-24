@@ -112,6 +112,7 @@ function rule_leaderKey() {
         f: 'Finder',
         g: 'Google Chrome',
         i: 'WeChat', // IM
+        j: 'ChatGPT', // IM
         m: 'Spark Desktop', // Mail
         r: 'Rider',
         s: 'Slack',
